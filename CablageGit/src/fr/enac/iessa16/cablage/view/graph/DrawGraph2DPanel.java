@@ -17,25 +17,27 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import fr.enac.iessa16.cablage.controller.Controller;
 import fr.enac.iessa16.cablage.model.Model;
 import fr.enac.iessa16.cablage.model.graph.Arete;
 import fr.enac.iessa16.cablage.model.graph.Graphe;
 import fr.enac.iessa16.cablage.model.graph.Sommet;
 import fr.enac.iessa16.cablage.view.ViewParameters;
 
-public class DrawGraph2DPanel extends JPanel implements MouseListener{
+public class DrawGraph2DPanel extends JPanel {
 	
 	private BufferedImage image = null;
 	private Model model;
 	
 	
-	public DrawGraph2DPanel(Model model) {
+	
+	public DrawGraph2DPanel(Model model,Controller controller) {
 		
 		super();
 		
 		this.model = model;
 		
-		this.addMouseListener(this);
+		this.addMouseListener(controller.getCliqueFenetreGraphController());
 		
 		//this.setPreferredSize(new Dimension(1100,600));
 		
@@ -155,8 +157,8 @@ public class DrawGraph2DPanel extends JPanel implements MouseListener{
 				g.setColor(Color.red);
 				
 				arete = aretes.get(i);
-				sommet1 = arete.getSommet1();
-				sommet2 = arete.getSommet2();
+				sommet1 = arete.getSommetOrigine();
+				sommet2 = arete.getSommetDestination();
 				
 				x1 = longitudeToX(sommet1.getLongitude());
 				y1 = latitudeToY(sommet1.getLatitude());
@@ -178,37 +180,6 @@ public class DrawGraph2DPanel extends JPanel implements MouseListener{
 
 	
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		
-		System.out.println("clique "+e.getX()+" "+e.getY());
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	
 	

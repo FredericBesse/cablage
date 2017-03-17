@@ -34,6 +34,14 @@ public class Model extends Observable {
 		return graphe;
 	}
 
+	public void cliqueFenetreGraphe(int x, int y) {
+		// TODO Auto-generated method stub
+		System.out.println("Model : clique "+x+" "+y);
+		
+		
+		
+	}
+
 	
 
 }

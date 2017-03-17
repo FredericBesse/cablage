@@ -88,7 +88,7 @@ public class View implements Observer {
 		// on r�cup�re le container de la fen�tre :
 		Container container = mainJFrame.getContentPane();
 		
-		contenuGraphe = new DrawGraph2DPanel(model);
+		contenuGraphe = new DrawGraph2DPanel(model,controller);
 		
 		
 		contenuGraphe.setPreferredSize(new Dimension(1100,600));

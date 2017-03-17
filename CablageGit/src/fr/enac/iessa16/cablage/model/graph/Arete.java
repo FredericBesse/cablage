@@ -1,43 +1,56 @@
 package fr.enac.iessa16.cablage.model.graph;
 
 
+/**
+ * 	Creation théorique d'une arete : une arete est une droite reliant 
+ * un sommet origine et un sommet destination  (d'où la presence de deux sommets en attributs), 
+ * chaque arete dispose d'une distance et d'un poids , dont le produit des deux nous permettra 
+ * de definir un cout de l'arete.
+ * 
+ * @author hedidira
+ *
+ */
 public class Arete {
+	 
 	
-	private Sommet sommet1;
-	private Sommet sommet2;
+
+	
+	private Sommet sommetOrigine; // origine   
+	private Sommet sommetDestination; // extrémité
 	private double distance;
 	private double poids;
 	private double cout;
 	
 	
 	
+	/*Creation du constructeur arete , */
 	
-	
-	public Arete(Sommet sommet1, Sommet sommet2, double poids) {
+	public Arete(Sommet sommetOrigine, Sommet sommetDestination, double poids) {
 	//	super();
-		this.sommet1 = sommet1;
-		this.sommet2 = sommet2;
+		this.sommetOrigine = sommetOrigine;
+		this.sommetDestination = sommetDestination;
 		this.poids = poids;
 		
-		this.distance = sommet1.distance(sommet2);
-		this.cout = this.distance * this.poids;
+		this.distance = sommetOrigine.distance(sommetDestination);//l'attribut distance est la distance entre le sommet 1 et le sommet 2
+		this.cout = this.distance * this.poids; /*le cout de chaque arete vaut le produit entre la norme de la droite reliant les 
+		 2 sommets et le poids*/
 		
 	}
 	
 	
 	
-	
-	public Sommet getSommet1() {
-		return sommet1;
+	/* Getters et Setters des attributs de la classe */
+	public Sommet getSommetOrigine() {   
+		return sommetOrigine;
 	}
-	public void setSommet1(Sommet sommet1) {
-		this.sommet1 = sommet1;
+	public void setSommetOrigine(Sommet sommetOrigine) {
+		this.sommetOrigine = sommetOrigine;
 	}
-	public Sommet getSommet2() {
-		return sommet2;
+	public Sommet getSommetDestination() {
+		return sommetDestination;
 	}
-	public void setSommet2(Sommet sommet2) {
-		this.sommet2 = sommet2;
+	public void setSommetDestination(Sommet sommetDestination) {
+		this.sommetDestination = sommetDestination;
 	}
 	public double getDistance() {
 		return distance;
