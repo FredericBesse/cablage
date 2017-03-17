@@ -7,7 +7,7 @@ package fr.enac.iessa16.cablage.model.graph;
  * chaque arete dispose d'une distance et d'un poids , dont le produit des deux nous permettra 
  * de definir un cout de l'arete.
  * 
- * @author Racha Hedidi
+ * @author Racha Hedidi et Frédéric Besse
  *
  */
 public class Arete {
