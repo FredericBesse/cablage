@@ -15,8 +15,8 @@ public class Arete {
 	
 
 	
-	private Sommet sommetOrigine; // origine   
-	private Sommet sommetDestination; // extrémité
+	private Sommet sommetOrigine; 		// origine   
+	private Sommet sommetDestination; 	// extrémité
 	private double distance;
 	private double poids;
 	private double cout;
