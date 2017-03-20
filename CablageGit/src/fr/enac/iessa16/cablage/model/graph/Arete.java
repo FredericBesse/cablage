@@ -2,8 +2,10 @@ package fr.enac.iessa16.cablage.model.graph;
 
 
 /**
- * 	Creation théorique d'une arete : une arete est une droite reliant 
- * un sommet origine et un sommet destination  (d'où la presence de deux sommets en attributs), 
+ * Classe Arete définissant le modèle théorique d'une arete.
+ * 
+ * Une arete est une droite reliant un sommet origine et un sommet 
+ * destination  (d'où la presence de deux sommets en attributs), 
  * chaque arete dispose d'une distance et d'un poids , dont le produit des deux nous permettra 
  * de definir un cout de l'arete.
  * 
@@ -12,9 +14,7 @@ package fr.enac.iessa16.cablage.model.graph;
  */
 public class Arete {
 	 
-	
-
-	
+		
 	private Sommet sommetOrigine; 		// origine   
 	private Sommet sommetDestination; 	// extrémité
 	private double distance;

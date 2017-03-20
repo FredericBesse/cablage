@@ -3,20 +3,29 @@ package fr.enac.iessa16.cablage.model.graph;
 import java.util.ArrayList;
 
 /**
- * Classe Graphe théorique : possède commme attribut,une liste de sommets et une liste d'aretes.
+ * Classe Graphe définissant le modèle théorique d'un graphe.
  * 
- * @author hedidira
- *
+ * Un graphe possède commme attribut une liste de sommets et une liste d'aretes.
+ * 
+ * @author Racha HEDIDI et Frédéric BESSE
  */
-
 public class Graphe {
 	
-	
+	/**
+	 * La liste des sommets du graphe
+	 */
 	private ArrayList<Sommet> listeSommets;
-	private ArrayList<Arete>  listeAretes;
 	
 	/**
-	 * Constructeur de la classe Graphe
+	 * La liste des aretes du graphe
+	 */
+	private ArrayList<Arete>  listeAretes;
+	
+	
+	/**
+	 * Constructeur de la classe Graphe, permet de construire un graphe 
+	 * à partir d'une liste de sommets et d'aretes
+	 * 
 	 * @param listeSommets la liste des sommets
 	 * @param listeAretes la liste des aretes
 	 */

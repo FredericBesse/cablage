@@ -37,7 +37,6 @@ public class Model extends Observable {
 	 * @return le graphe utile
 	 */
 	public Graphe getGraph() {
-		// TODO Auto-generated method stub
 		return graphe;
 	}
 
