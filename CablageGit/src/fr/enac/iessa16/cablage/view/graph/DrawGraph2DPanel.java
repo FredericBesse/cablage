@@ -27,7 +27,7 @@ import fr.enac.iessa16.cablage.view.ViewParameters;
 public class DrawGraph2DPanel extends JPanel {
 	
 	private BufferedImage image = null;
-	private Model model;
+	private Model _model;
 	
 	
 	
@@ -35,7 +35,7 @@ public class DrawGraph2DPanel extends JPanel {
 		
 		super();
 		
-		this.model = model;
+		this._model = model;
 		
 		this.addMouseListener(controller.getCliqueFenetreGraphController());
 		
@@ -91,7 +91,7 @@ public class DrawGraph2DPanel extends JPanel {
 		
 		
 		
-		Graphe graphe = model.getGraph();
+		Graphe graphe = _model.getGraph();
 		
 		if (graphe != null) {
 			ArrayList<Sommet> sommets = graphe.getListeSommets();
@@ -106,7 +106,7 @@ public class DrawGraph2DPanel extends JPanel {
 				
 				g.setColor(Color.red);
 				
-				x = this.longitudeToX(sommets.get(i).getLongitude()) - size/2;
+				x = this.longitudeToX(_model.getGraph().getListeSommets().get(i).getLongitude()) - size/2;
 				y = this.latitudeToY(sommets.get(i).getLatitude()) - size/2;
 				g.fillOval(x, y, size, size);
 				
@@ -138,7 +138,7 @@ public class DrawGraph2DPanel extends JPanel {
 		
 		
 		
-		Graphe graphe = model.getGraph();
+		Graphe graphe = _model.getGraph();
 		
 		if (graphe != null) {
 			ArrayList<Arete> aretes = graphe.getListeAretes();

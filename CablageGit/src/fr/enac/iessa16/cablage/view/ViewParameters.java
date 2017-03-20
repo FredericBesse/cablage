@@ -7,7 +7,8 @@ public class ViewParameters {
 	public static boolean isDrawEdge = true;
 	
 	
-	public static int vertexSize = 50;
+	public static int vertexSize = 10;
+	
 	
 	
 }
