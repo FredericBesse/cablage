@@ -41,7 +41,7 @@ public class Dessin2DGraphePanel extends JPanel {
 	/**
 	 * Attribut contenant l'image de fond (google maps)
 	 */
-	private BufferedImage image = null;
+	//private BufferedImage image = null;
 	
 		
 	/**
@@ -62,13 +62,13 @@ public class Dessin2DGraphePanel extends JPanel {
 		this.addMouseListener(controller.getCliqueFenetreGraphController());
 		
 		// Téléchargement de l'image de fond depuis google maps
-		try {
+		/*try {
 			image = ImageIO.read(new URL("https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=AIzaSyABrzv3EoXRNgraD15R12UduLzOBpwg14A"));
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		
 	}
 
@@ -82,19 +82,19 @@ public class Dessin2DGraphePanel extends JPanel {
 	public void paint(Graphics g) {
 		
 		// Affichage de l'image de fond (si la variable correspondante est à true)
-		if (ParametresAffichage.isDrawBackgroundImage) {
-			drawBackgroundImage(g);
-		}
+	//	if (ParametresAffichage.isDrawBackgroundImage) {
+			dessinerImageFond(g);
+	//	}
 
 		// Affichage des sommets du graphe du modèle (si la variable correspondante est à true)
-		if (ParametresAffichage.isDrawVertex) {
-			drawVertex(g);
-		}
+	//	if (ParametresAffichage.isDrawVertex) {
+			dessinerSommets(g);
+	//	}
 		
 		// Affichage des aretes du graphe du modèle (si la variable correspondante est à true)
-		if (ParametresAffichage.isDrawEdge) {
+	//	if (ParametresAffichage.isDrawEdge) {
 			drawEdge(g);
-		}	
+	//	}	
 	}
 	
 	
@@ -103,14 +103,14 @@ public class Dessin2DGraphePanel extends JPanel {
 	 * 
 	 * @param g
 	 */
-	private void drawBackgroundImage(Graphics g) {
+	private void dessinerImageFond(Graphics g) {
 		
 		// Si l'image a bien été téléchargée,
-		if (image != null) {
+		/*if (image != null) {
 			
 			// on la dessine
 			g.drawImage(image, 0, 0, null);
-		}
+		}*/
 	}
 	
 
@@ -119,7 +119,7 @@ public class Dessin2DGraphePanel extends JPanel {
 	 * 
 	 * @param g
 	 */
-	private void drawVertex(Graphics g) {
+	private void dessinerSommets(Graphics g) {
 		
 		// Variables locales
 		int i, x, y, size;
