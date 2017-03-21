@@ -11,16 +11,16 @@ import fr.enac.iessa16.cablage.model.graph.Sommet;
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
-public class DefaultGraphBuilder {
+public class ConstructeurGrapheParDefaut {
 
 	// L'objet graphe construit par la classe
-	private Graphe graphe;
+	private Graphe _graphe;
 
 	
 	/**
 	 * Constructeur de la classe DefaultGraphBuilder 
 	 */
-	public DefaultGraphBuilder() {
+	public ConstructeurGrapheParDefaut() {
 		
 		// Construction de la liste des sommets
 		ArrayList<Sommet> sommets = new ArrayList<Sommet>();
@@ -57,15 +57,15 @@ public class DefaultGraphBuilder {
 		listeAretes.add(arete5);
 
 		// Création du graphe à partir de la liste des sommets et de la liste des aretes		
-		this.graphe = new Graphe(sommets, listeAretes);
+		this._graphe = new Graphe(sommets, listeAretes);
 	}
 
 	
 	/**
-	 * @return le graphe construit par le builder
+	 * @return le graphe construit par le constructeur de graphe par defaut
 	 */
 	public Graphe getGraphe() {
-		return graphe;
+		return _graphe;
 	}
 
 	

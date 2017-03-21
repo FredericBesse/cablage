@@ -3,19 +3,19 @@ package fr.enac.iessa16.cablage.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import fr.enac.iessa16.cablage.model.Model;
+import fr.enac.iessa16.cablage.model.Donnees;
 
 /**
  * Classe MenuController permettant de gérer les intéractions avec le menu de la fenetre
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
-public class MenuController implements ActionListener {
+public class ControleurDuMenu implements ActionListener {
 	
 	/**
 	 * Attribut permettant de stocker le modèle de l'application
 	 */
-	private Model model;
+	private Donnees model;
 	
 	
 	/**
@@ -23,7 +23,7 @@ public class MenuController implements ActionListener {
 	 * 
 	 * @param model le modèle de l'application
 	 */
-	public MenuController(Model model) {
+	public ControleurDuMenu(Donnees model) {
 		
 		// Stockage du modèle dans les attributs pour une utilisation ultérieure
 		this.model = model;

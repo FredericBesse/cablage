@@ -10,9 +10,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import fr.enac.iessa16.cablage.controller.Controller;
-import fr.enac.iessa16.cablage.model.Model;
-import fr.enac.iessa16.cablage.view.graph.DrawGraph2DPanel;
+import fr.enac.iessa16.cablage.controller.Controleur;
+import fr.enac.iessa16.cablage.model.Donnees;
+import fr.enac.iessa16.cablage.view.graph.Dessin2DGraphePanel;
 import fr.enac.iessa16.cablage.view.menu.MenuFichier;
 
 
@@ -24,28 +24,23 @@ import fr.enac.iessa16.cablage.view.menu.MenuFichier;
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
-public class View implements Observer {
+public class Fenetre extends JFrame implements Observer {
 
 	/**
 	 * Le modèle de l'application contenant les données à afficher
 	 */
-	private Model model;
+	private Donnees model;
 	
 	/**
 	 * Le controller de l'application contenant les listeners
 	 */
-	private Controller controller;
+	private Controleur controller;
 
-	/**
-	 * La fenetre principale
-	 */
-	private JFrame mainJFrame;
-	
 	/**
 	 * L'objet DrawGraph2DPanel (dérivant de JPanel) permettant d'afficher
 	 * le graphe avec la bibliothèque Graplics2D
 	 */
-	private DrawGraph2DPanel contenuGraphe ;
+	private Dessin2DGraphePanel contenuGraphe ;
 
 	
 	/**
@@ -54,8 +49,11 @@ public class View implements Observer {
 	 * @param model le modele 
 	 * @param controller le controleur
 	 */
-	public View(Model model, Controller controller) {
+	public Fenetre(Donnees model, Controleur controller) {
 
+		// Création de la fenetre principale
+		super("Calcul du cablage à cout minimum");
+				
 		// On récupère le modèle 
 		this.model = model;
 		
@@ -65,9 +63,6 @@ public class View implements Observer {
 		
 		// On récupère le controleur
 		this.controller = controller;
-
-		// Création de la fenetre principale
-		this.mainJFrame = new JFrame("Calcul du cablage à cout minimum");
 
 		// Initialisation de la fenetre
 		this.init();
@@ -86,10 +81,10 @@ public class View implements Observer {
 	private void init() {
 		
 		// Définition de la taille de la fenetre
-		mainJFrame.setPreferredSize(new Dimension(1100, 600));
+		this.setPreferredSize(new Dimension(1100, 600));
 		
 		// Fermeture de l'application lorsqu'on clique sur la croix
-		mainJFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 	}
 	
 	
@@ -100,7 +95,7 @@ public class View implements Observer {
 		
 		// Création de la JMenuBar
 		JMenuBar jbar = new JMenuBar();
-		mainJFrame.setJMenuBar(jbar);
+		this.setJMenuBar(jbar);
 
 		// Création du JMenu Fichier
 		MenuFichier jmenu = new MenuFichier(controller);
@@ -118,10 +113,10 @@ public class View implements Observer {
 	private void createGraphPanel() {
 		
 		// on r�cup�re le container de la fen�tre :
-		Container container = mainJFrame.getContentPane();
+		Container container = this.getContentPane();
 		
 		// on crée le Panel
-		contenuGraphe = new DrawGraph2DPanel(model,controller);
+		contenuGraphe = new Dessin2DGraphePanel(model,controller);
 		contenuGraphe.setPreferredSize(new Dimension(1100,600));
 		
 		// Ajout du Panel au container de la fenetre
@@ -149,8 +144,8 @@ public class View implements Observer {
 	 */
 	public void start() {
 			
-		mainJFrame.pack();
-		mainJFrame.setVisible(true);
+		this.pack();
+		this.setVisible(true);
 	}
 
 }

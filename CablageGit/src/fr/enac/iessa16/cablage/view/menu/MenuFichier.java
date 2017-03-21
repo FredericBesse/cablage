@@ -3,7 +3,7 @@ package fr.enac.iessa16.cablage.view.menu;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import fr.enac.iessa16.cablage.controller.Controller;
+import fr.enac.iessa16.cablage.controller.Controleur;
 
 /**
  * Classe MenuFichier définissant le menu fichier
@@ -15,7 +15,7 @@ public class MenuFichier extends JMenu {
 	/**
 	 * 
 	 */
-	private Controller controller;
+	private Controleur controller;
 
 	
 	/**
@@ -23,7 +23,7 @@ public class MenuFichier extends JMenu {
 	 * 
 	 * @param controller le controleur de l'application
 	 */
-	public MenuFichier(Controller controller) {
+	public MenuFichier(Controleur controller) {
 		
 		// MenuFichier hérite de JMenu donc on appelle le constructeur parent
 		super("Fichier");

@@ -3,21 +3,21 @@ package fr.enac.iessa16.cablage.controller;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import fr.enac.iessa16.cablage.model.Model;
+import fr.enac.iessa16.cablage.model.Donnees;
 
 /**
- * Classe CliqueFenetreGraphController permettant de gérer les intéractions (clic souris)
+ * Classe ControleurCliqueFenetreGraphe permettant de gérer les intéractions (clic souris)
  * avec le panneau d'affichage du graphe
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
-public class CliqueFenetreGraphController implements MouseListener {
+public class ControleurCliqueFenetreGraphe implements MouseListener {
 
  
 	/**
 	 * Attribut permettant de stocker le modèle de l'application
 	 */
-	private Model model;
+	private Donnees model;
 	
   
 	/**
@@ -25,7 +25,7 @@ public class CliqueFenetreGraphController implements MouseListener {
 	 * 
 	 * @param model le modèle de l'application
 	 */
-	public CliqueFenetreGraphController(Model model) {
+	public ControleurCliqueFenetreGraphe(Donnees model) {
 		
 		// Stockage du modèle dans les attributs pour une utilisation ultérieure
 		this.model = model;		

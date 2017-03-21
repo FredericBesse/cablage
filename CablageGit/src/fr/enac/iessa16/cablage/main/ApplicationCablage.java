@@ -1,7 +1,7 @@
 package fr.enac.iessa16.cablage.main;
-import fr.enac.iessa16.cablage.controller.Controller;
-import fr.enac.iessa16.cablage.model.Model;
-import fr.enac.iessa16.cablage.view.View;
+import fr.enac.iessa16.cablage.controller.Controleur;
+import fr.enac.iessa16.cablage.model.Donnees;
+import fr.enac.iessa16.cablage.view.Fenetre;
 
 
 
@@ -10,7 +10,7 @@ import fr.enac.iessa16.cablage.view.View;
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
-public class RunCablageApplication {
+public class ApplicationCablage {
 
 	/**
 	 * Le Main de notre application
@@ -20,13 +20,13 @@ public class RunCablageApplication {
 	public static void main(String[] args) {
 				
 		// Création du modèle
-		Model model = new Model();
+		Donnees donnees = new Donnees();
 		
 		// Création du controleur (à qui on passe le modèle précédemment créé)
-		Controller controller = new Controller(model);
+		Controleur controller = new Controleur(donnees);
 		
 		// Création de la vue (à qui on passe le modèle et le controleur)
-		View view = new View(model,controller);
+		Fenetre view = new Fenetre(donnees,controller);
 		
 		// Affichage de la fenetre
 		view.start();

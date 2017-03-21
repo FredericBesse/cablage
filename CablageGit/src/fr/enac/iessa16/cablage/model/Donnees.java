@@ -3,15 +3,15 @@ package fr.enac.iessa16.cablage.model;
 
 import java.util.Observable;
 
-import fr.enac.iessa16.cablage.builder.DefaultGraphBuilder;
+import fr.enac.iessa16.cablage.builder.ConstructeurGrapheParDefaut;
 import fr.enac.iessa16.cablage.model.graph.Graphe;
 
 /**
- * Classe Model contenant les données utiles à afficher
+ * Classe Donnees contenant les données utiles à afficher
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
-public class Model extends Observable {
+public class Donnees extends Observable {
 
 	
 	/**
@@ -23,7 +23,7 @@ public class Model extends Observable {
 	/**
 	 * Constructeur de la classe Model
 	 */
-	public Model() {
+	public Donnees() {
 		
 		// Attention, par défaut, le graphe n'est pas créé 
 		this.graphe = null;
@@ -48,7 +48,7 @@ public class Model extends Observable {
 	public void loadDefaultGraph() {
 		
 		// Création d'un objet de type DefaultGraphBuilder pour construire le graphe par défaut
-		DefaultGraphBuilder defaultGraphBuilder = new DefaultGraphBuilder();
+		ConstructeurGrapheParDefaut defaultGraphBuilder = new ConstructeurGrapheParDefaut();
 				
 		// Mise à jour du graphe du modèle avec le graphe par défaut précédemment construit
 		this.graphe = defaultGraphBuilder.getGraphe();
@@ -62,12 +62,17 @@ public class Model extends Observable {
 	/**
 	 * Méthode appelé lors d'un clique souris sur la fenetre
 	 * 
-	 * @param x la position x du clic souris (pixel)
-	 * @param y la position y du clic souris (pixel)
+	 * @param lat la position x du clic souris (degre)
+	 * @param lon la position y du clic souris (degre)
 	 */
 	public void cliqueFenetreGraphe(int x, int y) {
 		// TODO Auto-generated method stub
 		System.out.println("Model : clique "+x+" "+y);
+		
+		
+		
+		
+		
 		
 	}
 }

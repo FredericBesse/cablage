@@ -5,7 +5,7 @@ package fr.enac.iessa16.cablage.view;
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
-public class ViewParameters {
+public class ParametresAffichage {
 
 	// Variable permettant de savoir si on affiche ou non l'image de fond
 	public static boolean isDrawBackgroundImage = false;
@@ -17,7 +17,7 @@ public class ViewParameters {
 	public static boolean isDrawEdge = true;
 	
 	// Variable definissant le rayon des cercles dessinant les sommets
-	public static int vertexSize = 10;
+	public static int vertexSize = 50;
 	
 	// TODO : ajouter ici les couleurs, ...
 	

@@ -17,25 +17,25 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import fr.enac.iessa16.cablage.controller.Controller;
-import fr.enac.iessa16.cablage.model.Model;
+import fr.enac.iessa16.cablage.controller.Controleur;
+import fr.enac.iessa16.cablage.model.Donnees;
 import fr.enac.iessa16.cablage.model.graph.Arete;
 import fr.enac.iessa16.cablage.model.graph.Graphe;
 import fr.enac.iessa16.cablage.model.graph.Sommet;
-import fr.enac.iessa16.cablage.view.ViewParameters;
+import fr.enac.iessa16.cablage.view.ParametresAffichage;
 
 /**
- * Classe DrawGraph2DPanel, dérivant de JPanel, permettant le dessin du
+ * Classe Dessin2DGraphePanel, dérivant de JPanel, permettant le dessin du
  * graphe du modèle grace à la bibliothèque Graphics2D 
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
-public class DrawGraph2DPanel extends JPanel {
+public class Dessin2DGraphePanel extends JPanel {
 	
 	/**
 	 * Le modèle de l'application, contenant les données à afficher
 	 */
-	private Model _model;
+	private Donnees _donnees;
 	
 	
 	/**
@@ -50,13 +50,13 @@ public class DrawGraph2DPanel extends JPanel {
 	 * @param model le modèle de l'application
 	 * @param controller le controleur de l'application
 	 */
-	public DrawGraph2DPanel(Model model,Controller controller) {
+	public Dessin2DGraphePanel(Donnees model,Controleur controller) {
 		
 		// Appel du constructeur parent (JPanel)
 		super();
 		
 		// Sauvegarde du modele dans les attributs
-		this._model = model;
+		this._donnees = model;
 		
 		// Ajout du listener permettant d'écouter les clics souris (le listener est dans le controleur)
 		this.addMouseListener(controller.getCliqueFenetreGraphController());
@@ -82,17 +82,17 @@ public class DrawGraph2DPanel extends JPanel {
 	public void paint(Graphics g) {
 		
 		// Affichage de l'image de fond (si la variable correspondante est à true)
-		if (ViewParameters.isDrawBackgroundImage) {
+		if (ParametresAffichage.isDrawBackgroundImage) {
 			drawBackgroundImage(g);
 		}
 
 		// Affichage des sommets du graphe du modèle (si la variable correspondante est à true)
-		if (ViewParameters.isDrawVertex) {
+		if (ParametresAffichage.isDrawVertex) {
 			drawVertex(g);
 		}
 		
 		// Affichage des aretes du graphe du modèle (si la variable correspondante est à true)
-		if (ViewParameters.isDrawEdge) {
+		if (ParametresAffichage.isDrawEdge) {
 			drawEdge(g);
 		}	
 	}
@@ -125,10 +125,10 @@ public class DrawGraph2DPanel extends JPanel {
 		int i, x, y, size;
 		
 		// On récupère la taille des sommets dans la classe contenant les paramètres de la vue
-		size = ViewParameters.vertexSize;
+		size = ParametresAffichage.vertexSize;
 		
 		// On récupère le graphe à afficher dans le modele	
-		Graphe graphe = _model.getGraph();
+		Graphe graphe = _donnees.getGraph();
 		
 		// S'il y a un graphe existant
 		if (graphe != null) {
@@ -149,7 +149,7 @@ public class DrawGraph2DPanel extends JPanel {
 				g.setColor(Color.red);
 				
 				// Calcul des coordonnées d'affichage du sommets
-				x = this.longitudeToX(_model.getGraph().getListeSommets().get(i).getLongitude()) - size/2;
+				x = this.longitudeToX(_donnees.getGraph().getListeSommets().get(i).getLongitude()) - size/2;
 				y = this.latitudeToY(sommets.get(i).getLatitude()) - size/2;
 				
 				// On dessine le cercle plein
@@ -194,7 +194,7 @@ public class DrawGraph2DPanel extends JPanel {
 		
 		
 		// On récupère le graphe à afficher dans le modele		
-		Graphe graphe = _model.getGraph();
+		Graphe graphe = _donnees.getGraph();
 		
 		// S'il y a un graphe existant
 		if (graphe != null) {

@@ -2,6 +2,9 @@ package fr.enac.iessa16.cablage.model.graph;
 
 import java.util.ArrayList;
 
+import org.jgrapht.Graph;
+import org.jgrapht.graph.SimpleGraph;
+
 /**
  * Classe Graphe définissant le modèle théorique d'un graphe.
  * 
@@ -59,6 +62,15 @@ public class Graphe {
 
 	public void setListeAretes(ArrayList<Arete> listeAretes) {
 		this.listeAretes = listeAretes;
+	}
+	
+	
+	
+	public void getDijkstraShortestPath(Sommet origine, Sommet destination) {
+		
+		
+		
+		
 	}
 	
 	
