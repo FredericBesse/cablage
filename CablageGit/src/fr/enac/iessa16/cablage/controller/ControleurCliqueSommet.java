@@ -2,6 +2,7 @@ package fr.enac.iessa16.cablage.controller;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import fr.enac.iessa16.cablage.model.DonneesAAfficher;
 import fr.enac.iessa16.cablage.model.GrapheTheorique;
@@ -13,10 +14,10 @@ import fr.enac.iessa16.cablage.view.DessinDuGrapheParDefaut;
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
-public class ControleurCliqueSommet implements MouseListener{
+public class ControleurCliqueSommet implements MouseListener, MouseMotionListener {
 
 	DonneesAAfficher model;
-	Sommet sommet;
+	
 	DessinDuGrapheParDefaut dessin1;
 	
 	
@@ -28,10 +29,10 @@ public class ControleurCliqueSommet implements MouseListener{
 	 * @param monmodel
 	 * @param sommet
 	 */
-	public ControleurCliqueSommet(DonneesAAfficher monmodel, Sommet sommet) {
+	public ControleurCliqueSommet(DonneesAAfficher monmodel) {
 		super();
 		this.model = monmodel;
-		this.sommet = sommet;
+		
 	}
 
 
@@ -45,47 +46,8 @@ public class ControleurCliqueSommet implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		double latitude;
-		int xClic;
 	
-		xClic = e.getX();
-		System.out.println("Clic souris x="+e.getX());
-		
-		for(int i=0 ; i<model.getGrapheàafficher().getEnsembleDeSommet().size();i++)
-		{
-			
-			System.out.println("Latitude sommet "+i+" : "+model.getGrapheàafficher().getEnsembleDeSommet().get(i).getLatitude());
-			
-			//latitude = 
-			
-			
-			if(Math.abs(model.getGrapheàafficher().getEnsembleDeSommet().get(i).getLatitude()-e.getX())<25)
-			
-			
-			{
-				
-				System.out.println("ca coincide avec le sommet "+model.getGrapheàafficher().getEnsembleDeSommet().get(i).getNom());
-				
-				
-				this.sommet = model.getGrapheàafficher().getEnsembleDeSommet().get(i);
-				
-				System.out.println(sommet.getNom());
-				//this.dessin1.paint(model.getGrapheàafficher());
-		
-			
-			} else {
-				System.out.println(" TEST NOK");
-			}
-			
-		
-		
-		
-		}
-		
-		
-		if (sommet != null) {
-			model.changement();
-		}
+
 		
 		
 		model.nouveauClicSouris(e.getX(), e.getY());
@@ -100,24 +62,7 @@ public class ControleurCliqueSommet implements MouseListener{
 	
 	
 	
-	/**
-	 * Getters et Setters
-	 */
-	public Sommet getSommet() {
-		return sommet;
-	}
 
-
-
-
-
-
-
-
-
-	public void setSommet(Sommet sommet) {
-		this.sommet = sommet;
-	}
 
 
 
@@ -172,6 +117,36 @@ public class ControleurCliqueSommet implements MouseListener{
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
+
+
+
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+		System.out.println("Mouse draged x="+e.getX());
+		
+	}
+
+
+
+
+
+
+
+
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}

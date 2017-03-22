@@ -16,7 +16,7 @@ public class Sommet {
 	private double longitude ;
 	private double latitude;
 	private String nom;
-	
+	private boolean selected;
 	/**
 	 * Constructeur de la classe sommet
 	 * 
@@ -32,7 +32,7 @@ public class Sommet {
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.nom = nom;
-	
+		selected = false;
 	}
 	
 	
@@ -120,7 +120,15 @@ public class Sommet {
 
 
 	
+	public boolean getSelected()
+	{	
+		return selected;
 	
+	}
+	
+	public void setSelected(boolean value) {
+		this.selected = value;
+	}
 	
 	
 	

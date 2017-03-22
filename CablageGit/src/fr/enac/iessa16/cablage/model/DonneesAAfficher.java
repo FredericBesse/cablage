@@ -17,8 +17,10 @@ public class DonneesAAfficher extends Observable
    private 	GrapheTheorique grapheAafficher;	
 	
    private Controleur controleur;
+
+private Sommet sommet;
    
-   
+private boolean selectionner = false;   
 
    
 	/**
@@ -72,9 +74,75 @@ public class DonneesAAfficher extends Observable
 	public void nouveauClicSouris(int x, int y) {
 		// TODO Auto-generated method stub
 		//for(int i =0 ;grapheAafficher.getEnsembleDeSommet().size())
-		System.out.println("MODELE : CLIC x="+x+" y="+y);
+	
+		
+		
+		//System.out.println("Clic souris x="+e.getX());
+		
+		for(int i=0 ; i<this.grapheAafficher.getEnsembleDeSommet().size();i++)
+		{
+			
+			//System.out.println("Latitude sommet "+i+" : "+model.getGrapheàafficher().getEnsembleDeSommet().get(i).getLatitude());
+			
+			//latitude = 
+			
+			
+			if(Math.sqrt(Math.pow((grapheAafficher.getEnsembleDeSommet().get(i).getLatitude()-x),2)+Math.pow((this.getGrapheàafficher().getEnsembleDeSommet().get(i).getLongitude()-y),2))<25)
+			  
+			
+			{
+				
+				//System.out.println("ca coincide avec le sommet "+model.getGrapheàafficher().getEnsembleDeSommet().get(i).getNom());
+				
+				
+				this.sommet = grapheAafficher.getEnsembleDeSommet().get(i);
+				
+				System.out.println(sommet.getNom());
+				//this.dessin1.paint(model.getGrapheàafficher());
+				//this.selectionner = true ;
+				if (grapheAafficher.getEnsembleDeSommet().get(i).getSelected() == true)
+					grapheAafficher.getEnsembleDeSommet().get(i).setSelected(false); 
+				else 
+					grapheAafficher.getEnsembleDeSommet().get(i).setSelected(true);
+			
+			} else {
+				System.out.println(" TEST NOK");
+			}
+		}
+		
+		
+		
+		
+		
+		
+		//if (sommet != null) {
+			this.changement();
+		//}
+		
+		
+		
+		
+		
+	//	System.out.println("MODELE : CLIC x="+x1+" y="+y);
 		
 	}
+	/**
+	 * Getters et Setters
+	 */
+	public Sommet getSommet() {
+		return sommet;
+	}
 
+
+		
+
+
+
+
+
+
+	public void setSommet(Sommet sommet) {
+		this.sommet = sommet;
+	}
 
 }

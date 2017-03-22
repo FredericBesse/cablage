@@ -13,7 +13,7 @@ public class Controleur {
 	
 	private ControleDuMenu controleMenu;
 	private ControleurCliqueSommet controleurClique;
-	private Sommet sommet;
+	
 	
 	
 	/**
@@ -24,7 +24,7 @@ public class Controleur {
 		
 		// TODO Auto-generated constructor stub
 		this.controleMenu = new ControleDuMenu(monModel);
-		this.controleurClique = new ControleurCliqueSommet( monModel, sommet );
+		this.controleurClique = new ControleurCliqueSommet( monModel);
 	
 	}
 

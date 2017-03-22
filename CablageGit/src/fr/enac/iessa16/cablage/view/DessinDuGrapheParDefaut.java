@@ -1,5 +1,6 @@
 package fr.enac.iessa16.cablage.view;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
@@ -28,6 +29,8 @@ public class DessinDuGrapheParDefaut extends JPanel {
 		this.controleur = controleur;
 
 		this.addMouseListener(controleur.getControleurClique());
+		this.addMouseMotionListener(controleur.getControleurClique());
+		
 		this.sommet = null;
 
 		// System.out.println("Création du JPanel Dessin graphe à partir d'un
@@ -47,7 +50,7 @@ public class DessinDuGrapheParDefaut extends JPanel {
 
 		int x, y;
 		int x1, y1, x2, y2;
-		//int x3, y3;
+		// int x3, y3;
 		// Si le graphe n'est pas vide
 		if (donneesaafficher.getGrapheàafficher() != null) {
 			// On parcourt l'ensemble des sommets
@@ -60,7 +63,10 @@ public class DessinDuGrapheParDefaut extends JPanel {
 				y = (int) donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i).getLongitude();
 				x = (int) donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i).getLatitude();
 				// On colorie les sommets en bleu
-				g.setColor(java.awt.Color.BLUE);
+				if (donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i).getSelected() == false)
+					g.setColor(java.awt.Color.BLUE);
+				else
+					g.setColor(Color.pink);
 				// On rend visible les sommets
 				g.fillOval(x - 25, y - 25, 50, 50);
 				g.setColor(java.awt.Color.BLACK);
@@ -87,23 +93,34 @@ public class DessinDuGrapheParDefaut extends JPanel {
 			}
 
 		}
-	
 
-		sommet = controleur.getControleurClique().getSommet();
+		/*
+		 * sommet =donneesaafficher.getSommet(); if (this.sommet != null) { int
+		 * x3, y3; if (donneesaafficher.getGrapheàafficher() != null) { for (int
+		 * i = 0; i <
+		 * donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().size();
+		 * i++) { if
+		 * (donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i)
+		 * == sommet) { System.out.println("racha"); y3 = (int)
+		 * donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i).
+		 * getLongitude(); x3 = (int)
+		 * donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i).
+		 * getLatitude(); g.setColor(java.awt.Color.GREEN); g.drawOval(x3 - 25,
+		 * y3 - 25, 50, 50);
+		 * 
+		 * } } } }
+		 */
+
+		sommet = donneesaafficher.getSommet();
 		if (this.sommet != null) {
 			int x3, y3;
-			if (donneesaafficher.getGrapheàafficher() != null) {
-				for (int i = 0; i < donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().size(); i++) {
-					if (donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i) == sommet) {
-						System.out.println("racha");
-						y3 = (int) donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i).getLongitude();
-						x3 = (int) donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i).getLatitude();
-						g.setColor(java.awt.Color.GREEN);
-						g.fillOval(x3 - 25, y3 - 25, 50, 50);
 
-					}
-				}
-			}
+			y3 = (int) sommet.getLongitude();
+			x3 = (int) sommet.getLatitude();
+			g.setColor(java.awt.Color.GREEN);
+			g.fillOval(x3 - 20, y3 - 20, 40, 40);
+
 		}
+
 	}
 }
