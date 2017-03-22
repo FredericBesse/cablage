@@ -1,7 +1,6 @@
 package fr.enac.iessa16.cablage.view;
 
 import java.awt.Container;
-import java.awt.Dimension;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -11,141 +10,117 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import fr.enac.iessa16.cablage.controller.Controleur;
-import fr.enac.iessa16.cablage.model.Donnees;
-import fr.enac.iessa16.cablage.view.graph.Dessin2DGraphePanel;
-import fr.enac.iessa16.cablage.view.menu.MenuFichier;
+import fr.enac.iessa16.cablage.model.DonneesAAfficher;
+
 
 
 /**
- * Classe View définissant la vue de l'application 
- * 
- * La vue implémente l'interface Observer pour recevoir les
- * notifications de changement du modèle
+ * Classe Fenetre qui correspond à la vue...
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
-public class Fenetre extends JFrame implements Observer {
-
-	/**
-	 * Le modèle de l'application contenant les données à afficher
-	 */
-	private Donnees model;
+public class Fenetre extends JFrame  implements Observer{
 	
-	/**
-	 * Le controller de l'application contenant les listeners
-	 */
-	private Controleur controller;
-
-	/**
-	 * L'objet DrawGraph2DPanel (dérivant de JPanel) permettant d'afficher
-	 * le graphe avec la bibliothèque Graplics2D
-	 */
-	private Dessin2DGraphePanel contenuGraphe ;
+	
 
 	
+	
+	
+   private Controleur controleur;
+ private DessinDuGrapheParDefaut dessin;	
+	
+	
+
 	/**
-	 * Contructeur de la vue à partir d'un modèle et d'un controleur existant
+	 * Constructeur de la classe Fenetre.java
+	 * @param controleur
+	 * @param model
+	 */
+	public Fenetre(Controleur controleur,DonneesAAfficher model)
+	{
+		
+		model.addObserver(this);
+		
+		proprieteFenetre();
+		
+		this.controleur = controleur;
+		creerMenu(controleur);
+		Container monContenair = this.getContentPane();
+		
+		this.dessin = new DessinDuGrapheParDefaut(model,controleur);
+		monContenair.add(dessin);
+		
+		
+		//this.pack();
+		this.setVisible(true);
+		
+	}
+	
+	
+	
+	
+	/**
+	 * Methode permettant de determiner les proprietés de la fenetre
+	 */
+	public void proprieteFenetre()
+	{
+		this.setSize(1100,600);
+		this.setAlwaysOnTop(true);
+		this.setResizable(false);
+		this.setTitle("Cablage à cout minimum");
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		this.validate();
+
+		
+   }
+	
+	
+	
+	/**
 	 * 
-	 * @param model le modele 
-	 * @param controller le controleur
+	 *Methode qui cree le menu
+	 * @param controleur
 	 */
-	public Fenetre(Donnees model, Controleur controller) {
-
-		// Création de la fenetre principale
-		super("Calcul du cablage à cout minimum");
-				
-		// On récupère le modèle 
-		this.model = model;
-		
-		// On ajoute la vue comme observeur du modèle (pour etre notifier
-		// en cas de changement)
-		this.model.addObserver(this);
-		
-		// On récupère le controleur
-		this.controller = controller;
-
-		// Initialisation de la fenetre
-		this.init();
-		
-		// Création du menu
-		this.createMenu();
-		
-		// Création du panneau permettant l'affichage du graphe
-		this.createGraphPanel();
-	}
-	
-
-	/**
-	 * Methode regroupant les initialisations de la fenetre
-	 */
-	private void init() {
-		
-		// Définition de la taille de la fenetre
-		this.setPreferredSize(new Dimension(1100, 600));
-		
-		// Fermeture de l'application lorsqu'on clique sur la croix
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
-	}
-	
-	
-	/**
-	 * Methode permettant de créer le menu
-	 */
-	private void createMenu() {
-		
-		// Création de la JMenuBar
+	public void creerMenu(Controleur controleur)
+	{
+		this.controleur = controleur;
 		JMenuBar jbar = new JMenuBar();
 		this.setJMenuBar(jbar);
-
-		// Création du JMenu Fichier
-		MenuFichier jmenu = new MenuFichier(controller);
-		jbar.add(jmenu);
-
-		/*JMenu menuFichier = new JMenu("Fichier");
-		jbar.add(menuFichier);*/
+		JMenu menu = new JMenu("Gerer graphe");
+		jbar.add(menu);
+		JMenuItem option1 = new JMenuItem("Charger Graphe par defaut");
+		menu.add(option1);
+		option1.setActionCommand("ChargerGrapheParDefaut");
+		option1.addActionListener(controleur.getControleMenu());
+		JMenuItem option2 = new JMenuItem("ChargerGrapheDonné");
+		menu.add(option2);
+		JMenuItem option3 = new JMenuItem("Quitter");
+		option3.setActionCommand("Quitter");
+		option3.addActionListener(controleur.getControleMenu());
+		//option3.addActionListener(this);
+		menu.add(option3);
 		
 	}
-	
-	
-	/**
-	 * Méthode permettant la création du panneau affichant le graphe
-	 */
-	private void createGraphPanel() {
-		
-		// on r�cup�re le container de la fen�tre :
-		Container container = this.getContentPane();
-		
-		// on crée le Panel
-		contenuGraphe = new Dessin2DGraphePanel(model,controller);
-		contenuGraphe.setPreferredSize(new Dimension(1100,600));
-		
-		// Ajout du Panel au container de la fenetre
-		container.add(contenuGraphe);
-	}
 
-	/* (non-Javadoc)
-	 * 
-	 * Méthode appelée en cas de modification du modèle (grace à la fonction notify)
-	 * 
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-	 */
 	@Override
 	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
 		
-		System.out.println("View : Model updated");
+		//System.out.println("update");
 		
-		// On force le réaffichage de la vue
-		contenuGraphe.repaint();
+		dessin.repaint();
+		
 		
 	}
 
-	/**
-	 * Méthode permettant l'affichage de la fenetre
-	 */
-	public void start() {
-			
-		this.pack();
-		this.setVisible(true);
-	}
 
-}
+
+	
+		
+	
+	
+	}
+	
+
+

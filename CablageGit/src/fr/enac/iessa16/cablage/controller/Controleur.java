@@ -1,65 +1,80 @@
 package fr.enac.iessa16.cablage.controller;
 
-import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
-
-import fr.enac.iessa16.cablage.model.Donnees;
+import fr.enac.iessa16.cablage.model.DonneesAAfficher;
+import fr.enac.iessa16.cablage.model.Sommet;
 
 /**
- * Classe Controller permettant de gérer les intéractions entre la vue et le modèle
- * (gestion des actions utilisateur)
+ * Classe Controleur , qui prend en attribut le Controle du menu et le controleur du clique sur le Sommet
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
 public class Controleur {
-	
 
-	// Le sous-controleur permettant la gestion des intéractions avec le menu
-	private ControleurDuMenu _controleurDuMenu;
 	
-	// Le sous-controleur permettant la gestion des clic souris sur le panneau d'affichage du graphe
-	private ControleurCliqueFenetreGraphe _controleurCliqueFenetreGraphe;
-	
-	// Le sous-controleur permettant la gestion des interactions souris sur le panneau d'affichage du graphe
-	private ControleurZoomFenetreGraphe _controleurZoomFenetreGraphe;
+	private ControleDuMenu controleMenu;
+	private ControleurCliqueSommet controleurClique;
+	private Sommet sommet;
 	
 	
 	/**
-	 * Constructeur de la classe Controller
-	 * 
-	 * @param donnees l'objet données
+	 * Constructeur de la classe Controleur.java
+	 * @param monModel
 	 */
-	public Controleur(Donnees donnees) {	
-			
-		// Création des sous-controleurs (à qui on fournit l'objet modèle)
-		this._controleurDuMenu = new ControleurDuMenu(donnees);
-		this._controleurCliqueFenetreGraphe= new ControleurCliqueFenetreGraphe(donnees);
-		this._controleurZoomFenetreGraphe = new ControleurZoomFenetreGraphe(donnees);
+	public Controleur(DonneesAAfficher monModel) {
 		
+		// TODO Auto-generated constructor stub
+		this.controleMenu = new ControleDuMenu(monModel);
+		this.controleurClique = new ControleurCliqueSommet( monModel, sommet );
+	
 	}
 
-	
+
+
 	/**
-	 * @return le sous-controleur gérant le menu
+	 * Getters et Setters
 	 */
-	public ActionListener getMenuController() {
-		return _controleurDuMenu;
+	public ControleurCliqueSommet getControleurClique() {
+		return controleurClique;
 	}
+
+
+
+	public void setControleurClique(ControleurCliqueSommet controleurClique) {
+		this.controleurClique = controleurClique;
+	}
+
+
+
+	public ControleDuMenu getControleMenu() {
+		return controleMenu;
+	}
+
+
+
+	public void setControleMenu(ControleDuMenu controleMenu) {
+		this.controleMenu = controleMenu;
+	}
+
+
+
+	
+
+
+
 	
 	
-	/**
-	 * @return le sous-controleur gérant les clics souris sur le panneau d'affichage du graphe
-	 */
-	public MouseListener getCliqueFenetreGraphController() {
-		return _controleurCliqueFenetreGraphe;
-	}
+
+
+
 	
-	/**
-	 * @return le sous-controleur gérant les zoom souris sur le panneau d'affichage du graphe
-	 */
-	public ControleurZoomFenetreGraphe getZoomFenetreGraphController() {
-		return _controleurZoomFenetreGraphe;
-	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 }

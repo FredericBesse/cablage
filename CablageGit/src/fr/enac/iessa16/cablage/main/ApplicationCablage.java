@@ -1,34 +1,32 @@
 package fr.enac.iessa16.cablage.main;
+
 import fr.enac.iessa16.cablage.controller.Controleur;
-import fr.enac.iessa16.cablage.model.Donnees;
+import fr.enac.iessa16.cablage.model.DonneesAAfficher;
 import fr.enac.iessa16.cablage.view.Fenetre;
 
-
-
 /**
- * Classe permettant de lancer l'application
+ * Classe 
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
 public class ApplicationCablage {
 
 	/**
-	 * Le Main de notre application
+	 * Ma...
 	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
-				
-		// Création du modèle
-		Donnees donnees = new Donnees();
 		
-		// Création du controleur (à qui on passe le modèle précédemment créé)
-		Controleur controller = new Controleur(donnees);
+		// On créé les
+		DonneesAAfficher donnees = new DonneesAAfficher();
+		Controleur controleur1 = new Controleur(donnees);
 		
-		// Création de la vue (à qui on passe le modèle et le controleur)
-		Fenetre view = new Fenetre(donnees,controller);
+		//ConstructionGrapheParDefaut constructeurdegraphepardefaut = new ConstructionGrapheParDefaut();
+		//constructeurdegraphepardefaut.getGraphe();
+		Fenetre toto = new Fenetre(controleur1,donnees);//, constructeurdegraphepardefaut.getGraphe());
 		
-		// Affichage de la fenetre
-		view.start();
+		System.out.println("toto");
+		
 	}
 }
