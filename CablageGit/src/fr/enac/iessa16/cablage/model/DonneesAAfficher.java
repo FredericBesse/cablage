@@ -3,6 +3,8 @@ package fr.enac.iessa16.cablage.model;
 import java.util.Observable;
 
 import fr.enac.iessa16.cablage.controller.Controleur;
+import fr.enac.iessa16.cablage.fichierTexte.Main;
+import fr.enac.iessa16.cablage.view.DessinDuGrapheParDefaut;
 
 /**
  * Classe Donnees contenant les données utiles à afficher
@@ -20,7 +22,8 @@ public class DonneesAAfficher extends Observable
 
 private Sommet sommet;
    
-private boolean selectionner = false;   
+private boolean selectionner = false; 
+private final double R = 6371;
 
    
 	/**
@@ -71,28 +74,36 @@ private boolean selectionner = false;
 	}
 
 
-	public void nouveauClicSouris(int x, int y) {
+	public void nouveauClicSouris(int xClic, int yClic) {
 		// TODO Auto-generated method stub
 		//for(int i =0 ;grapheAafficher.getEnsembleDeSommet().size())
-	
+		double distance;
+		double latitudeSommet, longitudeSommet;
+		double xSommet,ySommet;
 		
-		
-		//System.out.println("Clic souris x="+e.getX());
+		//System.out.println("Clic souris lon="+longitude+" lat="+latitude);
 		
 		for(int i=0 ; i<this.grapheAafficher.getEnsembleDeSommet().size();i++)
 		{
 			
 			//System.out.println("Latitude sommet "+i+" : "+model.getGrapheàafficher().getEnsembleDeSommet().get(i).getLatitude());
 			
-			//latitude = 
+			longitudeSommet = grapheAafficher.getEnsembleDeSommet().get(i).getLongitude();
+			latitudeSommet = grapheAafficher.getEnsembleDeSommet().get(i).getLatitude();
 			
+			xSommet = DessinDuGrapheParDefaut.ConversionLongitudeEnx(longitudeSommet);
+			ySommet = DessinDuGrapheParDefaut.ConversionLatitudeEny(latitudeSommet);
 			
-			if(Math.sqrt(Math.pow((grapheAafficher.getEnsembleDeSommet().get(i).getLatitude()-x),2)+Math.pow((this.getGrapheàafficher().getEnsembleDeSommet().get(i).getLongitude()-y),2))<25)
+			distance = Math.sqrt(Math.pow(xClic-xSommet,2)+Math.pow(yClic-ySommet,2));
+			//distance = calculerDistance(longitude, latitude, grapheAafficher.getEnsembleDeSommet().get(i).getLongitude(), this.getGrapheàafficher().getEnsembleDeSommet().get(i).getLatitude());
+			
+			System.out.println("distance = "+distance);
+			if(distance<25)
 			  
 			
 			{
 				
-				//System.out.println("ca coincide avec le sommet "+model.getGrapheàafficher().getEnsembleDeSommet().get(i).getNom());
+				System.out.println("ca coincide avec le sommet "+grapheAafficher.getEnsembleDeSommet().get(i).getNom());
 				
 				
 				this.sommet = grapheAafficher.getEnsembleDeSommet().get(i);
@@ -106,7 +117,7 @@ private boolean selectionner = false;
 					grapheAafficher.getEnsembleDeSommet().get(i).setSelected(true);
 			
 			} else {
-				System.out.println(" TEST NOK");
+				System.out.println(" TEST NOK avec le sommet "+grapheAafficher.getEnsembleDeSommet().get(i).getNom());
 			}
 		}
 		
@@ -126,6 +137,22 @@ private boolean selectionner = false;
 	//	System.out.println("MODELE : CLIC x="+x1+" y="+y);
 		
 	}
+	
+	
+	
+	
+	
+	private double calculerDistance(double long1,double lat1 ,double long2,double lat2)
+	
+	{
+		double distance;
+		distance = 2*R*Math.asin(Math.sqrt(Math.pow(Math.sin(Math.toRadians((lat1-lat2)/2)), 2)+Math.cos(lat1)*Math.cos(lat2)*Math.pow(Math.sin(Math.toRadians((long2-long1)/2)), 2)));
+		return distance;
+	}
+	
+	
+	
+	
 	/**
 	 * Getters et Setters
 	 */
@@ -144,5 +171,21 @@ private boolean selectionner = false;
 	public void setSommet(Sommet sommet) {
 		this.sommet = sommet;
 	}
+
+
+	public void ChargerLeGrapheDuFicherTexte() {
+		// TODO Auto-generated method stub
+ //Construire le graphe
+		
+		Main constructeurgrapheText = new Main();
+	    grapheAafficher = constructeurgrapheText.getGraphe();
+		
+	   // fenetre.repaint
+	    this.setChanged();//Le modele change mais personne ne le sait
+	    this.notifyObservers(); //on informe les autres que le modele change
+	}
+
+
+
 
 }

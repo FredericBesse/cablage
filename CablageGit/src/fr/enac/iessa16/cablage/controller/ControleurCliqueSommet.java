@@ -47,7 +47,7 @@ public class ControleurCliqueSommet implements MouseListener, MouseMotionListene
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 	
-
+		//System.out.println("Clic souris x="+e.getX()+" y="+e.getY()+"lon="+DessinDuGrapheParDefaut.ConversionxEnLongitude(e.getX())+" lat="+DessinDuGrapheParDefaut.ConversionyEnLatitude(e.getY()));
 		
 		
 		model.nouveauClicSouris(e.getX(), e.getY());

@@ -48,11 +48,16 @@ public class ControleDuMenu implements ActionListener {
 			
 			
 			
+			
 			System.out.println("d");
 			
 			
 		}
-		
+		if(s.equals("ChargerGrapheDonné"))
+		{
+			model.ChargerLeGrapheDuFicherTexte();
+			System.out.println("charger graphe donné");
+		}
 
 	}
 	

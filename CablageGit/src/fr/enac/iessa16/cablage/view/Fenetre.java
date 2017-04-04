@@ -94,6 +94,8 @@ public class Fenetre extends JFrame  implements Observer{
 		option1.setActionCommand("ChargerGrapheParDefaut");
 		option1.addActionListener(controleur.getControleMenu());
 		JMenuItem option2 = new JMenuItem("ChargerGrapheDonné");
+		option2.setActionCommand("ChargerGrapheDonné");
+		option2.addActionListener(controleur.getControleMenu());
 		menu.add(option2);
 		JMenuItem option3 = new JMenuItem("Quitter");
 		option3.setActionCommand("Quitter");

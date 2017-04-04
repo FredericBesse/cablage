@@ -18,7 +18,7 @@ import fr.enac.iessa16.cablage.model.Sommet;
 public class DessinDuGrapheParDefaut extends JPanel {
 
 	// Attributs de la classe
-	private DonneesAAfficher donneesaafficher;
+	private static DonneesAAfficher donneesaafficher;
 	private Controleur controleur;
 	private Sommet sommet;
 
@@ -46,10 +46,12 @@ public class DessinDuGrapheParDefaut extends JPanel {
 
 	protected void paintComponent(Graphics g) {
 
-		System.out.println("paint componet");
+		//System.out.println("paint componet");
 
 		int x, y;
 		int x1, y1, x2, y2;
+		double longitude;
+		double latitude;
 		// int x3, y3;
 		// Si le graphe n'est pas vide
 		if (donneesaafficher.getGrapheàafficher() != null) {
@@ -60,8 +62,11 @@ public class DessinDuGrapheParDefaut extends JPanel {
 				// Graphics2D gr = (Graphics2D) g;
 				// On recupere la longitude et la latitude de chaque centre du
 				// sommet
-				y = (int) donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i).getLongitude();
-				x = (int) donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i).getLatitude();
+				longitude = donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i).getLongitude();
+				latitude = donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i).getLatitude();
+				x = ConversionLongitudeEnx(longitude);
+				y = ConversionLatitudeEny(latitude);
+				//System.out.println("latitude = " + latitude +" longitude = " + longitude + " x = " + x + " y = "+y);
 				// On colorie les sommets en bleu
 				if (donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i).getSelected() == false)
 					g.setColor(java.awt.Color.BLUE);
@@ -76,7 +81,7 @@ public class DessinDuGrapheParDefaut extends JPanel {
 			}
 		}
 		// Pareil pour les aretes...
-		if (donneesaafficher.getGrapheàafficher() != null) {
+		/*if (donneesaafficher.getGrapheàafficher() != null) {
 
 			for (int i = 0; i < donneesaafficher.getGrapheàafficher().getEnsembleAretes().size(); i++) {
 
@@ -92,7 +97,7 @@ public class DessinDuGrapheParDefaut extends JPanel {
 				g.drawLine(x1, y1, x2, y2);
 			}
 
-		}
+		}*/
 
 		/*
 		 * sommet =donneesaafficher.getSommet(); if (this.sommet != null) { int
@@ -114,13 +119,60 @@ public class DessinDuGrapheParDefaut extends JPanel {
 		sommet = donneesaafficher.getSommet();
 		if (this.sommet != null) {
 			int x3, y3;
-
-			y3 = (int) sommet.getLongitude();
-			x3 = (int) sommet.getLatitude();
+			double long3;
+			double lat3;
+			
+			long3 = (int) sommet.getLongitude();
+			lat3 = (int) sommet.getLatitude();
+			x3 = ConversionLongitudeEnx(long3);
+			y3 = ConversionLatitudeEny(lat3);
+			
+			
 			g.setColor(java.awt.Color.GREEN);
 			g.fillOval(x3 - 20, y3 - 20, 40, 40);
 
 		}
 
 	}
+  
+	public static int ConversionLongitudeEnx(double longitude)
+	{
+		int x;
+		x =  ((int) (((longitude - donneesaafficher.getGrapheàafficher().getLongitudemin())*(1100*0.9-1100*0.1)/(donneesaafficher.getGrapheàafficher().getLongitudemax()-donneesaafficher.getGrapheàafficher().getLongitudemin()))+1100*0.1));
+		return x;
+		
+		
+	}
+	
+	
+	public static int ConversionLatitudeEny(double latitude)
+	{
+		int y;
+		y =  ((int) (((latitude - donneesaafficher.getGrapheàafficher().getLatitudemin())*(600*0.9-600*0.1)/(donneesaafficher.getGrapheàafficher().getLatitudemax()-donneesaafficher.getGrapheàafficher().getLatitudemin()))+600*0.1));
+		return y;
+		
+		
+	}
+	
+	public static double ConversionxEnLongitude(int x)
+	{
+		
+		double longitude;
+		longitude =(donneesaafficher.getGrapheàafficher().getLongitudemax()-donneesaafficher.getGrapheàafficher().getLongitudemin())/(1100*0.9-1100*0.1)*(x-1100*0.1)+donneesaafficher.getGrapheàafficher().getLongitudemin();		
+		return longitude;
+	}
+	
+	
+	
+	public static double ConversionyEnLatitude(int y)
+	{
+		double latitude;
+		latitude =(donneesaafficher.getGrapheàafficher().getLatitudemax()-donneesaafficher.getGrapheàafficher().getLatitudemin())/(600*0.9-600*0.1)*(y-600*0.1)+donneesaafficher.getGrapheàafficher().getLatitudemin();		
+		return latitude;
+		
+		
+		
+	}
+	
+	
 }
