@@ -5,6 +5,7 @@ import java.util.Observable;
 import fr.enac.iessa16.cablage.controller.Controleur;
 import fr.enac.iessa16.cablage.fichierTexte.Main;
 import fr.enac.iessa16.cablage.view.DessinDuGrapheParDefaut;
+import fr.enac.iessa16.cablage.view.ParametresFenetre;
 
 /**
  * Classe Donnees contenant les données utiles à afficher
@@ -98,7 +99,7 @@ private final double R = 6371;
 			//distance = calculerDistance(longitude, latitude, grapheAafficher.getEnsembleDeSommet().get(i).getLongitude(), this.getGrapheàafficher().getEnsembleDeSommet().get(i).getLatitude());
 			
 			System.out.println("distance = "+distance);
-			if(distance<25)
+			if(distance<ParametresFenetre.rayon)
 			  
 			
 			{

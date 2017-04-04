@@ -21,6 +21,7 @@ public class DessinDuGrapheParDefaut extends JPanel {
 	private static DonneesAAfficher donneesaafficher;
 	private Controleur controleur;
 	private Sommet sommet;
+	
 
 	// public DessinDuGrapheParDefaut(ConstructionGrapheParDefaut toto) {
 	public DessinDuGrapheParDefaut(DonneesAAfficher model, Controleur controleur) {
@@ -73,7 +74,7 @@ public class DessinDuGrapheParDefaut extends JPanel {
 				else
 					g.setColor(Color.pink);
 				// On rend visible les sommets
-				g.fillOval(x - 25, y - 25, 50, 50);
+				g.fillOval(x - ParametresFenetre.rayon, y - ParametresFenetre.rayon, 2*ParametresFenetre.rayon, 2*ParametresFenetre.rayon);
 				g.setColor(java.awt.Color.BLACK);
 				// On affiche les noms de chaque sommet
 				g.drawString(donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i).getNom(), x, y);
@@ -121,16 +122,18 @@ public class DessinDuGrapheParDefaut extends JPanel {
 			int x3, y3;
 			double long3;
 			double lat3;
+			String nom;
 			
 			long3 = (int) sommet.getLongitude();
 			lat3 = (int) sommet.getLatitude();
+			nom = sommet.getNom();
 			x3 = ConversionLongitudeEnx(long3);
 			y3 = ConversionLatitudeEny(lat3);
-			
-			
+			g.drawString(nom, x3, y3);
 			g.setColor(java.awt.Color.GREEN);
-			g.fillOval(x3 - 20, y3 - 20, 40, 40);
-
+			g.fillOval((int)(x3 - ParametresFenetre.rayon*0.5), (int)(y3 - ParametresFenetre.rayon*0.5),ParametresFenetre.rayon,ParametresFenetre.rayon);
+			
+			
 		}
 
 	}
