@@ -13,6 +13,8 @@ import org.jgrapht.alg.spanning.KruskalMinimumSpanningTree;
 import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+
 
 public class KruskalJGrapht {
 
@@ -52,7 +54,7 @@ public class KruskalJGrapht {
         // Ajout de toutes les aretes au graphe JGrapht
         for (Arete arete : graphe.getEnsembleAretes()) {
             graphPourJGrapht.addEdge(arete.getSommetOrigine(), arete.getSommetExtremité(), arete);
-            graphPourJGrapht.setEdgeWeight(arete, arete.getCout());
+            //graphPourJGrapht.setEdgeWeight(arete, arete.getCout());
         }
 	}
 	
@@ -64,7 +66,7 @@ public class KruskalJGrapht {
 	 * @param destination
 	 * @return la liste des aretes constituant un chemin le plus court
 	 */
-	public Set<Arete> getKruskalShortestPath(Sommet origine, Sommet destination) {
+	public ArrayList<Arete> getKruskalShortestPath() {
 
 		// Si l'objet permettant le calcul dans JGrapht n'est pas déjà créé, on le crée
         if (kruskalShortestPath == null) {
@@ -75,7 +77,8 @@ public class KruskalJGrapht {
         SpanningTree<Arete> tree = kruskalShortestPath.getSpanningTree();
 
         // On renvoie la liste des aretes
-        return tree.getEdges();
+        ArrayList<Arete> liste = new ArrayList<Arete>(tree.getEdges());
+        return liste;
     }
 }
 

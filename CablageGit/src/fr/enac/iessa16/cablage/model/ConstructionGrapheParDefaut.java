@@ -16,8 +16,11 @@ public class ConstructionGrapheParDefaut {
 
 	
 	
-	public ConstructionGrapheParDefaut() {
-		//super();
+	/**
+	 * Constructeur de la classe ConstructionGrapheParDefaut.java permettant de construire un 
+	 * graphe prédéfini.
+	 */
+	public ConstructionGrapheParDefaut() { //super();
 		// TODO Auto-generated constructor stub
 		
 		//Construction de 5 sommets, dont les coordonnees sont fixes.	
@@ -60,7 +63,7 @@ public class ConstructionGrapheParDefaut {
 		
 		
 		
-		//on cree l'obje graphe de type GrapheTheorique, il prendra donc en argument le tableau de sommets et le tableau d'aretes prealablement crées.
+		//on crée l'objet graphe de type GrapheTheorique, il prendra donc en argument le tableau de sommets et le tableau d'aretes prealablement crées.
 		
 		this.graphe=new GrapheTheorique(tableaudeSommet,tableauAretes);
 		
@@ -72,7 +75,7 @@ public class ConstructionGrapheParDefaut {
 	
 	
 	
-	//Getter et Setter du graphe
+	//Getters et Setters du graphe
 	public GrapheTheorique getGraphe() {
 		return graphe;
 	}

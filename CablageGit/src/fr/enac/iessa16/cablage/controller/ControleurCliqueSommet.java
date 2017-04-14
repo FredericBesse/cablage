@@ -16,9 +16,12 @@ import fr.enac.iessa16.cablage.view.DessinDuGrapheParDefaut;
  */
 public class ControleurCliqueSommet implements MouseListener, MouseMotionListener {
 
-	DonneesAAfficher model;
+	//
+	private DonneesAAfficher model;
+	private DessinDuGrapheParDefaut dessin1;
 	
-	DessinDuGrapheParDefaut dessin1;
+	
+	
 	
 	
 	
@@ -27,7 +30,6 @@ public class ControleurCliqueSommet implements MouseListener, MouseMotionListene
 	/**
 	 * Constructeur de la classe ControleurCliqueSommet.java
 	 * @param monmodel
-	 * @param sommet
 	 */
 	public ControleurCliqueSommet(DonneesAAfficher monmodel) {
 		super();

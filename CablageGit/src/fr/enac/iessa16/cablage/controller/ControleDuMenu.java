@@ -31,7 +31,7 @@ public class ControleDuMenu implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		//actions que doivent effectuer les items du menu
 		// TODO Auto-generated method stub
-		//On recupere l'option sur laquelle on a clqié dans le menu et on la stocke dans une string
+		//On recupere l'option sur laquelle on a cliqué dans le menu et on la stocke dans une string
 		String s = e.getActionCommand();
 		//On compare l'option stockée aux differents choix possibles du Menu
 		if(s.equals("Quitter"))
@@ -43,7 +43,7 @@ public class ControleDuMenu implements ActionListener {
 		if(s.equals("ChargerGrapheParDefaut"))
 			
 		{
-			//On appelle la methode ChargerLeGraphe implementer dans la classe DonneesAAfficher
+			//On appelle la methode ChargerLeGraphe implementé dans la classe DonneesAAfficher
 			model.ChargerLeGraphe();
 			
 			
@@ -55,6 +55,7 @@ public class ControleDuMenu implements ActionListener {
 		}
 		if(s.equals("ChargerGrapheDonné"))
 		{
+			//On appelle la methode ChargerGrapheDuFichier Texte implementer dans la classe DonneesAAfficher
 			model.ChargerLeGrapheDuFicherTexte();
 			System.out.println("charger graphe donné");
 		}

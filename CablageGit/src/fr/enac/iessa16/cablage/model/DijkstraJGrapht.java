@@ -54,7 +54,7 @@ public class DijkstraJGrapht {
         // Ajout de toutes les aretes au graphe JGrapht
         for (Arete arete : graphe.getEnsembleAretes()) {
             graphPourJGrapht.addEdge(arete.getSommetOrigine(), arete.getSommetExtremité(), arete);
-            graphPourJGrapht.setEdgeWeight(arete, arete.getCout());
+            // FIXME graphPourJGrapht.setEdgeWeight(arete, arete.getCout());
         }
 	}
 	
@@ -66,7 +66,7 @@ public class DijkstraJGrapht {
 	 * @param destination
 	 * @return la liste des aretes constituant un chemin le plus court
 	 */
-	public List<Arete> getDijkstraShortestPath(Sommet origine, Sommet destination) {
+	public ArrayList<Arete> getDijkstraShortestPath(Sommet origine, Sommet destination) {
 
 		// Si l'objet permettant le calcul dans JGrapht n'est pas déjà créé, on le crée
         if (dijkstraShortestPath == null) {
@@ -77,7 +77,9 @@ public class DijkstraJGrapht {
         GraphPath<Sommet, Arete> path = dijkstraShortestPath.getPath(origine, destination);
        
         // On renvoie la liste des aretes
-        return path.getEdgeList();
+        ArrayList<Arete> arete = new ArrayList<Arete>(path.getEdgeList());
+        return arete;
+       
     }
 }
 

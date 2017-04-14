@@ -24,7 +24,7 @@ import fr.enac.iessa16.cablage.model.Sommet;
 		private ArrayList<Sommet> points;
 		
 		private ArrayList<Sommet> sommets;
-		private ArrayList<Arete> arete;
+		private ArrayList<Arete> aretes;
 		
 		//Sommet sommet1;
 	
@@ -33,7 +33,7 @@ import fr.enac.iessa16.cablage.model.Sommet;
 			// TODO Auto-generated method stub
 			this.sommets = new ArrayList<Sommet>();
 			this.points = new ArrayList<Sommet>();
-			this.arete = new ArrayList<Arete>();
+			this.aretes = new ArrayList<Arete>();
 			
 			File fichier = new File("/home/eleve/IESSA/hedidira/git/applicationCablage/cablage/CablageGit/file/lfpo_map.txt");
 			
@@ -82,7 +82,7 @@ import fr.enac.iessa16.cablage.model.Sommet;
 			e.printStackTrace();
 			System.out.println("fichier non fermé");
 		}
-	     graphe =  new GrapheTheorique(sommets, arete);
+	     graphe =  new GrapheTheorique(sommets, aretes);
 	    
 	   }
 
@@ -103,7 +103,7 @@ import fr.enac.iessa16.cablage.model.Sommet;
 
 		String[] tab = s1.split(" ");
 		
-		System.out.println("taille de tab = "+tab.length);
+		//System.out.println("taille de tab = "+tab.length);
 		if(tab.length == 4)
 		{
 		String[] tab1 = tab[3].split(",");
@@ -128,11 +128,47 @@ import fr.enac.iessa16.cablage.model.Sommet;
 
 }
 	
+	
 	private void chargerLigne(String s1)
 	{
 		
-		//String tab2[] = 
-		
+		String tab2[] = s1.split(" ");
+		String tab3[];
+		double longitude1 , latitude1;
+		Sommet sommet1 ;
+		Arete arete;
+		Sommet sommetPrecedent = null;
+		//System.out.println("Lecture de la ligne contenant "+tab2.length+" champs");
+		for(int i =5 ; i<tab2.length;i++)
+		{
+			
+		//	System.out.println("tab2["+i+"] = "+tab2[i]);
+			
+			tab3 = tab2[i].split(",");
+			if (tab3.length == 2) {
+			//	System.out.println(" tab3[0] = "+tab3[0]);
+				longitude1 = Double.parseDouble(tab3[0]);
+				latitude1 = Double.parseDouble(tab3[1]);
+				sommet1 = new Sommet(longitude1,latitude1,"");
+				sommets.add(sommet1);
+			
+				
+				if(sommetPrecedent != null)
+				{
+				 arete = new Arete(sommet1 , sommetPrecedent,25);
+				 aretes.add(arete); 
+				}
+				sommetPrecedent = sommet1;
+				
+				//for(j= i)
+				//Arete aretes = new Arete()
+			}
+			
+		}
+		//String tab3[] = tab2[5].split(",");
+		//double longitude1 = Double.parseDouble(tab2[0]);
+		//double latitute1 = Double.parseDouble(tab2[1]);
+		//double longitude2
 		
 		
 		
