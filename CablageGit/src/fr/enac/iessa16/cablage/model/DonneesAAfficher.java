@@ -7,6 +7,8 @@ import java.util.Observable;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import org.jgrapht.alg.interfaces.AStarAdmissibleHeuristic;
+
 import fr.enac.iessa16.cablage.controller.Controleur;
 import fr.enac.iessa16.cablage.fichierTexte.Main;
 import fr.enac.iessa16.cablage.view.DessinDuGrapheParDefaut;
@@ -34,8 +36,11 @@ public class DonneesAAfficher extends Observable
 	private KruskalJGrapht kruskal;
 	private ArrayList<Arete> listearetesCoresspondantauCheminLeplusCourtKruskal;
 	private GrapheTheorique sousGraphe;
-
-
+private Plus AStar;
+private ArrayList<Arete> listearetesCoresspondantauCheminLeplusCourtAStar;
+private AStarAdmissibleHeuristic<Sommet> lol;
+private MaClasse param;
+public  ArrayList<Arete> getListearetesCoresspondantauCheminLeplusCourtAStar;
 	/**
 	 * Constructeur de la classe DonneesAAfficher.java
 	 * On initialise les graphes et sommets à null
@@ -45,6 +50,7 @@ public class DonneesAAfficher extends Observable
 		this.grapheAafficher = null;
 		this.sousGraphe = null;
 		this.listeDeSommetsSelectionnés = new ArrayList<Sommet>();
+		this.param = new MaClasse();
 
 	}
 
@@ -332,9 +338,60 @@ public class DonneesAAfficher extends Observable
 	}
 
 
+	public void calculerAStar() {
+		// TODO Auto-generated method stub
+		
+
+		this.AStar = new Plus(grapheAafficher);
+		listeDeSommetsSelectionnés.clear();
+		int size = grapheAafficher.getEnsembleDeSommet().size();
+		Sommet sommet;
+
+		for(int i = 0 ; i<size; i++)
+		{	
+			sommet = grapheAafficher.getEnsembleDeSommet().get(i);
+			//Si le sommet est selectionné
+			if(sommet.getSelected() == true)
+			{
+
+				//On rajoute le sommet à la liste de sommets sélectionnés.
+				listeDeSommetsSelectionnés.add(sommet);
+
+
+			} }
+
+
+		System.out.println("il y a "+ listeDeSommetsSelectionnés.size()+ " noeuds selectionnés");
+		if(listeDeSommetsSelectionnés.size()==2)//Si on a selectionné deux noeuds 
+		{
+			//On appelle Djikstra pour trouver le chemin le plus court pour aller du noued de depart au noeud d'arrivé.
+			this.listearetesCoresspondantauCheminLeplusCourtAStar = this.AStar.getShortestPath(listeDeSommetsSelectionnés.get(0), listeDeSommetsSelectionnés.get(1),param);
+
+			//System.out.println("Le chemin le plus court contient " + listearetesCoresspondantauCheminLeplusCourtDjikstra.size() +" aretes");
+			//On notifie la vue que le modèle a changé:
+			changement();
+		
+		
+		
+		
+		
+	}
+
+
 
 
 
 
 
 }
+
+
+	public ArrayList<Arete> getListearetesCoresspondantauCheminLeplusCourtAStar() {
+		return listearetesCoresspondantauCheminLeplusCourtAStar;
+	}
+
+
+	public void setListearetesCoresspondantauCheminLeplusCourtAStar(
+			ArrayList<Arete> listearetesCoresspondantauCheminLeplusCourtAStar) {
+		this.listearetesCoresspondantauCheminLeplusCourtAStar = listearetesCoresspondantauCheminLeplusCourtAStar;
+	}}

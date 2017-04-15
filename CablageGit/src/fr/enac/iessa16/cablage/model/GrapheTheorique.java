@@ -209,6 +209,12 @@ public class GrapheTheorique {
 		this.longitudemax = longitudemax;
 	}
 
+
+	public boolean existeArc(int x0, int i) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	
 
 }

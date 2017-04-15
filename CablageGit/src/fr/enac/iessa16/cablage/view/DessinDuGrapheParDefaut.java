@@ -144,7 +144,13 @@ public class DessinDuGrapheParDefaut extends JPanel {
 
 				g.setColor(java.awt.Color.RED);
 				g.drawLine(x1, y1, x2, y2);
-			}			
+			}	
+			
+			
+			
+			
+			
+			
 		}
 
 		/*
@@ -211,6 +217,37 @@ public class DessinDuGrapheParDefaut extends JPanel {
 				}		}
 
 		}
+		
+		if (donneesaafficher.getListearetesCoresspondantauCheminLeplusCourtAStar() != null) {
+			if (donneesaafficher.getGrapheàafficher() != null)
+			{
+				for (int i = 0; i < donneesaafficher.getListearetesCoresspondantauCheminLeplusCourtAStar().size(); i++) {
+
+					long1 = donneesaafficher.getListearetesCoresspondantauCheminLeplusCourtAStar.get(i).getSommetOrigine().getLongitude();
+						
+					long2 = donneesaafficher.getListearetesCoresspondantauCheminLeplusCourtAStar().get(i).getSommetExtremité()
+							.getLongitude();
+					lat1 = donneesaafficher.getListearetesCoresspondantauCheminLeplusCourtAStar().get(i).getSommetOrigine()
+							.getLatitude();
+					lat2 = donneesaafficher.getListearetesCoresspondantauCheminLeplusCourtAStar().get(i).getSommetExtremité()
+							.getLatitude();
+
+					x1 = ConversionLongitudeEnx(long1);
+					x2 = ConversionLongitudeEnx(long2);
+					y1 = ConversionLatitudeEny(lat1);
+					y2 = ConversionLatitudeEny(lat2);
+
+
+					g.setColor(java.awt.Color.BLACK);
+					g.drawLine(x1, y1, x2, y2);
+				}		}
+
+		}
+		
+		
+		
+		
+		
 		if (donneesaafficher.getGrapheàafficher() != null) {
 			if (donneesaafficher.getListearetesCoresspondantauCheminLeplusCourtKruskal()!= null) {
 				for (int i = 0; i < donneesaafficher.getListearetesCoresspondantauCheminLeplusCourtKruskal().size(); i++) {
