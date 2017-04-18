@@ -27,7 +27,7 @@ public class DonneesAAfficher extends Observable
 
 	private 	GrapheTheorique grapheAafficher;	
 	private Controleur controleur;
-	private Sommet sommet;
+	private Sommet dernierSommetSelectionne;
 	private boolean selectionner = false; 
 	private final double R = 6371;
 	private DijkstraJGrapht djikstra;
@@ -135,7 +135,7 @@ public  ArrayList<Arete> getListearetesCoresspondantauCheminLeplusCourtAStar;
 
 				// on  stocke le noeud cliqué dans l'attribut sommet
 
-				this.sommet = grapheAafficher.getEnsembleDeSommet().get(i);
+				this.dernierSommetSelectionne = grapheAafficher.getEnsembleDeSommet().get(i);
 
 				//System.out.println(sommet.getNom());
 				//this.dessin1.paint(model.getGrapheàafficher());
@@ -179,8 +179,8 @@ public  ArrayList<Arete> getListearetesCoresspondantauCheminLeplusCourtAStar;
 	/**Getter Sommet
 	 * @return sommet
 	 */
-	public Sommet getSommet() {
-		return sommet;
+	public Sommet getdernierSommetSelectionne() {
+		return dernierSommetSelectionne;
 	}
 
 
@@ -191,10 +191,10 @@ public  ArrayList<Arete> getListearetesCoresspondantauCheminLeplusCourtAStar;
 
 
 
-	public void setSommet(Sommet sommet) {
-		this.sommet = sommet;
+	/*public void setdernierSommetSelectionne(Sommet sommet) {
+		this.dernierSommetSelectionne = sommet;
 
-	}
+	}/*
 
 
 	/**Implementation de la methode qui permet de charger le graphe du fichier texte.

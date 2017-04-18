@@ -73,6 +73,7 @@ public class Plus {
 		       
 		        // On renvoie la liste des aretes
 		        ArrayList<Arete> arete = new ArrayList<Arete>(path.getEdgeList());
+		       System.out.println("le chemin le plus court "+ arete);
 		        return arete;
 		
 			
