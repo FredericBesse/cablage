@@ -126,7 +126,7 @@ public  ArrayList<Arete> getListearetesCoresspondantauCheminLeplusCourtAStar;
 			//System.out.println("distance = "+distance);
 			//Le sommet est consideré comme "sélectionné" si la distance entre le clique et 
 			//la position du sommet du graphe est inférieur au rayon de chaque sommet 
-			if(distance<ParametresFenetre.rayon)
+			if(distance<ParametresFenetre.rayonSommetClic)
 
 
 			{

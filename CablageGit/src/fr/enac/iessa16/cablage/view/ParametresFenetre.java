@@ -6,7 +6,8 @@ public class ParametresFenetre {
 
 	
 	
-	public static int rayon = 10;
+	public static int rayonSommetAffichage = 5;
+	public static int rayonSommetClic = 25;
 	
 	public static Dimension dimensionEcran;
 	

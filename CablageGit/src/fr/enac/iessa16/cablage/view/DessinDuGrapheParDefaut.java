@@ -119,7 +119,7 @@ public class DessinDuGrapheParDefaut extends JPanel {
 		        g2D.setTransform(at);
 				
 				
-				dessinerFondCarte(g2D);
+				//dessinerFondCarte(g2D);
 				
 				dessinerSommets(g2D);
 
@@ -176,8 +176,8 @@ public class DessinDuGrapheParDefaut extends JPanel {
 			else
 				g.setColor(Color.pink);
 			// On rend visible les sommets
-			g.fillOval(x - ParametresFenetre.rayon, y - ParametresFenetre.rayon, 2 * ParametresFenetre.rayon,
-					2 * ParametresFenetre.rayon);
+			g.fillOval(x - ParametresFenetre.rayonSommetAffichage, y - ParametresFenetre.rayonSommetAffichage, 2 * ParametresFenetre.rayonSommetAffichage,
+					2 * ParametresFenetre.rayonSommetAffichage);
 			g.setColor(java.awt.Color.BLACK);
 			// On affiche les noms de chaque sommet
 			g.drawString(sommet.getNom(), x, y);
@@ -213,8 +213,8 @@ public class DessinDuGrapheParDefaut extends JPanel {
 			else
 				g.setColor(Color.pink);
 			// On rend visible les sommets
-			g.fillOval(x - ParametresFenetre.rayon, y - ParametresFenetre.rayon, 2 * ParametresFenetre.rayon,
-					2 * ParametresFenetre.rayon);
+			g.fillOval(x - ParametresFenetre.rayonSommetAffichage, y - ParametresFenetre.rayonSommetAffichage, 2 * ParametresFenetre.rayonSommetAffichage,
+					2 * ParametresFenetre.rayonSommetAffichage);
 			g.setColor(java.awt.Color.BLACK);
 			// On affiche les noms de chaque sommet
 			g.drawString(donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i).getNom(), x, y);
@@ -279,7 +279,7 @@ public class DessinDuGrapheParDefaut extends JPanel {
 			y3 = ConversionLatitudeEny(lat3);
 			g.drawString(nom, x3, y3);
 			g.setColor(java.awt.Color.GREEN);
-			g.fillOval((int)(x3 - ParametresFenetre.rayon*0.5), (int)(y3 - ParametresFenetre.rayon*0.5),ParametresFenetre.rayon,ParametresFenetre.rayon);
+			g.fillOval((int)(x3 - ParametresFenetre.rayonSommetAffichage*0.5), (int)(y3 - ParametresFenetre.rayonSommetAffichage*0.5),ParametresFenetre.rayonSommetAffichage,ParametresFenetre.rayonSommetAffichage);
 		
 			//System.out.println("Affichage du dernier noeud sélectionnée");
 		}
