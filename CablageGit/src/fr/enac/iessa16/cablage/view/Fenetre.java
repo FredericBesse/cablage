@@ -83,19 +83,19 @@ public class Fenetre extends JFrame implements Observer {
 
 	
 		// Création du panneau
-		JPanel droite = new JPanel();
+		//JPanel droite = new JPanel();
 				
 		// Création de la bordure
-		droite.setBorder(BorderFactory.createTitledBorder("Vue 2D"));
+		//droite.setBorder(BorderFactory.createTitledBorder("Vue 2D"));
 				
 		// Taille du panneau
 		//droite.setPreferredSize(ParametresFenetre.dimensionJPanelParametres);
 		
 		
 		this.dessin = new DessinDuGrapheParDefaut(model, controleur);
-		droite.add(dessin);
+		//droite.add(dessin);
 		
-		monContenair.add(droite);
+		monContenair.add(dessin);
 
 		JPanel vide = new JPanel();
 		// vide.setBorder(BorderFactory.createLineBorder(Color.BLUE));
@@ -145,13 +145,13 @@ public class Fenetre extends JFrame implements Observer {
 		this.controleur = controleur;
 		this.jbar = new JMenuBar();
 		this.setJMenuBar(jbar);
-		JMenu menu = new JMenu("Gerer graphe");
+		JMenu menu = new JMenu("Fichier");
 		jbar.add(menu);
-		JMenuItem option1 = new JMenuItem("Charger Graphe par defaut");
+		JMenuItem option1 = new JMenuItem("Charger graphe par defaut");
 		menu.add(option1);
 		option1.setActionCommand("ChargerGrapheParDefaut");
 		option1.addActionListener(controleur.getControleMenu());
-		JMenuItem option2 = new JMenuItem("ChargerGrapheDonné");
+		JMenuItem option2 = new JMenuItem("Ouvrir...");
 		option2.setActionCommand("ChargerGrapheDonné");
 		option2.addActionListener(controleur.getControleMenu());
 		menu.add(option2);

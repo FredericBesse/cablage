@@ -28,7 +28,7 @@ import fr.enac.iessa16.cablage.model.Sommet;
 public class DessinDuGrapheParDefaut extends JPanel {
 
 	
-	private float scale = 1;
+	//private float scale = 1;
 	
 	// Attributs de la classe
 	private static DonneesAAfficher donneesaafficher;
@@ -47,21 +47,11 @@ public class DessinDuGrapheParDefaut extends JPanel {
 		this.addMouseListener(controleur.getControleurClique());
 		this.addMouseMotionListener(controleur.getControleurClique());
 
-		this.addMouseWheelListener(new MouseAdapter() {
 		
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e) {
-                double delta = 0.05f * e.getPreciseWheelRotation();
-                scale += delta;
-                revalidate();
-                repaint();
-            }
-
-        });
 		
 		
 		this.setPreferredSize(ParametresFenetre.dimensionJPanelGraphe);
-		//this.setBorder(BorderFactory.createTitledBorder("Vue 2D"));
+		this.setBorder(BorderFactory.createTitledBorder("Vue 2D"));
 		this.imageFond = null;
 		
 	
@@ -70,7 +60,7 @@ public class DessinDuGrapheParDefaut extends JPanel {
 		//String center="Brooklyn+Bridge,New+York,NY";
 		String center="Paris-Charles+De+Gaulle+(CDG)";
 		String zoom = "12";//"13";
-		String size = "4000x4000";
+		String size = "2000x2000";
 		String key = "AIzaSyABrzv3EoXRNgraD15R12UduLzOBpwg14A";
 		
 		/*String adresseImage = "https://maps.googleapis.com/maps/api/staticmap?center=" + center
@@ -112,33 +102,33 @@ public class DessinDuGrapheParDefaut extends JPanel {
 			// Si le graphe n'est pas vide
 			if (donneesaafficher.getGrapheàafficher() != null) {
 
-				Graphics2D g2D = (Graphics2D) g;
+				//Graphics2D g2D = (Graphics2D) g;
 				
-				AffineTransform at = new AffineTransform();
-		        at.scale(scale, scale);
-		        g2D.setTransform(at);
+				//AffineTransform at = new AffineTransform();
+		        //at.scale(scale, scale);
+		        //g2D.setTransform(at);
 				
 				
-				//dessinerFondCarte(g2D);
+				dessinerFondCarte(g);
 				
-				dessinerSommets(g2D);
+				dessinerSommets(g);
 
-				dessinerAretes(g2D);
+				dessinerAretes(g);
 
-				dessinerDernierSommetSelectionne(g2D);
+				dessinerDernierSommetSelectionne(g);
 
-				dessinerCheminDijkstra(g2D);
+				dessinerCheminDijkstra(g);
 
-				dessinerCheminKruskal(g2D);
+				dessinerCheminKruskal(g);
 				
-				dessinerCheminAstar(g2D);
+				dessinerCheminAstar(g);
 			}
 		}
 	}
 
 	
 
-	private void dessinerFondCarte(Graphics2D g) {
+	private void dessinerFondCarte(Graphics g) {
 		// TODO Auto-generated method stub
 		if (this.imageFond != null) {
 			g.drawImage(imageFond, 16, 20, this);
@@ -146,7 +136,7 @@ public class DessinDuGrapheParDefaut extends JPanel {
 		}
 	}
 
-	private void dessinerSommets(Graphics2D g) {
+	private void dessinerSommets(Graphics g) {
 
 		long start = System.currentTimeMillis();
 
@@ -225,7 +215,7 @@ public class DessinDuGrapheParDefaut extends JPanel {
 
 	}
 
-	private void dessinerAretes(Graphics2D g) {
+	private void dessinerAretes(Graphics g) {
 		// Pareil pour les aretes...
 		int x, y;
 		int x1, y1, x2, y2;

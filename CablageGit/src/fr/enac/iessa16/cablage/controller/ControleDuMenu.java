@@ -44,7 +44,7 @@ public class ControleDuMenu implements ActionListener {
 			
 		{
 			//On appelle la methode ChargerLeGraphe implementé dans la classe DonneesAAfficher
-			model.ChargerLeGraphe();
+			model.chargerLeGrapheParDefaut();
 			
 			
 			

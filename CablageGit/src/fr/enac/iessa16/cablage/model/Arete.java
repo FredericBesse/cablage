@@ -2,6 +2,8 @@ package fr.enac.iessa16.cablage.model;
 
 public class Arete {
 	
+
+	
 	
 	private double distance;
 	private double cout;
@@ -81,6 +83,11 @@ public class Arete {
 
 	public void setSommetExtremité(Sommet sommetExtremité) {
 		SommetExtremité = sommetExtremité;
+	}
+
+	@Override
+	public String toString() {
+		return "Arete ["+SommetOrigine + ", " + SommetExtremité + "]";
 	}
 	
 	

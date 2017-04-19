@@ -10,6 +10,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JFileChooser;
+
 import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
 import fr.enac.iessa16.cablage.model.Arete;
@@ -19,7 +21,7 @@ import fr.enac.iessa16.cablage.model.Sommet;
 
 	
 
-	public class Main {
+	public class LectureFichier {
 		private GrapheTheorique graphe;
 		private ArrayList<Sommet> points;
 		
@@ -29,13 +31,31 @@ import fr.enac.iessa16.cablage.model.Sommet;
 		//Sommet sommet1;
 	
 	      // Nous déclarons nos objets en dehors du bloc try/catch
-		public  Main() {
+		public  LectureFichier() {
 			// TODO Auto-generated method stub
 			this.sommets = new ArrayList<Sommet>();
 			this.points = new ArrayList<Sommet>();
 			this.aretes = new ArrayList<Arete>();
 			
-			File fichier = new File("/home/eleve/IESSA/hedidira/git/applicationCablage/cablage/CablageGit/file/lfpo_map.txt");
+			
+			JFileChooser fc = new JFileChooser("/home/eleve/IESSA/hedidira/git/applicationCablage/cablage/CablageGit/file/");
+			
+			int returnVal = fc.showOpenDialog(null);
+			 
+			File fichier = null;
+			
+	        if (returnVal == JFileChooser.APPROVE_OPTION) {
+	                fichier = fc.getSelectedFile();
+	                //This is where a real application would open the file.
+	               // log.append("Opening: " + file.getName() + "." + newline);
+	            } else {
+	                //log.append("Open command cancelled by user." + newline);
+	            	//FIXME A CORRIGER
+	            	return;
+	            }
+			
+			
+			//File fichier = new File("/home/eleve/IESSA/hedidira/git/applicationCablage/cablage/CablageGit/file/lfpo_map.txt");
 			
 		FileReader fis = null;
 		try {
@@ -53,10 +73,10 @@ import fr.enac.iessa16.cablage.model.Sommet;
 		try {
 			
 			s = bis.readLine();
-			System.out.println("Chargement de "+s);
+		//	System.out.println("Chargement de "+s);
 			
 			while ((s = bis.readLine()) != null) {
-				System.out.println(s);
+				//System.out.println(s);
 				
 				if(s.startsWith("P"))
 				{
@@ -107,14 +127,13 @@ import fr.enac.iessa16.cablage.model.Sommet;
 		if(tab.length == 4)
 		{
 		String[] tab1 = tab[3].split(",");
-		double longitude1 = Double.parseDouble(tab1[0]);
-		double latitude1 = Double.parseDouble(tab1[1]);
+		double  longitude1 = Double.parseDouble(tab1[0]);
+		double latitude1  = -Double.parseDouble(tab1[1]);
 		String nom1 = tab[1];
 		
 		//System.out.println("lat="+latitude1+" lon="+longitude1);
 		
-		Sommet sommet1 = new Sommet(
-				longitude1 , 
+		Sommet sommet1 = new Sommet(longitude1 , 
 				latitude1 , 
 				nom1);
 		//System.out.println("sommet="+sommets);//+" "+sommets.size());
@@ -148,16 +167,36 @@ import fr.enac.iessa16.cablage.model.Sommet;
 			if (tab3.length == 2) {
 			//	System.out.println(" tab3[0] = "+tab3[0]);
 				longitude1 = Double.parseDouble(tab3[0]);
-				latitude1 = Double.parseDouble(tab3[1]);
+				latitude1 = -Double.parseDouble(tab3[1]);
+				
+				
+				
 				sommet1 = new Sommet(longitude1,latitude1,"");
-				sommets.add(sommet1);
+				
+				if (!sommets.contains(sommet1))
+					sommets.add(sommet1);
 			
 				
 				if(sommetPrecedent != null)
 				{
-				 arete = new Arete(sommet1 , sommetPrecedent,25);
-				 aretes.add(arete); 
+					
+
+					if(!sommetPrecedent.equals(sommet1))
+					{
+						
+
+						arete = new Arete(sommet1 , sommetPrecedent,25);
+						aretes.add(arete);
+					}
+					else 
+					{
+						System.out.println("erreur : sommet origine = sommet destination donc boucle "+ s1);
+
+					}
 				}
+					
+				
+				
 				sommetPrecedent = sommet1;
 				
 				//for(j= i)

@@ -7,10 +7,12 @@ import java.util.Observable;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.alg.interfaces.AStarAdmissibleHeuristic;
+import org.jgrapht.graph.SimpleWeightedGraph;
 
 import fr.enac.iessa16.cablage.controller.Controleur;
-import fr.enac.iessa16.cablage.fichierTexte.Main;
+import fr.enac.iessa16.cablage.fichierTexte.LectureFichier;
 import fr.enac.iessa16.cablage.view.DessinDuGrapheParDefaut;
 import fr.enac.iessa16.cablage.view.ParametresFenetre;
 
@@ -24,6 +26,21 @@ public class DonneesAAfficher extends Observable
 {
 
 	//Attributs de la classe DonneesAAfficher 
+
+	public Sommet getSommetOrigine() {
+		return sommetOrigine;
+	}
+
+
+	public List<Set<Sommet>> getConnectedSet() {
+		return connectedSet;
+	}
+
+
+	public Sommet getSommetDestination() {
+		return sommetDestination;
+	}
+
 
 	private 	GrapheTheorique grapheAafficher;	
 	private Controleur controleur;
@@ -41,6 +58,10 @@ private ArrayList<Arete> listearetesCoresspondantauCheminLeplusCourtAStar;
 private AStarAdmissibleHeuristic<Sommet> lol;
 private MaClasse param;
 public  ArrayList<Arete> getListearetesCoresspondantauCheminLeplusCourtAStar;
+private double coutCheminLeplusCourtDjikstra;
+private Sommet sommetOrigine = null;
+private Sommet sommetDestination = null;
+private List<Set<Sommet>> connectedSet;
 	/**
 	 * Constructeur de la classe DonneesAAfficher.java
 	 * On initialise les graphes et sommets à null
@@ -58,7 +79,7 @@ public  ArrayList<Arete> getListearetesCoresspondantauCheminLeplusCourtAStar;
 	/**
 	 * Methode permettant d'afficher le graphe par defaut , apres avoir cliqué sur l'option adequate du menu
 	 */
-	public void ChargerLeGraphe()   
+	public void chargerLeGrapheParDefaut()   
 
 	{
 
@@ -66,6 +87,9 @@ public  ArrayList<Arete> getListearetesCoresspondantauCheminLeplusCourtAStar;
 
 		ConstructionGrapheParDefaut constructeurgraphedefaut = new ConstructionGrapheParDefaut();
 		grapheAafficher = constructeurgraphedefaut.getGraphe();
+		
+		
+		testConnectivite();
 
 		// fenetre.repaint
 		changement();
@@ -145,6 +169,10 @@ public  ArrayList<Arete> getListearetesCoresspondantauCheminLeplusCourtAStar;
 					grapheAafficher.getEnsembleDeSommet().get(i).setSelected(false); 
 				else 
 					grapheAafficher.getEnsembleDeSommet().get(i).setSelected(true);
+				
+				
+				
+				break;
 
 			} else {
 				///System.out.println(" TEST NOK avec le sommet "+grapheAafficher.getEnsembleDeSommet().get(i).getNom());
@@ -205,11 +233,43 @@ public  ArrayList<Arete> getListearetesCoresspondantauCheminLeplusCourtAStar;
 		// TODO Auto-generated method stub
 		//Construire le graphe
 
-		Main constructeurgrapheText = new Main();
+		LectureFichier constructeurgrapheText = new LectureFichier();
 		grapheAafficher = constructeurgrapheText.getGraphe();
 
+		testConnectivite();
+		
 		// fenetre.repaint
 		changement();
+	}
+
+
+	private void testConnectivite() {
+		// TODO Auto-generated method stub
+		
+		SimpleWeightedGraph graphPourJGrapht = new SimpleWeightedGraph<Sommet, Arete>(Arete.class);
+
+	        // Ajout de tous les sommets au graphe JGrapht
+	        for (Sommet sommet: grapheAafficher.getEnsembleDeSommet()) {
+	            graphPourJGrapht.addVertex(sommet);
+	        }
+	      /*  for (int i = 0; i< graphe.getEnsembleDeSommet().size();i++) {
+	        	Sommet sommet = graphe.getEnsembleDeSommet().get(i);
+	            graphPourJGrapht.addVertex(sommet);
+	        }*/
+	        
+	        // Ajout de toutes les aretes au graphe JGrapht
+	        for (Arete arete : grapheAafficher.getEnsembleAretes()) {
+	            graphPourJGrapht.addEdge(arete.getSommetOrigine(), arete.getSommetExtremité(), arete);
+	            // FIXME graphPourJGrapht.setEdgeWeight(arete, arete.getCout());
+	        }
+		
+		ConnectivityInspector<Sommet, Arete> connectivityInspector = new ConnectivityInspector<>(graphPourJGrapht);
+		
+		connectedSet = connectivityInspector.connectedSets();
+		
+		System.out.println(connectedSet.size()+" composantes connexes trouvées");
+		
+		
 	}
 
 
@@ -247,8 +307,16 @@ public  ArrayList<Arete> getListearetesCoresspondantauCheminLeplusCourtAStar;
 		if(listeDeSommetsSelectionnés.size()==2)//Si on a selectionné deux noeuds 
 		{
 			//On appelle Djikstra pour trouver le chemin le plus court pour aller du noued de depart au noeud d'arrivé.
-			this.listearetesCoresspondantauCheminLeplusCourtDjikstra = this.djikstra.getDijkstraShortestPath(listeDeSommetsSelectionnés.get(0),listeDeSommetsSelectionnés.get(1));
+			this.sommetOrigine = listeDeSommetsSelectionnés.get(0);
+			this.sommetDestination = listeDeSommetsSelectionnés.get(1);
+			
+			this.listearetesCoresspondantauCheminLeplusCourtDjikstra = this.djikstra.getDijkstraShortestPath(sommetOrigine,sommetDestination);
 
+			this.coutCheminLeplusCourtDjikstra = 0;
+			for (Arete arete : listearetesCoresspondantauCheminLeplusCourtDjikstra) {
+				coutCheminLeplusCourtDjikstra += arete.getCout();
+			}
+			
 			System.out.println("Le chemin le plus court contient " + listearetesCoresspondantauCheminLeplusCourtDjikstra.size() +" aretes");
 			//On notifie la vue que le modèle a changé:
 			changement();
@@ -394,4 +462,11 @@ public  ArrayList<Arete> getListearetesCoresspondantauCheminLeplusCourtAStar;
 	public void setListearetesCoresspondantauCheminLeplusCourtAStar(
 			ArrayList<Arete> listearetesCoresspondantauCheminLeplusCourtAStar) {
 		this.listearetesCoresspondantauCheminLeplusCourtAStar = listearetesCoresspondantauCheminLeplusCourtAStar;
-	}}
+	}
+
+
+	public double getCoutCheminLeplusCourtDjikstra() {
+		// TODO Auto-generated method stub
+		return coutCheminLeplusCourtDjikstra;
+	}
+}

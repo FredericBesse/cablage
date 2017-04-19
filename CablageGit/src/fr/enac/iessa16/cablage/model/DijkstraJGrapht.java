@@ -77,7 +77,13 @@ public class DijkstraJGrapht {
         GraphPath<Sommet, Arete> path = dijkstraShortestPath.getPath(origine, destination);
        
         // On renvoie la liste des aretes
-        ArrayList<Arete> arete = new ArrayList<Arete>(path.getEdgeList());
+        // FIXME gerer le cas erreur dijk
+        
+        ArrayList<Arete> arete = null;
+        
+        if (path != null)
+        	arete = new ArrayList<Arete>(path.getEdgeList());
+        
         return arete;
        
     }

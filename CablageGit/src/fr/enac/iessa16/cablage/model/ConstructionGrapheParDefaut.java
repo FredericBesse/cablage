@@ -46,7 +46,7 @@ public class ConstructionGrapheParDefaut {
 		Arete arete1 = new Arete(a,b,25);
 		Arete arete2 = new Arete(c,d,65);
 		Arete arete3 = new Arete(d,e,25);
-		Arete arete4 = new Arete(a,c,69);
+		//Arete arete4 = new Arete(a,c,69);
 		Arete arete5 = new Arete(a,d,69);
 		
 		//On cree le tableau d'aretes
@@ -58,7 +58,7 @@ public class ConstructionGrapheParDefaut {
 		tableauAretes.add(arete1);
 		tableauAretes.add(arete2);
 		tableauAretes.add(arete3);
-		tableauAretes.add(arete4);
+	//	tableauAretes.add(arete4);
 		tableauAretes.add(arete5);
 		
 		
