@@ -53,15 +53,15 @@ public class DonneesAAfficher extends Observable
 	private KruskalJGrapht kruskal;
 	private ArrayList<Arete> listearetesCoresspondantauCheminLeplusCourtKruskal;
 	private GrapheTheorique sousGraphe;
-private Plus AStar;
-private ArrayList<Arete> listearetesCoresspondantauCheminLeplusCourtAStar;
-private AStarAdmissibleHeuristic<Sommet> lol;
-private MaClasse param;
-public  ArrayList<Arete> getListearetesCoresspondantauCheminLeplusCourtAStar;
-private double coutCheminLeplusCourtDjikstra;
-private Sommet sommetOrigine = null;
-private Sommet sommetDestination = null;
-private List<Set<Sommet>> connectedSet;
+
+	private ArrayList<Arete> listearetesCoresspondantauCheminLeplusCourtAStar;
+	private AStarAdmissibleHeuristic<Sommet> lol;
+
+	public  ArrayList<Arete> getListearetesCoresspondantauCheminLeplusCourtAStar;
+	private double coutCheminLeplusCourtDjikstra;
+	private Sommet sommetOrigine = null;
+	private Sommet sommetDestination = null;
+	private List<Set<Sommet>> connectedSet;
 	/**
 	 * Constructeur de la classe DonneesAAfficher.java
 	 * On initialise les graphes et sommets à null
@@ -71,7 +71,7 @@ private List<Set<Sommet>> connectedSet;
 		this.grapheAafficher = null;
 		this.sousGraphe = null;
 		this.listeDeSommetsSelectionnés = new ArrayList<Sommet>();
-		this.param = new MaClasse();
+	
 
 	}
 
@@ -87,8 +87,8 @@ private List<Set<Sommet>> connectedSet;
 
 		ConstructionGrapheParDefaut constructeurgraphedefaut = new ConstructionGrapheParDefaut();
 		grapheAafficher = constructeurgraphedefaut.getGraphe();
-		
-		
+
+
 		testConnectivite();
 
 		// fenetre.repaint
@@ -169,9 +169,9 @@ private List<Set<Sommet>> connectedSet;
 					grapheAafficher.getEnsembleDeSommet().get(i).setSelected(false); 
 				else 
 					grapheAafficher.getEnsembleDeSommet().get(i).setSelected(true);
-				
-				
-				
+
+
+
 				break;
 
 			} else {
@@ -237,7 +237,7 @@ private List<Set<Sommet>> connectedSet;
 		grapheAafficher = constructeurgrapheText.getGraphe();
 
 		testConnectivite();
-		
+
 		// fenetre.repaint
 		changement();
 	}
@@ -245,31 +245,31 @@ private List<Set<Sommet>> connectedSet;
 
 	private void testConnectivite() {
 		// TODO Auto-generated method stub
-		
+
 		SimpleWeightedGraph graphPourJGrapht = new SimpleWeightedGraph<Sommet, Arete>(Arete.class);
 
-	        // Ajout de tous les sommets au graphe JGrapht
-	        for (Sommet sommet: grapheAafficher.getEnsembleDeSommet()) {
-	            graphPourJGrapht.addVertex(sommet);
-	        }
-	      /*  for (int i = 0; i< graphe.getEnsembleDeSommet().size();i++) {
+		// Ajout de tous les sommets au graphe JGrapht
+		for (Sommet sommet: grapheAafficher.getEnsembleDeSommet()) {
+			graphPourJGrapht.addVertex(sommet);
+		}
+		/*  for (int i = 0; i< graphe.getEnsembleDeSommet().size();i++) {
 	        	Sommet sommet = graphe.getEnsembleDeSommet().get(i);
 	            graphPourJGrapht.addVertex(sommet);
 	        }*/
-	        
-	        // Ajout de toutes les aretes au graphe JGrapht
-	        for (Arete arete : grapheAafficher.getEnsembleAretes()) {
-	            graphPourJGrapht.addEdge(arete.getSommetOrigine(), arete.getSommetExtremité(), arete);
-	            // FIXME graphPourJGrapht.setEdgeWeight(arete, arete.getCout());
-	        }
-		
+
+		// Ajout de toutes les aretes au graphe JGrapht
+		for (Arete arete : grapheAafficher.getEnsembleAretes()) {
+			graphPourJGrapht.addEdge(arete.getSommetOrigine(), arete.getSommetExtremité(), arete);
+			// FIXME graphPourJGrapht.setEdgeWeight(arete, arete.getCout());
+		}
+
 		ConnectivityInspector<Sommet, Arete> connectivityInspector = new ConnectivityInspector<>(graphPourJGrapht);
-		
+
 		connectedSet = connectivityInspector.connectedSets();
-		
+
 		System.out.println(connectedSet.size()+" composantes connexes trouvées");
-		
-		
+
+
 	}
 
 
@@ -309,14 +309,14 @@ private List<Set<Sommet>> connectedSet;
 			//On appelle Djikstra pour trouver le chemin le plus court pour aller du noued de depart au noeud d'arrivé.
 			this.sommetOrigine = listeDeSommetsSelectionnés.get(0);
 			this.sommetDestination = listeDeSommetsSelectionnés.get(1);
-			
+
 			this.listearetesCoresspondantauCheminLeplusCourtDjikstra = this.djikstra.getDijkstraShortestPath(sommetOrigine,sommetDestination);
 
 			this.coutCheminLeplusCourtDjikstra = 0;
 			for (Arete arete : listearetesCoresspondantauCheminLeplusCourtDjikstra) {
 				coutCheminLeplusCourtDjikstra += arete.getCout();
 			}
-			
+
 			System.out.println("Le chemin le plus court contient " + listearetesCoresspondantauCheminLeplusCourtDjikstra.size() +" aretes");
 			//On notifie la vue que le modèle a changé:
 			changement();
@@ -406,44 +406,6 @@ private List<Set<Sommet>> connectedSet;
 	}
 
 
-	public void calculerAStar() {
-		// TODO Auto-generated method stub
-		
-
-		this.AStar = new Plus(grapheAafficher);
-		listeDeSommetsSelectionnés.clear();
-		int size = grapheAafficher.getEnsembleDeSommet().size();
-		Sommet sommet;
-
-		for(int i = 0 ; i<size; i++)
-		{	
-			sommet = grapheAafficher.getEnsembleDeSommet().get(i);
-			//Si le sommet est selectionné
-			if(sommet.getSelected() == true)
-			{
-
-				//On rajoute le sommet à la liste de sommets sélectionnés.
-				listeDeSommetsSelectionnés.add(sommet);
-
-
-			} }
-
-
-		System.out.println("il y a "+ listeDeSommetsSelectionnés.size()+ " noeuds selectionnés");
-		if(listeDeSommetsSelectionnés.size()==2)//Si on a selectionné deux noeuds 
-		{
-			//On appelle Djikstra pour trouver le chemin le plus court pour aller du noued de depart au noeud d'arrivé.
-			this.listearetesCoresspondantauCheminLeplusCourtAStar = this.AStar.getShortestPath(listeDeSommetsSelectionnés.get(0), listeDeSommetsSelectionnés.get(1),param);
-
-			//System.out.println("Le chemin le plus court contient " + listearetesCoresspondantauCheminLeplusCourtDjikstra.size() +" aretes");
-			//On notifie la vue que le modèle a changé:
-			changement();
-		
-		
-		
-		
-		
-	}
 
 
 
@@ -451,7 +413,6 @@ private List<Set<Sommet>> connectedSet;
 
 
 
-}
 
 
 	public ArrayList<Arete> getListearetesCoresspondantauCheminLeplusCourtAStar() {
@@ -459,10 +420,7 @@ private List<Set<Sommet>> connectedSet;
 	}
 
 
-	public void setListearetesCoresspondantauCheminLeplusCourtAStar(
-			ArrayList<Arete> listearetesCoresspondantauCheminLeplusCourtAStar) {
-		this.listearetesCoresspondantauCheminLeplusCourtAStar = listearetesCoresspondantauCheminLeplusCourtAStar;
-	}
+
 
 
 	public double getCoutCheminLeplusCourtDjikstra() {

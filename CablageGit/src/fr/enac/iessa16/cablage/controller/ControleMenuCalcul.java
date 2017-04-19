@@ -46,14 +46,7 @@ public class ControleMenuCalcul implements ActionListener {
 			//On appelle la methode calculerKruskal implementé dans la classe DonneesAAfficher .
 			model.calculerKruskal();
 		}
-		if(s.equals("CalculerAStar"))
-		{
-			System.out.println("on va calculer AStar");
-			//On appelle la methode calculerKruskal implementé dans la classe DonneesAAfficher .
-			model.calculerAStar();
-			
-			
-		}
+
 		
 		
 	}
