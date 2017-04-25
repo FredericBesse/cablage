@@ -472,4 +472,12 @@ public class DonneesAAfficher extends Observable {
 	public void setParent(Component parent) {
 		this.parent = parent;
 	}
+
+
+	public void nouveauGraphe() {
+		// TODO Auto-generated method stub
+		
+		message("nouveau", "à faire");
+		
+	}
 }

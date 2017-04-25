@@ -11,6 +11,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
 import fr.enac.iessa16.cablage.controller.Controleur;
@@ -42,8 +43,8 @@ public class Fenetre extends JFrame implements Observer {
 		proprieteFenetre();
 		
 		this.controleur = controleur;
-		creerMenu(controleur);
-		creerMenuCalcul(controleur);
+		creerMenu();
+	
 
 		JPanel monContenair = new JPanel();
 
@@ -51,11 +52,6 @@ public class Fenetre extends JFrame implements Observer {
 
 		
 
-		// ParametresFenetre.dimensionFenetre = new Dimension()
-
-		// monContenair.setPreferredSize(new
-		// Dimension(ParametresFenetre.dimensionEcran.width-200,
-		// ParametresFenetre.dimensionEcran.height-200));
 
 		// Calcul de la dimension du JPanel paramètres (à gauche)
 		ParametresFenetre.dimensionJPanelParametres = new Dimension(300, ParametresFenetre.dimensionEcran.height - 85);
@@ -65,12 +61,6 @@ public class Fenetre extends JFrame implements Observer {
 		ParametresFenetre.dimensionJPanelGraphe = new Dimension(ParametresFenetre.dimensionEcran.width - 390,
 				ParametresFenetre.dimensionEcran.height - 85);
 		System.out.println("toto "+ParametresFenetre.dimensionJPanelGraphe);
-		// JPanel jpanel1 = new JPanel();
-		// jpanel1.setLayout(new FlowLayout());
-		// jpanel1.add(nomDuProjet);
-		// jpanel1.add(sujet);
-		// this.add(jpanel1);
-
 		this.setSize(ParametresFenetre.dimensionEcran);
 
 		System.out.println("taille écran " + ParametresFenetre.dimensionEcran);
@@ -79,26 +69,29 @@ public class Fenetre extends JFrame implements Observer {
 		
 		
 		panneauParametres = new PanneauParametres(model);
-		monContenair.add(panneauParametres);
-
-	
-		// Création du panneau
-		//JPanel droite = new JPanel();
-				
-		// Création de la bordure
-		//droite.setBorder(BorderFactory.createTitledBorder("Vue 2D"));
-				
-		// Taille du panneau
-		//droite.setPreferredSize(ParametresFenetre.dimensionJPanelParametres);
+		monContenair.add(panneauParametres);	
 		
+		//JTabbedPane tabbedPane = new JTabbedPane();
 		
 		this.dessin = new DessinDuGrapheParDefaut(model, controleur);
+		//dessin1 = new DessinDuGrapheParDefaut(model, controleur);
+		//dessin2 = new DessinDuGrapheParDefaut(model, controleur);
+	//	ImageIcon icon = createImageIcon("images/middle.gif");
+
+		//JComponent Vue = makeTextPanel("Panel #1");
+		//tabbedPane.addTab("Tab 1", icon, panel1,
+		//                  "Does nothing");
+		//tabbedPane.addTab("Defaut", dessin);
+		//tabbedPane.addTab("LFPO", dessin1);
+		//tabbedPane.addTab("LFPG", dessin2);
+	//	tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+		
 		//droite.add(dessin);
 		
+		//monContenair.add(tabbedPane);
 		monContenair.add(dessin);
-
+		
 		JPanel vide = new JPanel();
-		// vide.setBorder(BorderFactory.createLineBorder(Color.BLUE));
 		vide.setPreferredSize(new Dimension(60, 50));
 		monContenair.add(vide);
 
@@ -122,6 +115,13 @@ public class Fenetre extends JFrame implements Observer {
 		this.setResizable(false);
 		this.setTitle("Cablage à cout minimum");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		// Apparence de la fenetre
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		this.validate();
 
@@ -133,78 +133,24 @@ public class Fenetre extends JFrame implements Observer {
 	 * 
 	 * @param controleur
 	 */
-	public void creerMenu(Controleur controleur) {
+	public void creerMenu() {
 
-		// Look and feel de la fenetre
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		this.controleur = controleur;
-		this.jbar = new JMenuBar();
-		this.setJMenuBar(jbar);
-		JMenu menu = new JMenu("Fichier");
-		jbar.add(menu);
-		JMenuItem option1 = new JMenuItem("Charger graphe par defaut");
-		menu.add(option1);
-		option1.setActionCommand("ChargerGrapheParDefaut");
-		option1.addActionListener(controleur.getControleMenu());
-		JMenuItem option2 = new JMenuItem("Ouvrir...");
-		option2.setActionCommand("ChargerGrapheDonné");
-		option2.addActionListener(controleur.getControleMenu());
-		menu.add(option2);
-		JMenuItem option3 = new JMenuItem("Quitter");
-		option3.setActionCommand("Quitter");
-		option3.addActionListener(controleur.getControleMenu());
-		// option3.addActionListener(this);
-		menu.add(option3);
 		
 
-		// Get all the available look and feel that we are going to use for
-		// creating the JMenuItem and assign the action listener to handle
-		// the selection of menu item to change the look and feel.
-		/*
-		 * UIManager.LookAndFeelInfo[] lookAndFeels =
-		 * UIManager.getInstalledLookAndFeels(); for (UIManager.LookAndFeelInfo
-		 * lookAndFeelInfo : lookAndFeels) { JMenuItem item = new
-		 * JMenuItem(lookAndFeelInfo.getName()); item.addActionListener(event ->
-		 * { try { // Set the look and feel for the frame and update the UI //
-		 * to use a new selected look and feel.
-		 * System.out.println("toto"+lookAndFeelInfo.getClassName());
-		 * UIManager.setLookAndFeel(lookAndFeelInfo.getClassName());
-		 * SwingUtilities.updateComponentTreeUI(this); } catch (Exception e) {
-		 * e.printStackTrace(); } }); menu.add(item); }
-		 * 
-		 */
-	}
-
-	public void creerMenuCalcul(Controleur controleur) {
-
-		// this.setJMenuBar(jbar);
+		this.jbar = new JMenuBar();
+		this.setJMenuBar(jbar);
+		MenuFichier menufichier = new MenuFichier(controleur);
+		jbar.add(menufichier);
 		JMenu menuCalcul = new JMenu("Calcul");
-
-		JMenuItem optionDjikstra = new JMenuItem("Calculer Djikstra");
-		menuCalcul.add(optionDjikstra);
-		optionDjikstra.setActionCommand("CalculerDjikstra");
-		optionDjikstra.addActionListener(controleur.getControleCalcul());
-		JMenuItem optionKruskal = new JMenuItem("Calculer Kruskal");
-		menuCalcul.add(optionKruskal);
-		optionKruskal.setActionCommand("CalculerKruskal");
-		optionKruskal.addActionListener(controleur.getControleCalcul());
-		JMenuItem optionAStar = new JMenuItem("Calculer AStar");
-		menuCalcul.add(optionAStar);
-		optionAStar.setActionCommand("CalculerAStar");
-		optionAStar.addActionListener(controleur.getControleCalcul());
-		this.jbar.add(menuCalcul);
+		MenuCalcul menucalcul = new MenuCalcul(controleur); 
+		this.jbar.add(menucalcul);
+		
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 
-		// System.out.println("update");
 
 		dessin.update();
 		

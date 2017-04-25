@@ -59,7 +59,44 @@ public class ControleDuMenu implements ActionListener {
 			model.ChargerLeGrapheDuFicherTexte();
 			System.out.println("charger graphe donné");
 		}
-
+		
+		if(s.equals("GrapheAleatoire"))
+		{
+			
+			model.nouveauGraphe();
+			
+			
+		}
+		
+		if(s.equals("GrapheVide"))
+		{
+			
+			model.nouveauGraphe();
+		}
+		
+		
+		if(s.equals("Fermer"))
+		{
+			
+			
+			model.nouveauGraphe();
+		}
+		
+		if(s.equals("EnregistrerSous"))
+		{
+			
+			
+			model.nouveauGraphe();
+		}
+		
+		
+		if(s.equals("Imprimer"))
+		{
+			
+			
+			model.nouveauGraphe();
+		}
+		
 	}
 	
 }
