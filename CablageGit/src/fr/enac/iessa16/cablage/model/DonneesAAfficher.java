@@ -480,4 +480,52 @@ public class DonneesAAfficher extends Observable {
 		message("nouveau", "à faire");
 		
 	}
+
+	public void OuvertureGrapheAleatoire() {
+		// TODO Auto-generated method stub
+		
+		message("graphe aleatoire", "à faire");
+		
+	}
+
+	public void OuvertureGrapheVide() {
+		// TODO Auto-generated method stub
+		
+		message("Graphe Vide", "à faire");
+		
+	}
+	public void EnregisterSous() {
+		// TODO Auto-generated method stub
+		
+		message("Enregistrer sous", "à faire");
+		
+	}
+	
+	public void Imprimer() {
+		// TODO Auto-generated method stub
+		
+		message("Imprimer", "à faire");
+		
+	}
+
+
+	public void Fermer() {
+		// TODO Auto-generated method stub
+		message("Fermer", "à faire");
+	}
+
+
+	public void Ouvrir() {
+		// TODO Auto-generated method stub
+		message("Ouvrir", "à faire");
+	}
+	
+	
+
+
+
 }
+
+
+
+
