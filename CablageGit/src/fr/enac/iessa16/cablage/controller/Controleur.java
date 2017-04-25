@@ -1,7 +1,7 @@
 package fr.enac.iessa16.cablage.controller;
 
 import fr.enac.iessa16.cablage.model.DonneesAAfficher;
-import fr.enac.iessa16.cablage.model.Sommet;
+import fr.enac.iessa16.cablage.model.core.Sommet;
 
 /**
  * Classe Controleur , qui prend en attribut le Controle du menu,

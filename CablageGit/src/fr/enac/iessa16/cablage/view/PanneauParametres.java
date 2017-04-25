@@ -14,10 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import fr.enac.iessa16.cablage.model.Arete;
 import fr.enac.iessa16.cablage.model.DonneesAAfficher;
-import fr.enac.iessa16.cablage.model.GrapheTheorique;
-import fr.enac.iessa16.cablage.model.Sommet;
+import fr.enac.iessa16.cablage.model.core.Arete;
+import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
+import fr.enac.iessa16.cablage.model.core.Sommet;
 
 /**
  * Classe définissant le panneau paramètres (à gauche)

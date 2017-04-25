@@ -5,8 +5,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import fr.enac.iessa16.cablage.model.DonneesAAfficher;
-import fr.enac.iessa16.cablage.model.GrapheTheorique;
-import fr.enac.iessa16.cablage.model.Sommet;
+import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
+import fr.enac.iessa16.cablage.model.core.Sommet;
 import fr.enac.iessa16.cablage.view.DessinDuGrapheParDefaut;
 
 /**

@@ -17,8 +17,8 @@ import javax.swing.JPanel;
 
 import fr.enac.iessa16.cablage.controller.Controleur;
 import fr.enac.iessa16.cablage.model.DonneesAAfficher;
-import fr.enac.iessa16.cablage.model.GrapheTheorique;
-import fr.enac.iessa16.cablage.model.Sommet;
+import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
+import fr.enac.iessa16.cablage.model.core.Sommet;
 
 /**
  * Classe permmettant de dessiner un graphe
@@ -121,7 +121,7 @@ public class DessinDuGrapheParDefaut extends JPanel {
 
 				dessinerCheminKruskal(g);
 				
-				dessinerCheminAstar(g);
+				//dessinerCheminAstar(g);
 			}
 		}
 	}
@@ -364,42 +364,6 @@ public class DessinDuGrapheParDefaut extends JPanel {
 	
 	
 	
-	private void dessinerCheminAstar(Graphics g) {
-		// TODO Auto-generated method stub
-		int x, y;
-		int x1, y1, x2, y2;
-		double longitude;
-		double latitude;
-		double long1, long2;
-		double lat1, lat2;
-		Sommet sommet;
-		if (donneesaafficher.getListearetesCoresspondantauCheminLeplusCourtAStar() != null) {
-			if (donneesaafficher.getGrapheàafficher() != null) {
-				for (int i = 0; i < donneesaafficher.getListearetesCoresspondantauCheminLeplusCourtAStar()
-						.size(); i++) {
-
-					long1 = donneesaafficher.getListearetesCoresspondantauCheminLeplusCourtAStar.get(i)
-							.getSommetOrigine().getLongitude();
-
-					long2 = donneesaafficher.getListearetesCoresspondantauCheminLeplusCourtAStar().get(i)
-							.getSommetExtremité().getLongitude();
-					lat1 = donneesaafficher.getListearetesCoresspondantauCheminLeplusCourtAStar().get(i)
-							.getSommetOrigine().getLatitude();
-					lat2 = donneesaafficher.getListearetesCoresspondantauCheminLeplusCourtAStar().get(i)
-							.getSommetExtremité().getLatitude();
-
-					x1 = ConversionLongitudeEnx(long1);
-					x2 = ConversionLongitudeEnx(long2);
-					y1 = ConversionLatitudeEny(lat1);
-					y2 = ConversionLatitudeEny(lat2);
-
-					g.setColor(java.awt.Color.BLACK);
-					g.drawLine(x1, y1, x2, y2);
-				}
-			}
-
-		}
-	}
 	
 	
 	

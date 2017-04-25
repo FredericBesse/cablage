@@ -1,4 +1,4 @@
-package fr.enac.iessa16.cablage.model;
+package fr.enac.iessa16.cablage.model.core;
 
 public class Arete {
 	

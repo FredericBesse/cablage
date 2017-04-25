@@ -1,4 +1,5 @@
 package fr.enac.iessa16.cablage.fichierTexte;
+import java.awt.Component;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 //Packages à importer afin d'utiliser les objets
@@ -14,9 +15,9 @@ import javax.swing.JFileChooser;
 
 import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
-import fr.enac.iessa16.cablage.model.Arete;
-import fr.enac.iessa16.cablage.model.GrapheTheorique;
-import fr.enac.iessa16.cablage.model.Sommet;
+import fr.enac.iessa16.cablage.model.core.Arete;
+import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
+import fr.enac.iessa16.cablage.model.core.Sommet;
 
 
 	
@@ -28,10 +29,15 @@ import fr.enac.iessa16.cablage.model.Sommet;
 		private ArrayList<Sommet> sommets;
 		private ArrayList<Arete> aretes;
 		
+		private Component parent;
+		
 		//Sommet sommet1;
 	
 	      // Nous déclarons nos objets en dehors du bloc try/catch
-		public  LectureFichier() {
+		public  LectureFichier(Component parent) {
+			
+			this.parent = parent;
+			
 			// TODO Auto-generated method stub
 			this.sommets = new ArrayList<Sommet>();
 			this.points = new ArrayList<Sommet>();
@@ -40,7 +46,8 @@ import fr.enac.iessa16.cablage.model.Sommet;
 			
 			JFileChooser fc = new JFileChooser("/home/eleve/IESSA/hedidira/git/applicationCablage/cablage/CablageGit/file/");
 			
-			int returnVal = fc.showOpenDialog(null);
+			int returnVal = fc.showOpenDialog(parent);
+			fc.setVisible(true);
 			 
 			File fichier = null;
 			

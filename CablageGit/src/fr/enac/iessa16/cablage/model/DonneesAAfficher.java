@@ -1,110 +1,96 @@
 package fr.enac.iessa16.cablage.model;
 
-import java.sql.Time;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Set;
-import java.util.logging.Logger;
+
+import javax.swing.JOptionPane;
 
 import org.jgrapht.alg.ConnectivityInspector;
-import org.jgrapht.alg.interfaces.AStarAdmissibleHeuristic;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
-import fr.enac.iessa16.cablage.controller.Controleur;
 import fr.enac.iessa16.cablage.fichierTexte.LectureFichier;
+import fr.enac.iessa16.cablage.model.algo.DijkstraJGrapht;
+import fr.enac.iessa16.cablage.model.algo.KruskalJGrapht;
+import fr.enac.iessa16.cablage.model.core.Arete;
+import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
+import fr.enac.iessa16.cablage.model.core.Sommet;
 import fr.enac.iessa16.cablage.view.DessinDuGrapheParDefaut;
 import fr.enac.iessa16.cablage.view.ParametresFenetre;
 
 /**
- * Classe Donnees contenant les données utiles à afficher
+ * Classe DonneesAAfficher contenant les données utiles à afficher
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
-
-public class DonneesAAfficher extends Observable
-{
+public class DonneesAAfficher extends Observable {
 
 	//Attributs de la classe DonneesAAfficher 
+	private GrapheTheorique grapheAafficher;	
 
-	public Sommet getSommetOrigine() {
-		return sommetOrigine;
-	}
-
-
-	public List<Set<Sommet>> getConnectedSet() {
-		return connectedSet;
-	}
-
-
-	public Sommet getSommetDestination() {
-		return sommetDestination;
-	}
-
-
-	private 	GrapheTheorique grapheAafficher;	
-	private Controleur controleur;
 	private Sommet dernierSommetSelectionne;
-	private boolean selectionner = false; 
-	private final double R = 6371;
-	private DijkstraJGrapht djikstra;
 	private ArrayList<Sommet> listeDeSommetsSelectionnés;
+
 	private List<Arete> listearetesCoresspondantauCheminLeplusCourtDjikstra;
-	private KruskalJGrapht kruskal;
-	private ArrayList<Arete> listearetesCoresspondantauCheminLeplusCourtKruskal;
-	private GrapheTheorique sousGraphe;
-
-	private ArrayList<Arete> listearetesCoresspondantauCheminLeplusCourtAStar;
-	private AStarAdmissibleHeuristic<Sommet> lol;
-
-	public  ArrayList<Arete> getListearetesCoresspondantauCheminLeplusCourtAStar;
 	private double coutCheminLeplusCourtDjikstra;
-	private Sommet sommetOrigine = null;
-	private Sommet sommetDestination = null;
+	private Sommet sommetOrigine;
+	private Sommet sommetDestination;
+
+	private ArrayList<Arete> listearetesCoresspondantauCheminLeplusCourtKruskal;
+	
+	private DijkstraJGrapht djikstra;
+	private KruskalJGrapht kruskal;
+
 	private List<Set<Sommet>> connectedSet;
+
+	private Component parent;
+
+	
 	/**
 	 * Constructeur de la classe DonneesAAfficher.java
-	 * On initialise les graphes et sommets à null
 	 */
 	public DonneesAAfficher(){
 
+		// Initialisation des attributs
 		this.grapheAafficher = null;
-		this.sousGraphe = null;
+		this.dernierSommetSelectionne = null;
 		this.listeDeSommetsSelectionnés = new ArrayList<Sommet>();
-	
+		
+		this.listearetesCoresspondantauCheminLeplusCourtDjikstra = new ArrayList<Arete>();
+		this.coutCheminLeplusCourtDjikstra = 0;
+		this.sommetOrigine = null;
+		this.sommetDestination = null;
 
+		this.listearetesCoresspondantauCheminLeplusCourtKruskal = new ArrayList<Arete>();
+		
+		this.djikstra = null;
+		this.kruskal = null;
+
+		this.connectedSet = null;
+		
+		this.parent = null;
 	}
 
 
 	/**
 	 * Methode permettant d'afficher le graphe par defaut , apres avoir cliqué sur l'option adequate du menu
 	 */
-	public void chargerLeGrapheParDefaut()   
-
-	{
+	public void chargerLeGrapheParDefaut() {
 
 		//Construction de l'instance de classe "constructeur graphe defaut"
-
 		ConstructionGrapheParDefaut constructeurgraphedefaut = new ConstructionGrapheParDefaut();
 		grapheAafficher = constructeurgraphedefaut.getGraphe();
 
-
 		testConnectivite();
 
-		// fenetre.repaint
 		changement();
 	}
 
 
 
 
-
-	/**
-	 * @return le graphe à afficher
-	 */
-	public GrapheTheorique getGrapheàafficher() {
-		return grapheAafficher;
-	}
 
 
 	public void changement() {
@@ -116,17 +102,18 @@ public class DonneesAAfficher extends Observable
 
 
 
-	/**Méthode qui permet de changer la couleur d'un sommet sélectionné
+	/**
+	 * Méthode permettant de trouver le noeud le plus proche du clic souris
 	 * @param xClic
 	 * @param yClic
 	 */
 	public void nouveauClicSouris(int xClic, int yClic) {
-		// TODO Auto-generated method stub
-		//for(int i =0 ;grapheAafficher.getEnsembleDeSommet().size())
+	
 
-		double distance;
+		double distance, distanceMin = Double.MAX_VALUE;
 		double latitudeSommet, longitudeSommet;
 		double xSommet,ySommet;
+		Sommet sommetLePlusProcheDuClic = null;
 
 		//System.out.println("Clic souris lon="+longitude+" lat="+latitude);
 		//On parcourt l'ensemble des sommets du graphe théorique qui apparait sur la fenetre
@@ -150,42 +137,52 @@ public class DonneesAAfficher extends Observable
 			//System.out.println("distance = "+distance);
 			//Le sommet est consideré comme "sélectionné" si la distance entre le clique et 
 			//la position du sommet du graphe est inférieur au rayon de chaque sommet 
-			if(distance<ParametresFenetre.rayonSommetClic)
-
-
-			{
-
-				//System.out.println("ça coincide avec le sommet "+grapheAafficher.getEnsembleDeSommet().get(i).getNom());
-
-				// on  stocke le noeud cliqué dans l'attribut sommet
-
-				this.dernierSommetSelectionne = grapheAafficher.getEnsembleDeSommet().get(i);
-
-				//System.out.println(sommet.getNom());
-				//this.dessin1.paint(model.getGrapheàafficher());
-				//this.selectionner = true ;
-				//Si le sommmet était déjà selectionné , on le deselectionne quand on clique dessus
-				if (grapheAafficher.getEnsembleDeSommet().get(i).getSelected() == true)
-					grapheAafficher.getEnsembleDeSommet().get(i).setSelected(false); 
-				else 
-					grapheAafficher.getEnsembleDeSommet().get(i).setSelected(true);
-
-
-
-				break;
-
-			} else {
-				///System.out.println(" TEST NOK avec le sommet "+grapheAafficher.getEnsembleDeSommet().get(i).getNom());
+			if(distance<ParametresFenetre.rayonSommetClic)	{
+				
+				if (distance<distanceMin) {
+					
+					distanceMin = distance;
+					sommetLePlusProcheDuClic = grapheAafficher.getEnsembleDeSommet().get(i);
+					
+				}
 			}
+		}
+		
+		if (sommetLePlusProcheDuClic != null) {
+				
+			// on  stocke le noeud cliqué dans l'attribut dernierSommetSelectionne
+			this.dernierSommetSelectionne = sommetLePlusProcheDuClic;
+
+			//System.out.println(sommet.getNom());
+			//this.dessin1.paint(model.getGrapheàafficher());
+			//this.selectionner = true ;
+			
+			//Si le sommmet était déjà selectionné
+			if (dernierSommetSelectionne.getSelected() == true) {
+				//on le deselectionne quand on clique dessus
+				dernierSommetSelectionne.setSelected(false); 
+				
+				// on le supprime de la liste des noeuds sélectionnés
+				this.listeDeSommetsSelectionnés.remove(dernierSommetSelectionne);
+			}
+			else { 
+				//on le selectionne 
+				dernierSommetSelectionne.setSelected(true);
+				
+				// on l'ajoute dans la liste des noeuds sélectionnés
+				this.listeDeSommetsSelectionnés.add(dernierSommetSelectionne);
+			}
+
+
+			//On notifie la vue que le modèle a changé
+			this.changement();
+			
+
+			
 		}
 
 
-		//On notifie la vue que le modèle a changé
-
-		//if (sommet != null) {
-		this.changement();
-		//}
-
+		
 
 
 
@@ -203,13 +200,6 @@ public class DonneesAAfficher extends Observable
 
 
 
-
-	/**Getter Sommet
-	 * @return sommet
-	 */
-	public Sommet getdernierSommetSelectionne() {
-		return dernierSommetSelectionne;
-	}
 
 
 
@@ -233,7 +223,7 @@ public class DonneesAAfficher extends Observable
 		// TODO Auto-generated method stub
 		//Construire le graphe
 
-		LectureFichier constructeurgrapheText = new LectureFichier();
+		LectureFichier constructeurgrapheText = new LectureFichier(parent);
 		grapheAafficher = constructeurgrapheText.getGraphe();
 
 		testConnectivite();
@@ -339,46 +329,52 @@ public class DonneesAAfficher extends Observable
 	public void calculerKruskal() {
 		// TODO Auto-generated method stub
 		ArrayList<Arete> sousAretes = new ArrayList<Arete>();
+		ArrayList<Sommet> sousSommets = new ArrayList<Sommet>();
+		GrapheTheorique sousGraphe;
+		ArrayList<Arete> chemin;
+		
+		int nbNoeudInutile = 0;
+		
+		// Le sous graphe pour Kruskal contient tous les noeuds sélectionnés
+		sousSommets.addAll(listeDeSommetsSelectionnés);
+		
+		// Création de l'objet permettant le calcul de Dijkstra
 		this.djikstra = new DijkstraJGrapht(grapheAafficher);
-		listeDeSommetsSelectionnés.clear();
-		Sommet sommet;
-		//On recupere la liste de sommets selectionnés
-		int size = grapheAafficher.getEnsembleDeSommet().size(); //Optimisation du code ,utilisation de variable locale...
-		for(int i = 0 ;i<size ;i++)
-		{
-			if(grapheAafficher.getEnsembleDeSommet().get(i).getSelected() == true)
-			{
-				sommet = grapheAafficher.getEnsembleDeSommet().get(i);
-
-				listeDeSommetsSelectionnés.add(sommet);
-
-
-			}
-
-
-
-		}
-
-		System.out.println("il y a "+ listeDeSommetsSelectionnés.size()+ " noeuds selectionnés");
-		//Logger.getLogger()
-
-
+		
+		//On calcule Djikstra entre un noeud de depart (indice i ) et toutes les combinaisons possibles (autre noeud commencant à l'indice i+1);
 		for(int i = 0 ; i<listeDeSommetsSelectionnés.size(); i++)
 		{
 			for(int j = i+1 ; j<listeDeSommetsSelectionnés.size(); j++) 
 			{
 
-				//On calcule Djikstra entre un noeud de depart (indice i ) et toutes les combinaisons possibles (autre noeud commencant à l'indice i+1);
-				sousAretes.addAll(this.djikstra.getDijkstraShortestPath(listeDeSommetsSelectionnés.get(i),listeDeSommetsSelectionnés.get(j)));
-
+				chemin = this.djikstra.getDijkstraShortestPath(listeDeSommetsSelectionnés.get(i),listeDeSommetsSelectionnés.get(j));
+				
+				// on ajoute toutes les aretes du chemin le plus court aux sous Aretes
+				sousAretes.addAll(chemin);
+				
+				// on parcourt toutes les aretes pour ajouter les sommets supplémentaires (non sélectionné) à la liste des sous sommets
+				for (Arete arete : chemin) {
+					
+					if (!sousSommets.contains(arete.getSommetOrigine())) {
+						nbNoeudInutile++;
+						sousSommets.add(arete.getSommetOrigine());
+					}
+					if (!sousSommets.contains(arete.getSommetExtremité())) {
+						nbNoeudInutile++;
+						sousSommets.add(arete.getSommetExtremité());
+					}					
+				}
 			}
-
-
-
-
 		}
+		
+		if (nbNoeudInutile != 0) {
+			
+			message("Algorithme de Kruskal", nbNoeudInutile+" noeud(s) non sélectionné(s) ont du etre rajouté pour le calcul du chemin à cout minimum");
+			
+		}
+		
 		//On cree un sous graphe avec la liste des sommets selectionnés et les sous Aretes.
-		this.sousGraphe = new GrapheTheorique(listeDeSommetsSelectionnés, sousAretes);
+		sousGraphe = new GrapheTheorique(listeDeSommetsSelectionnés, sousAretes);
 
 		//On appelle Kruskal sur ce sous graphe
 		this.kruskal = new KruskalJGrapht(sousGraphe);
@@ -390,6 +386,34 @@ public class DonneesAAfficher extends Observable
 	}
 
 	//Getters et Setters 
+
+	private void message(String titre, String message) {
+		
+		
+		JOptionPane.showMessageDialog(parent, message, titre, JOptionPane.INFORMATION_MESSAGE);
+		//default title and icon
+		/*JOptionPane.showMessageDialog(frame,
+		    "Eggs are not supposed to be green.");
+
+		Informational dialog with custom title, warning icon 	
+
+		//custom title, warning icon
+		JOptionPane.showMessageDialog(frame,
+		    "Eggs are not supposed to be green.",
+		    "Inane warning",
+		    JOptionPane.WARNING_MESSAGE);
+
+		Informational dialog with custom title, error icon 	
+
+		//custom title, error icon
+		JOptionPane.showMessageDialog(frame,
+		    "Eggs are not supposed to be green.",
+		    "Inane error",
+		    JOptionPane.ERROR_MESSAGE);*/
+
+		
+	}
+
 
 	public List<Arete> getListearetesCoresspondantauCheminLeplusCourtDjikstra() {
 		return listearetesCoresspondantauCheminLeplusCourtDjikstra;
@@ -408,15 +432,11 @@ public class DonneesAAfficher extends Observable
 
 
 
-
-
-
-
-
-
-
-	public ArrayList<Arete> getListearetesCoresspondantauCheminLeplusCourtAStar() {
-		return listearetesCoresspondantauCheminLeplusCourtAStar;
+	/**Getter Sommet
+	 * @return sommet
+	 */
+	public Sommet getdernierSommetSelectionne() {
+		return dernierSommetSelectionne;
 	}
 
 
@@ -426,5 +446,30 @@ public class DonneesAAfficher extends Observable
 	public double getCoutCheminLeplusCourtDjikstra() {
 		// TODO Auto-generated method stub
 		return coutCheminLeplusCourtDjikstra;
+	}
+	public Sommet getSommetOrigine() {
+		return sommetOrigine;
+	}
+
+
+	public List<Set<Sommet>> getConnectedSet() {
+		return connectedSet;
+	}
+
+
+	public Sommet getSommetDestination() {
+		return sommetDestination;
+	}
+
+
+	/**
+	 * @return le graphe à afficher
+	 */
+	public GrapheTheorique getGrapheàafficher() {
+		return grapheAafficher;
+	}
+	
+	public void setParent(Component parent) {
+		this.parent = parent;
 	}
 }

@@ -1,6 +1,10 @@
 package fr.enac.iessa16.cablage.model;
 
 import java.util.ArrayList;
+
+import fr.enac.iessa16.cablage.model.core.Arete;
+import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
+import fr.enac.iessa16.cablage.model.core.Sommet;
 /**
  * Classe ConstructionGrapheParDefaut  permettant de construire un graphe par défaut (pour des tests)
  *

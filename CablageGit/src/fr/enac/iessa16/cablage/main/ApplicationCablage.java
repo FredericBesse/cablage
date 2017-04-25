@@ -5,28 +5,37 @@ import fr.enac.iessa16.cablage.model.DonneesAAfficher;
 import fr.enac.iessa16.cablage.view.Fenetre;
 
 /**
- * Classe 
+ * Classe principale permettant le lancement de l'application
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
 public class ApplicationCablage {
-
+	
 	/**
-	 * Ma...
+	 * Le constructeur de l'application
+	 */
+	public ApplicationCablage() {
+		
+		// Création du modèle
+		DonneesAAfficher donnees = new DonneesAAfficher();
+		
+		// Création du controleur principal
+		Controleur controleur = new Controleur(donnees);
+				
+		// Création de la fenetre
+		Fenetre fen = new Fenetre(controleur,donnees);
+		donnees.setParent(fen);
+	}
+
+	
+	/**
+	 * Main de l'application cablage
 	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		
-		// On créé les
-		DonneesAAfficher donnees = new DonneesAAfficher();
-		Controleur controleur1 = new Controleur(donnees);
-		
-		//ConstructionGrapheParDefaut constructeurdegraphepardefaut = new ConstructionGrapheParDefaut();
-		//constructeurdegraphepardefaut.getGraphe();
-		Fenetre toto = new Fenetre(controleur1,donnees);//, constructeurdegraphepardefaut.getGraphe());
-		
-		System.out.println("toto");
+		new ApplicationCablage();
 		
 	}
 }
