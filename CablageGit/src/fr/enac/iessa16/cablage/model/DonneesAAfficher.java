@@ -519,6 +519,17 @@ public class DonneesAAfficher extends Observable {
 		// TODO Auto-generated method stub
 		message("Ouvrir", "à faire");
 	}
+
+
+	public void drag(int dx, int dy) {
+		// TODO Auto-generated method stub
+		ParametresFenetre.offsetX += dx;
+		ParametresFenetre.offsetY += dy;
+		
+		//message("drag", "dx="+dx+" dy="+dy);
+		
+		changement();
+	}
 	
 	
 

@@ -3,18 +3,22 @@ package fr.enac.iessa16.cablage.controller;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 import fr.enac.iessa16.cablage.model.DonneesAAfficher;
 import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
 import fr.enac.iessa16.cablage.model.core.Sommet;
 import fr.enac.iessa16.cablage.view.DessinDuGrapheParDefaut;
+import fr.enac.iessa16.cablage.view.ParametresFenetre;
+
 
 /**
  * Classe Controleur Clique sur le Sommet
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
-public class ControleurCliqueSommet implements MouseListener, MouseMotionListener {
+public class ControleurCliqueSommet implements MouseListener, MouseMotionListener, MouseWheelListener {
 
 	//
 	private DonneesAAfficher model;
@@ -22,7 +26,7 @@ public class ControleurCliqueSommet implements MouseListener, MouseMotionListene
 	
 	
 	
-	
+	private int x_old, y_old;
 	
 	
 	
@@ -96,8 +100,8 @@ public class ControleurCliqueSommet implements MouseListener, MouseMotionListene
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
-		
-		
+		this.x_old = e.getX();
+		this.y_old = e.getY();
 		
 		
 		
@@ -134,8 +138,16 @@ public class ControleurCliqueSommet implements MouseListener, MouseMotionListene
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
+		int dx = e.getX()-x_old;
+		int dy = e.getY()-y_old;
 		
-		System.out.println("Mouse draged x="+e.getX());
+		System.out.println("Mouse draged dx="+dx+" dy="+dy);
+		
+		model.drag(dx, dy);
+		
+		
+		this.x_old = e.getX();
+		this.y_old = e.getY();
 		
 	}
 
@@ -151,6 +163,51 @@ public class ControleurCliqueSommet implements MouseListener, MouseMotionListene
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+
+
+
+
+
+
+
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		// TODO Auto-generated method stub
+		// on récupère la rotation de la molette (le "-" permet de modifier le
+				// sens de rotation pour zoomer/dézoomer)
+				int delta = -5 * e.getWheelRotation();
+				
+				//System.out.println("delta = "+delta);
+
+				// on récupére la position de la souris pour zoomer sur la souris
+				int xs = e.getX();
+				int ys = e.getY();
+
+				// on calcule la nouvelle échelle pour la vue
+				double newEchelle = ParametresFenetre.echelle * //Math.max(1,
+						 Math.pow(1.01, delta);
+				
+				
+
+				// on calcule les nouveaux offset en fonction de la position de la
+				// souris
+				double newOffsetX = ParametresFenetre.offsetX
+						+ DessinDuGrapheParDefaut.getRealCoordX(xs) / ParametresFenetre.ECHELLE_BASE
+						* (ParametresFenetre.echelle - newEchelle);
+				double newOffsetY = ParametresFenetre.offsetY
+						- DessinDuGrapheParDefaut.getRealCoordY(ys) / ParametresFenetre.ECHELLE_BASE
+						* (ParametresFenetre.echelle - newEchelle);
+				
+			
+				ParametresFenetre.echelle = newEchelle;
+				ParametresFenetre.offsetX = newOffsetX;
+				ParametresFenetre.offsetY = newOffsetY;
+				
+
+			model.changement();
 	}
 
 }

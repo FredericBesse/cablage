@@ -20,6 +20,7 @@ import fr.enac.iessa16.cablage.model.DonneesAAfficher;
 import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
 import fr.enac.iessa16.cablage.model.core.Sommet;
 
+
 /**
  * Classe permmettant de dessiner un graphe
  *
@@ -46,7 +47,7 @@ public class DessinDuGrapheParDefaut extends JPanel {
 
 		this.addMouseListener(controleur.getControleurClique());
 		this.addMouseMotionListener(controleur.getControleurClique());
-
+		this.addMouseWheelListener(controleur.getControleurClique());
 		
 		
 		
@@ -359,31 +360,148 @@ public class DessinDuGrapheParDefaut extends JPanel {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/*private void centerView() {
 
+		double echelleX = 0;
+		double echelleY = 0;
+
+		double[] boundingBox = this.getBoundingBox();
+
+		if ((boundingBox[1] - boundingBox[0] != Double.NEGATIVE_INFINITY)
+				&& (boundingBox[3] - boundingBox[2] != Double.NEGATIVE_INFINITY)) {
+			echelleX = (this.getWidth() - 100) * ViewParameters.ECHELLE_BASE
+					/ (boundingBox[1] - boundingBox[0]);
+			echelleY = (this.getHeight() - 100) * ViewParameters.ECHELLE_BASE
+					/ (boundingBox[3] - boundingBox[2]);
+
+			this.echelle = Math.min(echelleX, echelleY);
+
+			this.offsetX = -(this
+					.getLocalCoordX((boundingBox[1] + boundingBox[0]) / 2) - this
+					.getLocalCoordX(0));
+			this.offsetY = -(this
+					.getLocalCoordY((boundingBox[3] + boundingBox[2]) / 2) - this
+					.getLocalCoordY(0));
+
+		} else { // pas de contenu
+			Model.logger
+					.warning("Pas de contenu trouvé lors du centrage de la vue 2D...");
+		}
+	}*/
+	
+	/**
+	 * Méthode permettant de calculer les valeurs Xmin/max et Ymin/max de la
+	 * boite englobante des secteurs du dataset, utilisés pour centrer la vue
+	 * 
+	 * @return un tableau de 4 double: Xmin, Xmax, Ymin, Ymax
+	 */
+	/*private double[] getBoundingBox() {
+
+		double data[] = new double[4];
+		double[] bb = new double[4];
+
+		/*data[0] = Double.POSITIVE_INFINITY; // x min
+		data[1] = Double.NEGATIVE_INFINITY; // x max
+		data[2] = Double.POSITIVE_INFINITY; // y min
+		data[3] = Double.NEGATIVE_INFINITY; // y max
+
+		
+		//for (Airspace atsu : atsuList.list()) {
+			for (Sector sector : model.getAllSectorVector()) {
+				for (Volume volume : sector.getVolumesList()) {
+					Leg leg = volume.getBoundingBox();
+					bb[0] = leg.start.lonW();
+					bb[1] = leg.stop.lonW();
+					bb[2] = leg.stop.latW();
+					bb[3] = leg.start.latW();
+
+					if (bb[0] < data[0]) {
+						data[0] = bb[0];
+					}
+					if (bb[1] > data[1]) {
+						data[1] = bb[1];
+					}
+					if (bb[2] < data[2]) {
+						data[2] = bb[2];
+					}
+					if (bb[3] > data[3]) {
+						data[3] = bb[3];
+					}
+				}
+			}
+		}*/
+		
+	/*	data[0] = model.getCoflightParser().getMinLon(); // x min
+		data[1] = model.getCoflightParser().getMaxLon(); // x max
+		data[2] = model.getCoflightParser().getMinLat(); // y min
+		data[3] = model.getCoflightParser().getMaxLat(); // y max
+		
+		return data;
+	}
+	*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static int ConversionLongitudeEnx(double longitude) {
+		return (int) Math.round(ParametresFenetre.dimensionJPanelGraphe.getWidth() / 2 + ParametresFenetre.offsetX + longitude
+				* ParametresFenetre.echelle / ParametresFenetre.ECHELLE_BASE);
+
+	}
+
+	public static int ConversionLatitudeEny(double latitude) {
+		return (int) Math.round(ParametresFenetre.dimensionJPanelGraphe.getHeight() / 2 + ParametresFenetre.offsetY - latitude
+				* ParametresFenetre.echelle / ParametresFenetre.ECHELLE_BASE);
+
+	}
+
+	
+	
+	/**
+	 * Méthode permettant de convertir une abscisse locale (repère JPanel) en
+	 * abscisse réelle
+	 * 
+	 * @param x
+	 *            l'abscisse locale
+	 * @return l'abscisse réelle
+	 */
+	// TODO fonction a mettre dans le model ???
+	public static double getRealCoordX(double x) {
+		return (x - (ParametresFenetre.dimensionJPanelGraphe.getWidth() / 2 + ParametresFenetre.offsetX))
+				* ParametresFenetre.ECHELLE_BASE / ParametresFenetre.echelle;
+	}
+
+	/**
+	 * Méthode permettant de convertir une ordonnée locale (repère JPanel) en
+	 * ordonnée réelle
+	 * 
+	 * @param y
+	 *            l'ordonnée locale
+	 * @return l'ordonnée réelle
+	 */
+	// TODO fonction a mettre dans le model ???
+	public static double getRealCoordY(double y) {
+		return (y - (ParametresFenetre.dimensionJPanelGraphe.getHeight() / 2 + ParametresFenetre.offsetY))
+				* -ParametresFenetre.ECHELLE_BASE / ParametresFenetre.echelle;
+	}
+
+	/*
+	 * Sauvegarde FBE
+	 * 
+	 * public static int ConversionLongitudeEnx(double longitude) {
 		int x;
 		x = ((int) (((longitude - donneesaafficher.getGrapheàafficher().getLongitudemin())
 				* (ParametresFenetre.dimensionJPanelGraphe.width * 0.9 - ParametresFenetre.dimensionJPanelGraphe.width * 0.1)
@@ -403,7 +521,7 @@ public class DessinDuGrapheParDefaut extends JPanel {
 				+ ParametresFenetre.dimensionEcran.height * 0.1));
 		return y;
 
-	}
+	}*/
 
 	/*public static double ConversionxEnLongitude(int x) {
 

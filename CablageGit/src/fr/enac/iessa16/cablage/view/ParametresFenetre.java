@@ -19,4 +19,9 @@ public class ParametresFenetre {
 	public static Dimension dimensionJPanelParametresArete;
 	
 	public static Dimension dimensionJPanelGraphe;
+	public static double offsetX=0;
+	public static double echelle=1;
+	public static double ECHELLE_BASE=1;
+	public static double offsetY=0;
+
 }
