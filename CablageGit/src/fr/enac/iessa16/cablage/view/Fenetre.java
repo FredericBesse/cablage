@@ -160,6 +160,7 @@ public class Fenetre extends JFrame implements Observer {
 		option3.addActionListener(controleur.getControleMenu());
 		// option3.addActionListener(this);
 		menu.add(option3);
+		
 
 		// Get all the available look and feel that we are going to use for
 		// creating the JMenuItem and assign the action listener to handle

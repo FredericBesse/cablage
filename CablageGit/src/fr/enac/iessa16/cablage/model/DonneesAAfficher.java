@@ -374,7 +374,7 @@ public class DonneesAAfficher extends Observable {
 		}
 		
 		//On cree un sous graphe avec la liste des sommets selectionnés et les sous Aretes.
-		sousGraphe = new GrapheTheorique(listeDeSommetsSelectionnés, sousAretes);
+		sousGraphe = new GrapheTheorique(sousSommets, sousAretes);
 
 		//On appelle Kruskal sur ce sous graphe
 		this.kruskal = new KruskalJGrapht(sousGraphe);
