@@ -63,7 +63,7 @@ public class ControleDuMenu implements ActionListener {
 		if(s.equals("GrapheAleatoire"))
 		{
 			
-			model.nouveauGraphe();
+			model.OuvertureGrapheAleatoire();
 			
 			
 		}
@@ -71,7 +71,7 @@ public class ControleDuMenu implements ActionListener {
 		if(s.equals("GrapheVide"))
 		{
 			
-			model.nouveauGraphe();
+			model.OuvertureGrapheVide();;
 		}
 		
 		
@@ -79,23 +79,31 @@ public class ControleDuMenu implements ActionListener {
 		{
 			
 			
-			model.nouveauGraphe();
+			model.Fermer();
 		}
 		
 		if(s.equals("EnregistrerSous"))
 		{
 			
 			
-			model.nouveauGraphe();
-		}
+			model.EnregisterSous();		}
 		
 		
 		if(s.equals("Imprimer"))
 		{
 			
 			
-			model.nouveauGraphe();
+			model.Imprimer();
 		}
+		
+		if(s.equals("Ouvrir"))
+		{
+			
+			
+			model.Ouvrir();
+		}
+		
+		
 		
 	}
 	

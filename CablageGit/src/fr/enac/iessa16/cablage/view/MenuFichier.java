@@ -58,15 +58,20 @@ public class MenuFichier extends JMenu{
 		optionChargerDefaut.addActionListener(controleur.getControleMenu());
 		optionNouveau.add(optionChargerDefaut);
 		
+		JMenuItem optionImporter = new JMenuItem("Importer...");
+		optionImporter.setMnemonic(KeyEvent.VK_O);
+		optionImporter.setAccelerator(KeyStroke.getKeyStroke("control I"));
+		optionImporter.setActionCommand("ChargerGrapheDonné");
+		optionImporter.addActionListener(controleur.getControleMenu());
+		this.add(optionImporter);
+		
+		
 		JMenuItem optionOuvrir = new JMenuItem("Ouvrir...");
 		optionOuvrir.setMnemonic(KeyEvent.VK_O);
 		optionOuvrir.setAccelerator(KeyStroke.getKeyStroke("control O"));
-		optionOuvrir.setActionCommand("ChargerGrapheDonné");
+		optionOuvrir.setActionCommand("Ouvrir");
 		optionOuvrir.addActionListener(controleur.getControleMenu());
 		this.add(optionOuvrir);
-		
-	
-		
 		
 		
 		

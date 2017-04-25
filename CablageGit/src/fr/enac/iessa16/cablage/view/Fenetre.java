@@ -1,5 +1,6 @@
 package fr.enac.iessa16.cablage.view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.Observable;
@@ -12,6 +13,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JToolBar;
 import javax.swing.UIManager;
 
 import fr.enac.iessa16.cablage.controller.Controleur;
@@ -98,6 +100,7 @@ public class Fenetre extends JFrame implements Observer {
 		
 
 		this.getContentPane().add(monContenair);
+		this.getContentPane().add(new BarreOutils(controleur), BorderLayout.NORTH);
 
 		// this.pack();
 		this.setVisible(true);
@@ -136,7 +139,7 @@ public class Fenetre extends JFrame implements Observer {
 	public void creerMenu() {
 
 		
-
+		
 		this.jbar = new JMenuBar();
 		this.setJMenuBar(jbar);
 		MenuFichier menufichier = new MenuFichier(controleur);
@@ -145,7 +148,10 @@ public class Fenetre extends JFrame implements Observer {
 		MenuCalcul menucalcul = new MenuCalcul(controleur); 
 		this.jbar.add(menucalcul);
 		
+	
+	
 	}
+	
 
 	@Override
 	public void update(Observable o, Object arg) {
