@@ -52,7 +52,7 @@ public class Fenetre extends JFrame implements Observer {
 
 		monContenair.setLayout(new FlowLayout());
 
-		
+	
 
 
 		// Calcul de la dimension du JPanel paramètres (à gauche)
@@ -76,6 +76,9 @@ public class Fenetre extends JFrame implements Observer {
 		//JTabbedPane tabbedPane = new JTabbedPane();
 		
 		this.dessin = new DessinDuGrapheParDefaut(model, controleur);
+		
+		
+		
 		//dessin1 = new DessinDuGrapheParDefaut(model, controleur);
 		//dessin2 = new DessinDuGrapheParDefaut(model, controleur);
 	//	ImageIcon icon = createImageIcon("images/middle.gif");
@@ -147,7 +150,8 @@ public class Fenetre extends JFrame implements Observer {
 		JMenu menuCalcul = new JMenu("Calcul");
 		MenuCalcul menucalcul = new MenuCalcul(controleur); 
 		this.jbar.add(menucalcul);
-		
+		MenuEdition menuedition = new MenuEdition(controleur);
+		this.jbar.add(menuedition);
 	
 	
 	}
@@ -167,6 +171,10 @@ public class Fenetre extends JFrame implements Observer {
 		
 		
 
+	}
+
+	public DessinDuGrapheParDefaut getDessin() {
+		return dessin;
 	}
 
 }

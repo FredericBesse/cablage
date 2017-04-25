@@ -7,6 +7,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -26,7 +29,7 @@ import fr.enac.iessa16.cablage.model.core.Sommet;
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
-public class DessinDuGrapheParDefaut extends JPanel {
+public class DessinDuGrapheParDefaut extends JPanel implements Printable {
 
 	
 	//private float scale = 1;
@@ -94,9 +97,6 @@ public class DessinDuGrapheParDefaut extends JPanel {
 	protected void paintComponent(Graphics g) {
 
 		super.paintComponent(g);
-		
-		
-        
         
 		if (donneesaafficher != null) {
 			
@@ -548,6 +548,40 @@ public class DessinDuGrapheParDefaut extends JPanel {
 	public void update() {
 		// TODO Auto-generated method stub
 		repaint();
+	}
+
+	@Override
+	public int print(Graphics g, PageFormat pageFormat, int pageIndex) throws PrinterException {
+		// TODO Auto-generated method stub
+		if (donneesaafficher != null) {
+			
+			// Si le graphe n'est pas vide
+			if (donneesaafficher.getGrapheàafficher() != null) {
+
+				//Graphics2D g2D = (Graphics2D) g;
+				
+				//AffineTransform at = new AffineTransform();
+		        //at.scale(scale, scale);
+		        //g2D.setTransform(at);
+				
+				
+				dessinerFondCarte(g);
+				
+				dessinerSommets(g);
+
+				dessinerAretes(g);
+
+				dessinerDernierSommetSelectionne(g);
+
+				dessinerCheminDijkstra(g);
+
+				dessinerCheminKruskal(g);
+				
+				//dessinerCheminAstar(g);
+			}
+		}
+		
+		return 0;
 	}
 	
 	
