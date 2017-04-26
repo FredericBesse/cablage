@@ -3,17 +3,20 @@ package fr.enac.iessa16.cablage.model.core;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Chemin {
+public class Cablage {
 	
-	private ArrayList<Arete> chemin;
+	private ArrayList<Sommet> sommetsSelectionnes;
+	private ArrayList<Sommet> sommetsUtiles;
+	private ArrayList<Arete> aretes;
 	private double cout;
 	
 	private HashMap<Sommet, ArrayList<Arete>> aretesParSommet;
 	
 
-	public Chemin(ArrayList<Arete> listeAretes) {
+	public Cablage(ArrayList<Sommet> sommetsSelectionnes, ArrayList<Arete> listeAretes) {
 		
-		this.chemin = listeAretes;
+		this.sommetsSelectionnes = sommetsSelectionnes;
+		this.aretes = listeAretes;
 		
 		this.aretesParSommet = new HashMap<Sommet, ArrayList<Arete>>();
 		
@@ -50,23 +53,27 @@ public class Chemin {
 		return aretesParSommet;
 	}
 
-	public Chemin(Chemin chemin) {
+	public Cablage(Cablage chemin) {
 		
-		this(chemin.getChemin());
+		this(chemin.getSommetsSelectionnes(), chemin.getChemin());
 	}
 
 	public ArrayList<Arete> getChemin() {
-		return chemin;
+		return aretes;
 	}
 
 	public double getCout() {
 		
 		// Calcul du cout
 		this.cout = 0;
-		for (Arete arete : this.chemin) {
+		for (Arete arete : this.aretes) {
 			this.cout += arete.getCout();
 		}
 		
 		return cout;
+	}
+
+	public ArrayList<Sommet> getSommetsSelectionnes() {
+		return sommetsSelectionnes;
 	}
 }

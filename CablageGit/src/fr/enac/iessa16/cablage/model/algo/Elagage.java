@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import fr.enac.iessa16.cablage.model.core.Arete;
-import fr.enac.iessa16.cablage.model.core.Chemin;
+import fr.enac.iessa16.cablage.model.core.Cablage;
 import fr.enac.iessa16.cablage.model.core.Sommet;
 
 public class Elagage {
 	
-	private Chemin chemin;
-	private Chemin cheminElague;
+	private Cablage chemin;
+	private Cablage cheminElague;
 
 	
 
-	public Elagage(Chemin chemin) {
+	public Elagage(Cablage chemin) {
 		
 		this.chemin = chemin;
-		this.cheminElague = new Chemin(chemin);
+		this.cheminElague = new Cablage(chemin);
 		this.elague();
 	}
 	
@@ -86,11 +86,11 @@ public class Elagage {
 		
 	}
 	
-	public Chemin getChemin() {
+	public Cablage getChemin() {
 		return chemin;
 	}
 	
-	public Chemin getCheminElague() {
+	public Cablage getCheminElague() {
 		return cheminElague;
 	}
 

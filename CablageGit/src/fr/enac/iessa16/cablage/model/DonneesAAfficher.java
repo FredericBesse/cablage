@@ -18,6 +18,7 @@ import fr.enac.iessa16.cablage.model.core.Arete;
 import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
 import fr.enac.iessa16.cablage.model.core.Sommet;
 import fr.enac.iessa16.cablage.view.DessinDuGrapheParDefaut;
+import fr.enac.iessa16.cablage.view.Fenetre;
 import fr.enac.iessa16.cablage.view.ParametresFenetre;
 
 /**
@@ -327,59 +328,16 @@ public class DonneesAAfficher extends Observable {
 	 * Methode permettant de calculer Kruskal
 	 */
 	public void calculerKruskal() {
-		// TODO Auto-generated method stub
-		ArrayList<Arete> sousAretes = new ArrayList<Arete>();
-		ArrayList<Sommet> sousSommets = new ArrayList<Sommet>();
-		GrapheTheorique sousGraphe;
-		ArrayList<Arete> chemin;
 		
-		int nbNoeudInutile = 0;
 		
-		// Le sous graphe pour Kruskal contient tous les noeuds sélectionnés
-		sousSommets.addAll(listeDeSommetsSelectionnés);
-		
-		// Création de l'objet permettant le calcul de Dijkstra
-		this.djikstra = new DijkstraJGrapht(grapheAafficher);
-		
-		//On calcule Djikstra entre un noeud de depart (indice i ) et toutes les combinaisons possibles (autre noeud commencant à l'indice i+1);
-		for(int i = 0 ; i<listeDeSommetsSelectionnés.size(); i++)
-		{
-			for(int j = i+1 ; j<listeDeSommetsSelectionnés.size(); j++) 
-			{
-
-				chemin = this.djikstra.getDijkstraShortestPath(listeDeSommetsSelectionnés.get(i),listeDeSommetsSelectionnés.get(j));
-				
-				// on ajoute toutes les aretes du chemin le plus court aux sous Aretes
-				sousAretes.addAll(chemin);
-				
-				// on parcourt toutes les aretes pour ajouter les sommets supplémentaires (non sélectionné) à la liste des sous sommets
-				for (Arete arete : chemin) {
-					
-					if (!sousSommets.contains(arete.getSommetOrigine())) {
-						nbNoeudInutile++;
-						sousSommets.add(arete.getSommetOrigine());
-					}
-					if (!sousSommets.contains(arete.getSommetExtremité())) {
-						nbNoeudInutile++;
-						sousSommets.add(arete.getSommetExtremité());
-					}					
-				}
-			}
+		if (this.kruskal == null) {
+			this.kruskal = new KruskalJGrapht(this, grapheAafficher);
 		}
 		
-		if (nbNoeudInutile != 0) {
-			
-			message("Algorithme de Kruskal", nbNoeudInutile+" noeud(s) non sélectionné(s) ont du etre rajouté pour le calcul du chemin à cout minimum");
-			
-		}
+		kruskal.calculerKruskal(this.listeDeSommetsSelectionnés);
 		
-		//On cree un sous graphe avec la liste des sommets selectionnés et les sous Aretes.
-		sousGraphe = new GrapheTheorique(sousSommets, sousAretes);
-
-		//On appelle Kruskal sur ce sous graphe
-		this.kruskal = new KruskalJGrapht(sousGraphe);
-		this.listearetesCoresspondantauCheminLeplusCourtKruskal = this.kruskal.getKruskalShortestPath();
-
+		listearetesCoresspondantauCheminLeplusCourtKruskal = kruskal.getKruskalShortestPath();
+		
 		System.out.println("Le chemin le plus court contient " + listearetesCoresspondantauCheminLeplusCourtKruskal.size() +" aretes");
 		changement();
 
@@ -387,7 +345,7 @@ public class DonneesAAfficher extends Observable {
 
 	//Getters et Setters 
 
-	private void message(String titre, String message) {
+	public void message(String titre, String message) {
 		
 		
 		JOptionPane.showMessageDialog(parent, message, titre, JOptionPane.INFORMATION_MESSAGE);
@@ -503,8 +461,8 @@ public class DonneesAAfficher extends Observable {
 	
 	public void Imprimer() {
 		// TODO Auto-generated method stub
-		
-		message("Imprimer", "à faire");
+		fr.enac.iessa16.cablage.view.Imprimer monImpression = new fr.enac.iessa16.cablage.view.Imprimer(((Fenetre)parent).getDessin());
+		//message("Imprimer", "à faire");
 		
 	}
 
