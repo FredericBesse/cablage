@@ -17,87 +17,74 @@ import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import fr.enac.iessa16.cablage.model.DonneesAAfficher;
 import fr.enac.iessa16.cablage.model.core.Arete;
+import fr.enac.iessa16.cablage.model.core.Cablage;
 import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
 import fr.enac.iessa16.cablage.model.core.Sommet;
 
 
 public class KruskalJGrapht {
-
+	
+	// Référence vers le modèle
+	private DonneesAAfficher model;
 	
 	// Référence vers le graphe du modèle
 	private GrapheTheorique graphe;
 	
-	// Graphe théorique au format JGrapht		
-	private SimpleWeightedGraph<Sommet, Arete> graphPourJGrapht = null;
-	
 	// Objet permettant de calculer Dijkstra sur un graphe JGrapht
-	private KruskalMinimumSpanningTree<Sommet, Arete> kruskalShortestPath = null;
-
 	private DijkstraJGrapht djikstra;
 
-	private DonneesAAfficher model;
-		
+	// Cablage obtenu par l'algorithme de Kruskal
+	private  ArrayList<Arete> cablage;
+	
 	
 	/**
-	 * Constructeur à partir du graphe à afficher
+	 * Constructeur à partir du modèle
 	 * 
-	 * @param g le graphe sur lequel l'algorithme sera exécuté
+	 * @param model le modèle de l'application
 	 */
-	public KruskalJGrapht(DonneesAAfficher model, GrapheTheorique g){	
+	public KruskalJGrapht(DonneesAAfficher model){	
 	
+		// Enregistrement d'une référence vers le modèle
 		this.model = model;
 		
-		// Enregistrement d'une référence vers le graphe à afficher
-		this.graphe = g;
+		// Enregistrement d'une référence vers le graphe du modèle
+		this.graphe = model.getGrapheàafficher();
 		
-		// Construction du graphPourJGrapht à partir le l'objet graphe donné
-        graphPourJGrapht = new SimpleWeightedGraph<Sommet, Arete>(Arete.class);
-
-        // Ajout de tous les sommets au graphe JGrapht
-        for (Sommet sommet: graphe.getEnsembleDeSommet()) {
-            graphPourJGrapht.addVertex(sommet);
-        }
-      /*  for (int i = 0; i< graphe.getEnsembleDeSommet().size();i++) {
-        	Sommet sommet = graphe.getEnsembleDeSommet().get(i);
-            graphPourJGrapht.addVertex(sommet);
-        }*/
+	    // Création de l'objet permettant le calcul de Dijkstra
+        djikstra = new DijkstraJGrapht(this.graphe);    
         
-        // Ajout de toutes les aretes au graphe JGrapht
-        for (Arete arete : graphe.getEnsembleAretes()) {
-            graphPourJGrapht.addEdge(arete.getSommetOrigine(), arete.getSommetExtremité(), arete);
-            //graphPourJGrapht.setEdgeWeight(arete, arete.getCout());
-        }
-        
-     // Création de l'objet permettant le calcul de Dijkstra
-        djikstra = new DijkstraJGrapht(this.graphe);
+        this.cablage = null;
 	}
 	
 	
+	/**
+	 * Méthode permettant de calculer le chemin à moindre cout reliant l'ensemble des noeuds sélectionnés
+	 * 
+	 * @param listeDeSommetsSelectionnés
+	 */
 	public void calculerKruskal(ArrayList<Sommet> listeDeSommetsSelectionnés) {
-		// TODO Auto-generated method stub
 		
-	
-	
-		// TODO Auto-generated method stub
+		// Déclaration des variables locales
 		ArrayList<Arete> sousAretes = new ArrayList<Arete>();
 		ArrayList<Sommet> sousSommets = new ArrayList<Sommet>();
-		GrapheTheorique sousGraphe;
+		SimpleWeightedGraph<Sommet, Arete> sousGraphe = new SimpleWeightedGraph<Sommet, Arete>(Arete.class);
 		ArrayList<Arete> chemin;
-		
 		int nbNoeudInutile = 0;
+		Sommet sommetI, sommetJ;
 		
 		// Le sous graphe pour Kruskal contient tous les noeuds sélectionnés
 		sousSommets.addAll(listeDeSommetsSelectionnés);
 		
-		
-		
 		//On calcule Djikstra entre un noeud de depart (indice i ) et toutes les combinaisons possibles (autre noeud commencant à l'indice i+1);
-		for(int i = 0 ; i<listeDeSommetsSelectionnés.size(); i++)
-		{
-			for(int j = i+1 ; j<listeDeSommetsSelectionnés.size(); j++) 
-			{
+		for(int i = 0 ; i<listeDeSommetsSelectionnés.size(); i++) {
+			
+			for(int j = i+1 ; j<listeDeSommetsSelectionnés.size(); j++) {
+				
+				sommetI = listeDeSommetsSelectionnés.get(i);
+				sommetJ = listeDeSommetsSelectionnés.get(j);
 
-				chemin = this.djikstra.getDijkstraShortestPath(listeDeSommetsSelectionnés.get(i),listeDeSommetsSelectionnés.get(j));
+				// calcul du chemin le plus court entre les sommets i et j
+				chemin = this.djikstra.getDijkstraShortestPath(sommetI,sommetJ);
 				
 				// on ajoute toutes les aretes du chemin le plus court aux sous Aretes
 				sousAretes.addAll(chemin);
@@ -124,11 +111,34 @@ public class KruskalJGrapht {
 		}
 		
 		//On cree un sous graphe avec la liste des sommets selectionnés et les sous Aretes.
-		sousGraphe = new GrapheTheorique(sousSommets, sousAretes);
+		//sousGraphe = new GrapheTheorique(sousSommets, sousAretes);
+		
+		
+		 // Ajout de tous les sommets au graphe JGrapht
+        for (Sommet sommet: sousSommets) {
+            sousGraphe.addVertex(sommet);
+        }
+      /*  for (int i = 0; i< graphe.getEnsembleDeSommet().size();i++) {
+        	Sommet sommet = graphe.getEnsembleDeSommet().get(i);
+            graphPourJGrapht.addVertex(sommet);
+        }*/
+        
+        // Ajout de toutes les aretes au graphe JGrapht
+        for (Arete arete : sousAretes) {
+            sousGraphe.addEdge(arete.getSommetOrigine(), arete.getSommetExtremité(), arete);
+            //graphPourJGrapht.setEdgeWeight(arete, arete.getCout());
+        }
+        
+        // Création de l'objet permettant le calcul de Kruskal sur le sous graphe
+        KruskalMinimumSpanningTree kruskalShortestPath = new KruskalMinimumSpanningTree<Sommet,Arete>(sousGraphe);
 
 		//On appelle Kruskal sur ce sous graphe
-		this.kruskal = new KruskalJGrapht(sousGraphe);
-		this.listearetesCoresspondantauCheminLeplusCourtKruskal = this.kruskal.getKruskalShortestPath();
+        SpanningTree<Arete> tree = kruskalShortestPath.getSpanningTree();
+
+        // On récupère la liste des aretes
+        this.cablage = new ArrayList<Arete>(tree.getEdges());
+     
+		
 	}
 	
 
@@ -139,19 +149,8 @@ public class KruskalJGrapht {
 	 * @param destination
 	 * @return la liste des aretes constituant un chemin le plus court
 	 */
-	public ArrayList<Arete> getKruskalShortestPath() {
-
-		// Si l'objet permettant le calcul dans JGrapht n'est pas déjà créé, on le crée
-        if (kruskalShortestPath == null) {
-        	kruskalShortestPath = new KruskalMinimumSpanningTree<Sommet,Arete>(this.graphPourJGrapht);
-        }
-
-        // On utilise la méthode fournie par la bibliothèque JGrapht
-        SpanningTree<Arete> tree = kruskalShortestPath.getSpanningTree();
-
-        // On renvoie la liste des aretes
-        ArrayList<Arete> liste = new ArrayList<Arete>(tree.getEdges());
-        return liste;
+	public  ArrayList<Arete> getKruskalShortestPath() {
+        return cablage;
     }
 
 
