@@ -331,7 +331,7 @@ public class DonneesAAfficher extends Observable {
 		
 		
 		if (this.kruskal == null) {
-			this.kruskal = new KruskalJGrapht(this, grapheAafficher);
+			this.kruskal = new KruskalJGrapht(this);
 		}
 		
 		kruskal.calculerKruskal(this.listeDeSommetsSelectionnés);
