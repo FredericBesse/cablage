@@ -18,10 +18,13 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import com.sun.javafx.tk.FontMetrics;
+
 import fr.enac.iessa16.cablage.controller.Controleur;
 import fr.enac.iessa16.cablage.model.DonneesAAfficher;
 import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
 import fr.enac.iessa16.cablage.model.core.Sommet;
+import javafx.scene.text.Font;
 
 
 /**
@@ -557,13 +560,6 @@ public class DessinDuGrapheParDefaut extends JPanel implements Printable {
 			
 			// Si le graphe n'est pas vide
 			if (donneesaafficher.getGrapheàafficher() != null) {
-
-				//Graphics2D g2D = (Graphics2D) g;
-				
-				//AffineTransform at = new AffineTransform();
-		        //at.scale(scale, scale);
-		        //g2D.setTransform(at);
-				
 				
 				dessinerFondCarte(g);
 				
@@ -580,6 +576,12 @@ public class DessinDuGrapheParDefaut extends JPanel implements Printable {
 				//dessinerCheminAstar(g);
 			}
 		}
+	      if(pageIndex>=1) return NO_SUCH_PAGE;
+	    //  g.setFont(new Font("arial", Font.BOLD, 30));
+	     /// FontMetrics fm = g.getFontMetrics();
+	      int X = (int) pageFormat.getImageableX(), Y = (int) pageFormat.getImageableY();
+	      int W = (int) pageFormat.getImageableWidth(), H = (int) pageFormat.getImageableHeight();
+	     // java.awt.geom.Rectangle2D r = fm.getStringBounds("" + pi, g);
 		
 		return 0;
 	}

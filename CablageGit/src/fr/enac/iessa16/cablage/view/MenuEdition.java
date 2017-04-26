@@ -3,6 +3,7 @@ package fr.enac.iessa16.cablage.view;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
 import com.sun.glass.events.KeyEvent;
@@ -16,7 +17,7 @@ public class MenuEdition extends JMenu{
 	
 	public MenuEdition(Controleur controleur) {
 		
-		super("Edition");
+		super("\u00C9dition");
 		
 		this.controleur = controleur;
 		
@@ -44,6 +45,8 @@ public class MenuEdition extends JMenu{
 		SupprimerSommet.setActionCommand("SuppSommet");
 		SupprimerSommet.addActionListener(controleur.getControleMenu());
 		this.add(SupprimerSommet);
+		this.addSeparator();
+		
 		
 		
 		JMenuItem AjouterArete = new JMenuItem("Ajouter une arete");

@@ -171,7 +171,8 @@ import fr.enac.iessa16.cablage.model.core.Sommet;
 		//	System.out.println("tab2["+i+"] = "+tab2[i]);
 			
 			tab3 = tab2[i].split(",");
-			if (tab3.length == 2) {
+			if (tab3.length == 2) 
+			{
 			//	System.out.println(" tab3[0] = "+tab3[0]);
 				longitude1 = Double.parseDouble(tab3[0]);
 				latitude1 = -Double.parseDouble(tab3[1]);

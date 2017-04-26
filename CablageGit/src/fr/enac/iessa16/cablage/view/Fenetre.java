@@ -1,6 +1,7 @@
 package fr.enac.iessa16.cablage.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.Observable;
@@ -47,10 +48,24 @@ public class Fenetre extends JFrame implements Observer {
 		this.controleur = controleur;
 		creerMenu();
 	
-
+		
+		/*JPanel toolboxPanel = new JPanel();
+		toolboxPanel.setLayout(new FlowLayout());
+		//toolboxPanel.setBorder(BorderFactory.createLineBorder(Color.RED));
+		toolboxPanel.add(new BarreOutilsFichier(controleur));
+		toolboxPanel.add(new BarreOutilsGraphe(controleur));
+		//this.getContentPane().add(new BarreOutilsFichier(controleur));
+				this.getContentPane().add(new BarreOutilsFichier(controleur), BorderLayout.NORTH);
+			    //this.getContentPane().add(new BarreOutilsGraphe(controleur), BorderLayout.);
+		this.getContentPane().add(toolboxPanel);//,BorderLayout.NORTH);
+		*/
+		
+		
 		JPanel monContenair = new JPanel();
 
 		monContenair.setLayout(new FlowLayout());
+		
+		
 
 	
 
@@ -101,9 +116,10 @@ public class Fenetre extends JFrame implements Observer {
 		monContenair.add(vide);
 
 		
+		
 
 		this.getContentPane().add(monContenair);
-		this.getContentPane().add(new BarreOutils(controleur), BorderLayout.NORTH);
+		this.getContentPane().add(new BarreOutilsFichier(controleur), BorderLayout.NORTH);
 
 		// this.pack();
 		this.setVisible(true);
@@ -124,7 +140,8 @@ public class Fenetre extends JFrame implements Observer {
 		
 		// Apparence de la fenetre
 		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+			//"com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -145,14 +162,19 @@ public class Fenetre extends JFrame implements Observer {
 		
 		this.jbar = new JMenuBar();
 		this.setJMenuBar(jbar);
+		
 		MenuFichier menufichier = new MenuFichier(controleur);
 		jbar.add(menufichier);
-		JMenu menuCalcul = new JMenu("Calcul");
+		
+		//JMenu menuCalcul = new JMenu("Calcul");
 		MenuCalcul menucalcul = new MenuCalcul(controleur); 
 		this.jbar.add(menucalcul);
+		
 		MenuEdition menuedition = new MenuEdition(controleur);
 		this.jbar.add(menuedition);
-	
+		
+		MenuAide menuaide = new MenuAide(controleur);
+		jbar.add(menuaide);
 	
 	}
 	

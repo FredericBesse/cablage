@@ -1,5 +1,7 @@
 package fr.enac.iessa16.cablage.controller;
 
+import java.awt.event.ActionListener;
+
 import fr.enac.iessa16.cablage.model.DonneesAAfficher;
 import fr.enac.iessa16.cablage.model.core.Sommet;
 
@@ -23,8 +25,10 @@ public class Controleur {
 	private ControleDuMenu controleMenu;
 	private ControleurCliqueSommet controleurClique;
 	private ControleMenuCalcul controleCalcul;
+	private ControleurAide controleAide;
+	private ControleCreationGraphe controleCreationGraphe;
 	
-	
+
 	/**
 	 * Constructeur de la classe Controleur.java
 	 * @param monModel
@@ -35,7 +39,9 @@ public class Controleur {
 		this.controleMenu = new ControleDuMenu(monModel);
 		this.controleurClique = new ControleurCliqueSommet( monModel);
 		this.controleCalcul = new ControleMenuCalcul(monModel);
+		this.controleAide = new ControleurAide(monModel);
 		//this.
+		this.controleCreationGraphe = new ControleCreationGraphe(monModel);
 	}
 
 
@@ -80,8 +86,17 @@ public class Controleur {
 
 
 
-	
+	public ActionListener getControleAide() {
+		// TODO Auto-generated method stub
+		return controleAide;
+	}
 
+
+
+	
+	public ControleCreationGraphe getControleCreationGraphe() {
+		return controleCreationGraphe;
+	}
 
 
 	

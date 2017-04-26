@@ -12,6 +12,11 @@ import com.sun.prism.Graphics;
 import java.awt.*;
 import java.awt.print.*;
 
+/**
+ * Classe impression 
+ *
+ * @author Racha HEDIDI et Frédéric BESSE
+ */
 public class  Imprimer {
    
 	public Imprimer (DessinDuGrapheParDefaut dessin) { 

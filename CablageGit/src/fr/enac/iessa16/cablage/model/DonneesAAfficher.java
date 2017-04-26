@@ -30,7 +30,7 @@ public class DonneesAAfficher extends Observable {
 
 	//Attributs de la classe DonneesAAfficher 
 	private GrapheTheorique grapheAafficher;	
-
+	private GrapheTheorique grapheàdessiner;
 	private Sommet dernierSommetSelectionne;
 	private ArrayList<Sommet> listeDeSommetsSelectionnés;
 
@@ -38,6 +38,7 @@ public class DonneesAAfficher extends Observable {
 	private double coutCheminLeplusCourtDjikstra;
 	private Sommet sommetOrigine;
 	private Sommet sommetDestination;
+	private Sommet sommetDessiné;
 
 	private ArrayList<Arete> listearetesCoresspondantauCheminLeplusCourtKruskal;
 	
@@ -56,6 +57,7 @@ public class DonneesAAfficher extends Observable {
 
 		// Initialisation des attributs
 		this.grapheAafficher = null;
+		this.grapheàdessiner = null;
 		this.dernierSommetSelectionne = null;
 		this.listeDeSommetsSelectionnés = new ArrayList<Sommet>();
 		
@@ -63,7 +65,7 @@ public class DonneesAAfficher extends Observable {
 		this.coutCheminLeplusCourtDjikstra = 0;
 		this.sommetOrigine = null;
 		this.sommetDestination = null;
-
+		sommetDessiné = null;
 		this.listearetesCoresspondantauCheminLeplusCourtKruskal = new ArrayList<Arete>();
 		
 		this.djikstra = null;
@@ -149,7 +151,8 @@ public class DonneesAAfficher extends Observable {
 			}
 		}
 		
-		if (sommetLePlusProcheDuClic != null) {
+		if (sommetLePlusProcheDuClic != null) 
+		{
 				
 			// on  stocke le noeud cliqué dans l'attribut dernierSommetSelectionne
 			this.dernierSommetSelectionne = sommetLePlusProcheDuClic;
@@ -488,6 +491,57 @@ public class DonneesAAfficher extends Observable {
 		
 		changement();
 	}
+
+
+	public void aide() {
+		// TODO Auto-generated method stub
+		message("Aide", "à faire");
+	}
+
+
+	public void javaDoc() {
+		// TODO Auto-generated method stub
+		message("javadoc", "à faire");
+		
+	}
+
+
+	public void aPropos() {
+		// TODO Auto-generated method stub
+		message("apropos", "à faire");
+	}
+
+
+	public void ajoutSommet(int xClic, int yClic) {
+		// TODO Auto-generated method stub
+		message("Ajouter Sommet", "à faire");
+		
+		
+	}
+
+
+	public void suppSommet() {
+		// TODO Auto-generated method stub
+		message("Supprimer Sommet", "à faire");
+	}
+
+
+	public void ajoutArete() {
+		// TODO Auto-generated method stub
+		message("Ajouter Arete", "à faire");
+	}
+
+
+	public void supprimerArete() {
+		// TODO Auto-generated method stub
+		message("SupprimerArete", "à faire");
+	}
+
+
+
+
+
+	
 	
 	
 
