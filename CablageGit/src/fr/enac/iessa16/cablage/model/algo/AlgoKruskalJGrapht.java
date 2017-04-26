@@ -3,6 +3,7 @@ package fr.enac.iessa16.cablage.model.algo;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -15,26 +16,28 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
-import fr.enac.iessa16.cablage.model.DonneesAAfficher;
+import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.model.core.Arete;
 import fr.enac.iessa16.cablage.model.core.Cablage;
 import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
 import fr.enac.iessa16.cablage.model.core.Sommet;
 
 
-public class KruskalJGrapht {
+public class AlgoKruskalJGrapht {
 	
 	// Référence vers le modèle
-	private DonneesAAfficher model;
+	private Modele model;
 	
 	// Référence vers le graphe du modèle
 	private GrapheTheorique graphe;
 	
 	// Objet permettant de calculer Dijkstra sur un graphe JGrapht
-	private DijkstraJGrapht djikstra;
+	private AlgoDijkstraJGrapht djikstra;
 
 	// Cablage obtenu par l'algorithme de Kruskal
-	private  ArrayList<Arete> cablage;
+	private  ArrayList<Arete> listeAretes;
+
+	private Cablage cablage;
 	
 	
 	/**
@@ -42,18 +45,18 @@ public class KruskalJGrapht {
 	 * 
 	 * @param model le modèle de l'application
 	 */
-	public KruskalJGrapht(DonneesAAfficher model){	
+	public AlgoKruskalJGrapht(Modele model){	
 	
 		// Enregistrement d'une référence vers le modèle
 		this.model = model;
 		
 		// Enregistrement d'une référence vers le graphe du modèle
-		this.graphe = model.getGrapheàafficher();
+		this.graphe = model.getGraphe();
 		
 	    // Création de l'objet permettant le calcul de Dijkstra
-        djikstra = new DijkstraJGrapht(this.graphe);    
+        djikstra = new AlgoDijkstraJGrapht(this.graphe);    
         
-        this.cablage = null;
+        this.listeAretes = null;
 	}
 	
 	
@@ -69,7 +72,7 @@ public class KruskalJGrapht {
 		ArrayList<Sommet> sousSommets = new ArrayList<Sommet>();
 		SimpleWeightedGraph<Sommet, Arete> sousGraphe = new SimpleWeightedGraph<Sommet, Arete>(Arete.class);
 		ArrayList<Arete> chemin;
-		int nbNoeudInutile = 0;
+		int nbNoeudSupplémentaire = 0;
 		Sommet sommetI, sommetJ;
 		
 		// Le sous graphe pour Kruskal contient tous les noeuds sélectionnés
@@ -93,20 +96,20 @@ public class KruskalJGrapht {
 				for (Arete arete : chemin) {
 					
 					if (!sousSommets.contains(arete.getSommetOrigine())) {
-						nbNoeudInutile++;
+						nbNoeudSupplémentaire++;
 						sousSommets.add(arete.getSommetOrigine());
 					}
 					if (!sousSommets.contains(arete.getSommetExtremité())) {
-						nbNoeudInutile++;
+						nbNoeudSupplémentaire++;
 						sousSommets.add(arete.getSommetExtremité());
 					}					
 				}
 			}
 		}
 		
-		if (nbNoeudInutile != 0) {
+		if (nbNoeudSupplémentaire > 0) {
 			
-			model.message("Algorithme de Kruskal", nbNoeudInutile+" noeud(s) non sélectionné(s) ont du etre rajouté pour le calcul du chemin à cout minimum");
+			model.message("Algorithme de Kruskal", nbNoeudSupplémentaire+" noeud(s) non sélectionné(s) ont du etre rajouté pour le calcul du chemin à cout minimum");
 			
 		}
 		
@@ -134,12 +137,104 @@ public class KruskalJGrapht {
 
 		//On appelle Kruskal sur ce sous graphe
         SpanningTree<Arete> tree = kruskalShortestPath.getSpanningTree();
-
+        
         // On récupère la liste des aretes
-        this.cablage = new ArrayList<Arete>(tree.getEdges());
-     
+        this.listeAretes = new ArrayList<Arete>(tree.getEdges());
+        
+        // On crée le cablage correspondant
+        this.cablage = new Cablage(listeDeSommetsSelectionnés, sousSommets, sousAretes);
+        
+        // On élague le graphe si nécessaire
+        if (nbNoeudSupplémentaire > 0) {
+        	this.elague();
+        }
+	}
+	
+	
+	/**
+	 * Méthode permettant d'élaguer le graphe, ie de supprimer les aretes menant vers
+	 * des noeuds non sélectionnés
+	 */
+	private void elague() {
+		
+		int nbPasses = 0;
+		boolean hasElague = true;
+		int nbAreteSupprime = 0;
+		int nbNoeudSupprime = 0;
+		
+		HashMap<Sommet, ArrayList<Arete>> areteParSommet = this.cablage.getAretesParSommet();
+		Arete areteASupprimer;
+		Sommet origine, extremite;
+		
+		while (hasElague && nbPasses < 10) {
+			nbPasses ++;
+			hasElague = false;
+			
+			System.out.println("Phase "+nbPasses+" de l'élagage");
+			
+			for (Sommet sommet : areteParSommet.keySet()) {
+				
+				// Si le sommet n'est pas sélectionné
+				if (!sommet.getSelected()) {
+					
+					// S'il est relié au graphe par une seule arete, on peut le supprimer
+					if (areteParSommet.get(sommet).size() == 1) {
+						
+						System.out.println(" -> Sommet inutile relié par une seule arete trouvé : "+sommet);
+						nbAreteSupprime ++;
+						
+						hasElague = true;
+						
+						areteASupprimer = areteParSommet.get(sommet).get(0);
+						
+						// on supprime le sommet inutile
+						areteParSommet.remove(sommet);
+						cablage.getSommetsUtiles().remove(sommet);
+						cablage.getChemin().remove(areteASupprimer);
+						
+						System.out.println("test size "+cablage.getChemin().size()+" = "+this.listeAretes.size());
+						
+						nbNoeudSupprime++;
+						
+						// on supprime l'arete de la liste des aretes du sommet de l'autre extremite
+						origine = areteASupprimer.getSommetOrigine();
+						extremite = areteASupprimer.getSommetOrigine();
+						
+						if (sommet.equals(origine)) {
+							
+							areteParSommet.get(extremite).remove(areteASupprimer);
+							
+							
+						} else if (sommet.equals(extremite)) {
+							
+							areteParSommet.get(origine).remove(areteASupprimer);
+							
+							
+						} else {
+							System.out.println("ERREUR : ne devrait jamais se produire");
+						}
+						
+						
+						
+					}
+					
+				}
+				
+			}
+			
+			
+			
+		}
+		
+		
+		if (nbAreteSupprime > 0) {
+			
+			model.message("Algorithme de Kruskal", nbNoeudSupprime+" noeud(s) et "+nbAreteSupprime+" aretes inutiles ont été supprimés.");
+			
+		}
 		
 	}
+	
 	
 
 	/**
@@ -150,7 +245,7 @@ public class KruskalJGrapht {
 	 * @return la liste des aretes constituant un chemin le plus court
 	 */
 	public  ArrayList<Arete> getKruskalShortestPath() {
-        return cablage;
+        return listeAretes;
     }
 
 

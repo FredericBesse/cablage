@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import com.sun.javafx.tk.FontMetrics;
 
 import fr.enac.iessa16.cablage.controller.Controleur;
-import fr.enac.iessa16.cablage.model.DonneesAAfficher;
+import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
 import fr.enac.iessa16.cablage.model.core.Sommet;
 import javafx.scene.text.Font;
@@ -38,13 +38,13 @@ public class DessinDuGrapheParDefaut extends JPanel implements Printable {
 	//private float scale = 1;
 	
 	// Attributs de la classe
-	private static DonneesAAfficher donneesaafficher;
+	private static Modele donneesaafficher;
 	private Controleur controleur;
 	
 	private BufferedImage imageFond;
 
 	// public DessinDuGrapheParDefaut(ConstructionGrapheParDefaut toto) {
-	public DessinDuGrapheParDefaut(DonneesAAfficher model, Controleur controleur) {
+	public DessinDuGrapheParDefaut(Modele model, Controleur controleur) {
 
 		super();
 
@@ -104,7 +104,7 @@ public class DessinDuGrapheParDefaut extends JPanel implements Printable {
 		if (donneesaafficher != null) {
 			
 			// Si le graphe n'est pas vide
-			if (donneesaafficher.getGrapheàafficher() != null) {
+			if (donneesaafficher.getGraphe() != null) {
 
 				//Graphics2D g2D = (Graphics2D) g;
 				
@@ -150,18 +150,18 @@ public class DessinDuGrapheParDefaut extends JPanel implements Printable {
 		Sommet sommet;
 
 		// On parcourt l'ensemble des sommets
-		int size = donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().size();
+		int size = donneesaafficher.getGraphe().getEnsembleDeSommet().size();
 		for (int i = 0; i < size; i++) {
 
 			// super.paintComponent(g);
 			// Graphics2D gr = (Graphics2D) g;
 			// On recupere la longitude et la latitude de chaque centre du
 			// sommet
-			sommet = donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i);
+			sommet = donneesaafficher.getGraphe().getEnsembleDeSommet().get(i);
 			longitude = sommet.getLongitude();
 			latitude = sommet.getLatitude();
-			x = ConversionLongitudeEnx(longitude);
-			y = ConversionLatitudeEny(latitude);
+			x = conversionLongitudeEnX(longitude);
+			y = conversionLatitudeEnY(latitude);
 			// System.out.println("latitude = " + latitude +" longitude = " +
 			// longitude + " x = " + x + " y = "+y);
 			// On colorie les sommets en bleu
@@ -195,14 +195,14 @@ public class DessinDuGrapheParDefaut extends JPanel implements Printable {
 			// Graphics2D gr = (Graphics2D) g;
 			// On recupere la longitude et la latitude de chaque centre du
 			// sommet
-			longitude = donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i).getLongitude();
-			latitude = donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i).getLatitude();
-			x = ConversionLongitudeEnx(longitude);
-			y = ConversionLatitudeEny(latitude);
+			longitude = donneesaafficher.getGraphe().getEnsembleDeSommet().get(i).getLongitude();
+			latitude = donneesaafficher.getGraphe().getEnsembleDeSommet().get(i).getLatitude();
+			x = conversionLongitudeEnX(longitude);
+			y = conversionLatitudeEnY(latitude);
 			// System.out.println("latitude = " + latitude +" longitude = " +
 			// longitude + " x = " + x + " y = "+y);
 			// On colorie les sommets en bleu
-			if (donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i).getSelected() == false)
+			if (donneesaafficher.getGraphe().getEnsembleDeSommet().get(i).getSelected() == false)
 				g.setColor(java.awt.Color.BLUE);
 			else
 				g.setColor(Color.pink);
@@ -211,7 +211,7 @@ public class DessinDuGrapheParDefaut extends JPanel implements Printable {
 					2 * ParametresFenetre.rayonSommetAffichage);
 			g.setColor(java.awt.Color.BLACK);
 			// On affiche les noms de chaque sommet
-			g.drawString(donneesaafficher.getGrapheàafficher().getEnsembleDeSommet().get(i).getNom(), x, y);
+			g.drawString(donneesaafficher.getGraphe().getEnsembleDeSommet().get(i).getNom(), x, y);
 
 		}
 		long duree2 = System.currentTimeMillis() - start2;
@@ -229,18 +229,18 @@ public class DessinDuGrapheParDefaut extends JPanel implements Printable {
 		double lat1, lat2;
 		Sommet sommet;
 
-		for (int i = 0; i < donneesaafficher.getGrapheàafficher().getEnsembleAretes().size(); i++) {
+		for (int i = 0; i < donneesaafficher.getGraphe().getEnsembleAretes().size(); i++) {
 
-			long1 = donneesaafficher.getGrapheàafficher().getEnsembleAretes().get(i).getSommetOrigine().getLongitude();
-			long2 = donneesaafficher.getGrapheàafficher().getEnsembleAretes().get(i).getSommetExtremité()
+			long1 = donneesaafficher.getGraphe().getEnsembleAretes().get(i).getSommetOrigine().getLongitude();
+			long2 = donneesaafficher.getGraphe().getEnsembleAretes().get(i).getSommetExtremité()
 					.getLongitude();
-			lat1 = donneesaafficher.getGrapheàafficher().getEnsembleAretes().get(i).getSommetOrigine().getLatitude();
-			lat2 = donneesaafficher.getGrapheàafficher().getEnsembleAretes().get(i).getSommetExtremité().getLatitude();
+			lat1 = donneesaafficher.getGraphe().getEnsembleAretes().get(i).getSommetOrigine().getLatitude();
+			lat2 = donneesaafficher.getGraphe().getEnsembleAretes().get(i).getSommetExtremité().getLatitude();
 
-			x1 = ConversionLongitudeEnx(long1);
-			x2 = ConversionLongitudeEnx(long2);
-			y1 = ConversionLatitudeEny(lat1);
-			y2 = ConversionLatitudeEny(lat2);
+			x1 = conversionLongitudeEnX(long1);
+			x2 = conversionLongitudeEnX(long2);
+			y1 = conversionLatitudeEnY(lat1);
+			y2 = conversionLatitudeEnY(lat2);
 
 			g.setColor(java.awt.Color.RED);
 			g.drawLine(x1, y1, x2, y2);
@@ -269,8 +269,8 @@ public class DessinDuGrapheParDefaut extends JPanel implements Printable {
 			long3=(int)sommet.getLongitude();
 			lat3=(int)sommet.getLatitude();
 			nom=sommet.getNom();
-			x3=	ConversionLongitudeEnx(long3);
-			y3 = ConversionLatitudeEny(lat3);
+			x3=	conversionLongitudeEnX(long3);
+			y3 = conversionLatitudeEnY(lat3);
 			g.drawString(nom, x3, y3);
 			g.setColor(java.awt.Color.GREEN);
 			g.fillOval((int)(x3 - ParametresFenetre.rayonSommetAffichage*0.5), (int)(y3 - ParametresFenetre.rayonSommetAffichage*0.5),ParametresFenetre.rayonSommetAffichage,ParametresFenetre.rayonSommetAffichage);
@@ -303,10 +303,10 @@ public class DessinDuGrapheParDefaut extends JPanel implements Printable {
 				lat2 = donneesaafficher.getListearetesCoresspondantauCheminLeplusCourtDjikstra().get(i)
 						.getSommetExtremité().getLatitude();
 
-				x1 = ConversionLongitudeEnx(long1);
-				x2 = ConversionLongitudeEnx(long2);
-				y1 = ConversionLatitudeEny(lat1);
-				y2 = ConversionLatitudeEny(lat2);
+				x1 = conversionLongitudeEnX(long1);
+				x2 = conversionLongitudeEnX(long2);
+				y1 = conversionLatitudeEnY(lat1);
+				y2 = conversionLatitudeEnY(lat2);
 
 				g.setColor(java.awt.Color.BLACK);
 				g.drawLine(x1, y1, x2, y2);
@@ -325,7 +325,7 @@ public class DessinDuGrapheParDefaut extends JPanel implements Printable {
 		Sommet sommet;
 	
 
-		if (donneesaafficher.getGrapheàafficher() != null) {
+		if (donneesaafficher.getGraphe() != null) {
 			if (donneesaafficher.getListearetesCoresspondantauCheminLeplusCourtKruskal() != null) {
 				for (int i = 0; i < donneesaafficher.getListearetesCoresspondantauCheminLeplusCourtKruskal()
 						.size(); i++) {
@@ -339,10 +339,10 @@ public class DessinDuGrapheParDefaut extends JPanel implements Printable {
 					lat2 = donneesaafficher.getListearetesCoresspondantauCheminLeplusCourtKruskal().get(i)
 							.getSommetExtremité().getLatitude();
 
-					x1 = ConversionLongitudeEnx(long1);
-					x2 = ConversionLongitudeEnx(long2);
-					y1 = ConversionLatitudeEny(lat1);
-					y2 = ConversionLatitudeEny(lat2);
+					x1 = conversionLongitudeEnX(long1);
+					x2 = conversionLongitudeEnX(long2);
+					y1 = conversionLatitudeEnY(lat1);
+					y2 = conversionLatitudeEnY(lat2);
 
 					g.setColor(java.awt.Color.YELLOW);
 					g.drawLine(x1, y1, x2, y2);
@@ -459,13 +459,13 @@ public class DessinDuGrapheParDefaut extends JPanel implements Printable {
 	
 	
 	
-	public static int ConversionLongitudeEnx(double longitude) {
+	public static int conversionLongitudeEnX(double longitude) {
 		return (int) Math.round(ParametresFenetre.dimensionJPanelGraphe.getWidth() / 2 + ParametresFenetre.offsetX + longitude
 				* ParametresFenetre.echelle / ParametresFenetre.ECHELLE_BASE);
 
 	}
 
-	public static int ConversionLatitudeEny(double latitude) {
+	public static int conversionLatitudeEnY(double latitude) {
 		return (int) Math.round(ParametresFenetre.dimensionJPanelGraphe.getHeight() / 2 + ParametresFenetre.offsetY - latitude
 				* ParametresFenetre.echelle / ParametresFenetre.ECHELLE_BASE);
 
@@ -559,7 +559,7 @@ public class DessinDuGrapheParDefaut extends JPanel implements Printable {
 		if (donneesaafficher != null) {
 			
 			// Si le graphe n'est pas vide
-			if (donneesaafficher.getGrapheàafficher() != null) {
+			if (donneesaafficher.getGraphe() != null) {
 				
 				dessinerFondCarte(g);
 				

@@ -2,7 +2,7 @@ package fr.enac.iessa16.cablage.controller;
 
 import java.awt.event.ActionListener;
 
-import fr.enac.iessa16.cablage.model.DonneesAAfficher;
+import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.model.core.Sommet;
 
 /**
@@ -33,7 +33,7 @@ public class Controleur {
 	 * Constructeur de la classe Controleur.java
 	 * @param monModel
 	 */
-	public Controleur(DonneesAAfficher monModel) {
+	public Controleur(Modele monModel) {
 		
 		// TODO Auto-generated constructor stub
 		this.controleMenu = new ControleDuMenu(monModel);

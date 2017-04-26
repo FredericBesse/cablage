@@ -3,15 +3,15 @@ package fr.enac.iessa16.cablage.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import fr.enac.iessa16.cablage.model.DonneesAAfficher;
+import fr.enac.iessa16.cablage.model.Modele;
 
 public class ControleCreationGraphe implements ActionListener {
 	
 	
 	
-	DonneesAAfficher model;
+	Modele model;
 
-	public ControleCreationGraphe(DonneesAAfficher monmodel) {
+	public ControleCreationGraphe(Modele monmodel) {
 		super();
 		this.model = monmodel;
 		

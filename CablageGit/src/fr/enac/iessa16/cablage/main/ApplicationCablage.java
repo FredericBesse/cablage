@@ -1,7 +1,7 @@
 package fr.enac.iessa16.cablage.main;
 
 import fr.enac.iessa16.cablage.controller.Controleur;
-import fr.enac.iessa16.cablage.model.DonneesAAfficher;
+import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.view.Fenetre;
 
 /**
@@ -17,14 +17,14 @@ public class ApplicationCablage {
 	public ApplicationCablage() {
 		
 		// Création du modèle
-		DonneesAAfficher donnees = new DonneesAAfficher();
+		Modele modele = new Modele();
 		
 		// Création du controleur principal
-		Controleur controleur = new Controleur(donnees);
+		Controleur controleur = new Controleur(modele);
 				
 		// Création de la fenetre
-		Fenetre fen = new Fenetre(controleur,donnees);
-		donnees.setParent(fen);
+		Fenetre fenetre = new Fenetre(controleur, modele);
+		modele.setParent(fenetre); // pour l'affichage des boites de dialogue
 	}
 
 	

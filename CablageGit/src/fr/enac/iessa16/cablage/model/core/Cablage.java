@@ -13,9 +13,10 @@ public class Cablage {
 	private HashMap<Sommet, ArrayList<Arete>> aretesParSommet;
 	
 
-	public Cablage(ArrayList<Sommet> sommetsSelectionnes, ArrayList<Arete> listeAretes) {
+	public Cablage(ArrayList<Sommet> sommetsSelectionnes, ArrayList<Sommet> sommetsUtiles, ArrayList<Arete> listeAretes) {
 		
 		this.sommetsSelectionnes = sommetsSelectionnes;
+		this.sommetsUtiles = sommetsUtiles;
 		this.aretes = listeAretes;
 		
 		this.aretesParSommet = new HashMap<Sommet, ArrayList<Arete>>();
@@ -55,7 +56,7 @@ public class Cablage {
 
 	public Cablage(Cablage chemin) {
 		
-		this(chemin.getSommetsSelectionnes(), chemin.getChemin());
+		this(chemin.getSommetsSelectionnes(), chemin.getSommetsUtiles(), chemin.getChemin());
 	}
 
 	public ArrayList<Arete> getChemin() {
@@ -71,6 +72,10 @@ public class Cablage {
 		}
 		
 		return cout;
+	}
+	
+	public ArrayList<Sommet> getSommetsUtiles() {
+		return sommetsUtiles;
 	}
 
 	public ArrayList<Sommet> getSommetsSelectionnes() {

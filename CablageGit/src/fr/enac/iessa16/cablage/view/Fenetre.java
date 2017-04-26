@@ -18,7 +18,7 @@ import javax.swing.JToolBar;
 import javax.swing.UIManager;
 
 import fr.enac.iessa16.cablage.controller.Controleur;
-import fr.enac.iessa16.cablage.model.DonneesAAfficher;
+import fr.enac.iessa16.cablage.model.Modele;
 
 /**
  * Classe Fenetre qui correspond à la vue...
@@ -38,7 +38,7 @@ public class Fenetre extends JFrame implements Observer {
 	 * @param controleur
 	 * @param model
 	 */
-	public Fenetre(Controleur controleur, DonneesAAfficher model) {
+	public Fenetre(Controleur controleur, Modele model) {
 
 		// Ajout de la fenetre comme observateur du modele
 		model.addObserver(this);

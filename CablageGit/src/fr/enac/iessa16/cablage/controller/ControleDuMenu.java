@@ -3,7 +3,7 @@ package fr.enac.iessa16.cablage.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import fr.enac.iessa16.cablage.model.DonneesAAfficher;
+import fr.enac.iessa16.cablage.model.Modele;
 
 /**
  * Classe 
@@ -13,7 +13,7 @@ import fr.enac.iessa16.cablage.model.DonneesAAfficher;
 public class ControleDuMenu implements ActionListener { 
 
 		
-    DonneesAAfficher model;
+    Modele model;
     
 	/**
 	 * Constructeur de la classe ControleDuMenu.java
@@ -22,7 +22,7 @@ public class ControleDuMenu implements ActionListener {
 	 * 
 	 * constructeur du ControleurDuMenu, il prend en argument le modele
 	 */
-	public ControleDuMenu(DonneesAAfficher monModel) { 
+	public ControleDuMenu(Modele monModel) { 
 		this.model = monModel;
 		
 	}
@@ -44,7 +44,7 @@ public class ControleDuMenu implements ActionListener {
 			
 		{
 			//On appelle la methode ChargerLeGraphe implementé dans la classe DonneesAAfficher
-			model.chargerLeGrapheParDefaut();
+			model.chargerGrapheParDefaut();
 			
 			
 			
@@ -56,7 +56,7 @@ public class ControleDuMenu implements ActionListener {
 		if(s.equals("ChargerGrapheDonné"))
 		{
 			//On appelle la methode ChargerGrapheDuFichier Texte implementer dans la classe DonneesAAfficher
-			model.ChargerLeGrapheDuFicherTexte();
+			model.chargerGrapheFichierTexte();
 			System.out.println("charger graphe donné");
 		}
 		
@@ -100,7 +100,7 @@ public class ControleDuMenu implements ActionListener {
 		{
 			
 			
-			model.Ouvrir();
+			model.ouvrir();
 		}
 		
 		

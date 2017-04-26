@@ -6,7 +6,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
-import fr.enac.iessa16.cablage.model.DonneesAAfficher;
+import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
 import fr.enac.iessa16.cablage.model.core.Sommet;
 import fr.enac.iessa16.cablage.view.DessinDuGrapheParDefaut;
@@ -21,7 +21,7 @@ import fr.enac.iessa16.cablage.view.ParametresFenetre;
 public class ControleurCliqueSommet implements MouseListener, MouseMotionListener, MouseWheelListener {
 
 	//
-	private DonneesAAfficher model;
+	private Modele model;
 	private DessinDuGrapheParDefaut dessin1;
 	
 	
@@ -35,7 +35,7 @@ public class ControleurCliqueSommet implements MouseListener, MouseMotionListene
 	 * Constructeur de la classe ControleurCliqueSommet.java
 	 * @param monmodel
 	 */
-	public ControleurCliqueSommet(DonneesAAfficher monmodel) {
+	public ControleurCliqueSommet(Modele monmodel) {
 		super();
 		this.model = monmodel;
 		
@@ -56,7 +56,7 @@ public class ControleurCliqueSommet implements MouseListener, MouseMotionListene
 		//System.out.println("Clic souris x="+e.getX()+" y="+e.getY()+"lon="+DessinDuGrapheParDefaut.ConversionxEnLongitude(e.getX())+" lat="+DessinDuGrapheParDefaut.ConversionyEnLatitude(e.getY()));
 		
 		
-		model.nouveauClicSouris(e.getX(), e.getY());
+		model.touverSommetLePlusProcheDuClicSouris(e.getX(), e.getY());
 		
 	}
 

@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import fr.enac.iessa16.cablage.model.DonneesAAfficher;
+import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.model.core.Arete;
 import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
 import fr.enac.iessa16.cablage.model.core.Sommet;
@@ -26,7 +26,7 @@ import fr.enac.iessa16.cablage.model.core.Sommet;
  */
 public class PanneauParametres extends JPanel {
 	
-	private DonneesAAfficher modele;
+	private Modele modele;
 	private JTextField textFieldNom;
 	private JTextField textFieldLat;
 	private JTextField textFieldLon;
@@ -45,7 +45,7 @@ public class PanneauParametres extends JPanel {
 	/**
 	 * Constructeur de la classe JPanelParametres.java
 	 */
-	public PanneauParametres(DonneesAAfficher modele) {
+	public PanneauParametres(Modele modele) {
 		
 		super();
 		
@@ -217,7 +217,7 @@ public class PanneauParametres extends JPanel {
 			
 			
 			// Mise à jour panneau graphe
-			GrapheTheorique graphe = modele.getGrapheàafficher();
+			GrapheTheorique graphe = modele.getGraphe();
 			
 			if (graphe != null) {
 				

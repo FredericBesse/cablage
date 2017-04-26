@@ -11,7 +11,7 @@ import fr.enac.iessa16.cablage.model.core.Sommet;
  * @author Racha HEDIDI et Frédéric BESSE
  */
 
-public class ConstructionGrapheParDefaut {
+public class ConstructeurGrapheParDefaut {
 	
 	
 	
@@ -24,7 +24,7 @@ public class ConstructionGrapheParDefaut {
 	 * Constructeur de la classe ConstructionGrapheParDefaut.java permettant de construire un 
 	 * graphe prédéfini.
 	 */
-	public ConstructionGrapheParDefaut() { //super();
+	public ConstructeurGrapheParDefaut() { //super();
 		// TODO Auto-generated constructor stub
 		
 		//Construction de 5 sommets, dont les coordonnees sont fixes.	

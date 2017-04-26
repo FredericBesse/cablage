@@ -3,7 +3,7 @@ package fr.enac.iessa16.cablage.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import fr.enac.iessa16.cablage.model.DonneesAAfficher;
+import fr.enac.iessa16.cablage.model.Modele;
 
 /**
  * Classe 
@@ -13,10 +13,10 @@ import fr.enac.iessa16.cablage.model.DonneesAAfficher;
 public class ControleMenuCalcul implements ActionListener {
 
 	//Attribut de la classe ControleMenuCalcul
-	DonneesAAfficher model;
+	Modele model;
 	
 	//Constructeur qui prend en argument le model de type DonneesAAfficher
-	public ControleMenuCalcul(DonneesAAfficher model) {
+	public ControleMenuCalcul(Modele model) {
 		super();
 		// TODO Auto-generated constructor stub
 		this.model = model;

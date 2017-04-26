@@ -3,12 +3,12 @@ package fr.enac.iessa16.cablage.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import fr.enac.iessa16.cablage.model.DonneesAAfficher;
+import fr.enac.iessa16.cablage.model.Modele;
 
 public class ControleurAide implements ActionListener {
-	private DonneesAAfficher model;
+	private Modele model;
 
-	public ControleurAide(DonneesAAfficher monModel) {
+	public ControleurAide(Modele monModel) {
 		super();
 		
 		this.model = monModel;

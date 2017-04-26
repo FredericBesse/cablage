@@ -21,7 +21,7 @@ import fr.enac.iessa16.cablage.model.core.Sommet;
  * @author Frédéric BESSE et Racha HEDIDI
  *
  */
-public class DijkstraJGrapht {
+public class AlgoDijkstraJGrapht {
 	
 	// Référence vers le graphe du modèle
 	private GrapheTheorique graphe;
@@ -38,7 +38,7 @@ public class DijkstraJGrapht {
 	 * 
 	 * @param g le graphe sur lequel l'algorithme sera exécuté
 	 */
-	public DijkstraJGrapht(GrapheTheorique g){	
+	public AlgoDijkstraJGrapht(GrapheTheorique g){	
 	
 		// Enregistrement d'une référence vers le graphe à afficher
 		this.graphe = g;

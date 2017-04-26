@@ -1,4 +1,4 @@
-package fr.enac.iessa16.cablage.fichierTexte;
+package fr.enac.iessa16.cablage.model.file;
 import java.awt.Component;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -22,7 +22,7 @@ import fr.enac.iessa16.cablage.model.core.Sommet;
 
 	
 
-	public class LectureFichier {
+	public class ConstructeurGrapheFichierTexte {
 		private GrapheTheorique graphe;
 		private ArrayList<Sommet> points;
 		
@@ -34,7 +34,7 @@ import fr.enac.iessa16.cablage.model.core.Sommet;
 		//Sommet sommet1;
 	
 	      // Nous déclarons nos objets en dehors du bloc try/catch
-		public  LectureFichier(Component parent) {
+		public  ConstructeurGrapheFichierTexte(Component parent) {
 			
 			this.parent = parent;
 			
