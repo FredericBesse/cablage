@@ -1,5 +1,8 @@
 package fr.enac.iessa16.cablage.main;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fr.enac.iessa16.cablage.controller.Controleur;
 import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.view.Fenetre;
@@ -16,6 +19,11 @@ public class ApplicationCablage {
 	 */
 	public ApplicationCablage() {
 		
+		// Configuration du logger
+		System.setProperty("log4j.configurationFile","lib/configurationLogger.xml");
+		Logger LOGGER = LogManager.getLogger(ApplicationCablage.class);
+		LOGGER.info("Lancement de l'application...");
+		
 		// Création du modèle
 		Modele modele = new Modele();
 		
@@ -24,7 +32,8 @@ public class ApplicationCablage {
 				
 		// Création de la fenetre
 		Fenetre fenetre = new Fenetre(controleur, modele);
-		modele.setParent(fenetre); // pour l'affichage des boites de dialogue
+		modele.setFenetre(fenetre); // pour l'affichage des boites de dialogue
+	
 	}
 
 	

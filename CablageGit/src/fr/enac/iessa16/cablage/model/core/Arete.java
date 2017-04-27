@@ -1,103 +1,71 @@
 package fr.enac.iessa16.cablage.model.core;
 
+/**
+ * Classe Arete
+ *	
+ * @author Racha HEDIDI et Frédéric BESSE
+ */
 public class Arete {
-	
-
-	
 	
 	private double distance;
 	private double cout;
 	private double poids;
-	private Sommet SommetOrigine;
-	private Sommet SommetExtremité;
+	private Sommet sommetOrigine;
+	private Sommet sommetExtremite;
 	
 	
-	/*Creation du constructeur arete , */
-	public Arete(Sommet Origine, Sommet Extremité, double poids) {
-		//super();
-		this.SommetOrigine = Origine;
-		this.SommetExtremité = Extremité;
+	
+	/**
+	 * Constructeur de la classe Arete
+	 * 
+	 * @param origine
+	 * @param extremite
+	 * @param poids
+	 */
+	public Arete(Sommet origine, Sommet extremite, double poids) {
+		
+		this.sommetOrigine = origine;
+		this.sommetExtremite = extremite;
 		this.poids = poids;
 		
-		
-		this.distance = this.SommetOrigine.Calculdistance(SommetExtremité);
-		this.cout = distance*cout;
-		
+		this.distance = origine.calculerDistance(extremite);
+		this.cout = distance * poids;
 	}
 
-	/* Getters et Setters des attributs de la classe */
-
+	/* 
+	 * Getters et Setters des attributs de la classe
+	 */
 	public double getDistance() {
 		return distance;
 	}
-
-
-
-	public void setDistance(double distance) {
-		this.distance = distance;
-	}
-
-
 
 	public double getCout() {
 		return cout;
 	}
 
-
-
-	public void setCout(double cout) {
-		this.cout = cout;
-	}
-
-
-
 	public double getPoids() {
 		return poids;
 	}
 
-
-
-	public void setPoids(double poids) {
-		this.poids = poids;
-	}
-
-
-
 	public Sommet getSommetOrigine() {
-		return SommetOrigine;
+		return sommetOrigine;
 	}
-
-
-
-	public void setSommetOrigine(Sommet sommetOrigine) {
-		SommetOrigine = sommetOrigine;
-	}
-
-
 
 	public Sommet getSommetExtremité() {
-		return SommetExtremité;
+		return sommetExtremite;
 	}
-
-
-
-	public void setSommetExtremité(Sommet sommetExtremité) {
-		SommetExtremité = sommetExtremité;
+	
+	public void setPoids(double poids) {
+		this.poids = poids;
+		this.cout = poids * distance;
 	}
+	
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "Arete ["+SommetOrigine + ", " + SommetExtremité + "]";
+		return "Arete ["+sommetOrigine + ", " + sommetExtremite + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

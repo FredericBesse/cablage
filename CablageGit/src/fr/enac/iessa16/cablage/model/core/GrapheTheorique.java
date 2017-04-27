@@ -1,222 +1,103 @@
 package fr.enac.iessa16.cablage.model.core;
 
-
 import java.util.ArrayList;
 
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
-
-
 /**
- * Classe Graphe définissant le modèle théorique d'un graphe.
+ * Classe GrapheTheorique définissant le modèle théorique d'un graphe.
  * 
- * Un graphe possède commme attribut une liste de sommets et une liste d'aretes.
+ * Un graphe possède comme attribut une liste de sommets et une liste d'aretes.
  * 
  * @author Racha HEDIDI et Frédéric BESSE
  */
-
-
-
 public class GrapheTheorique {
-	
-	 //La liste des sommets du graphe
-	private ArrayList <Sommet> ensembleDeSommet;
-	
+
+	// La liste des sommets du graphe
+	private ArrayList<Sommet> listeSommets;
+
 	// La liste des aretes du graphe
-	
-	private ArrayList<Arete>  ensembleAretes;
-	
-	private double latitudemax;
-	private double latitudemin;
-	private double longitudemin;
-	private double longitudemax;
+	private ArrayList<Arete> listeAretes;
+
+	private double latitudeMax;
+	private double latitudeMin;
+	private double longitudeMin;
+	private double longitudeMax;
+
 	/**
-	 * Constructeur de la classe Graphe, permet de construire un graphe 
-	 * à partir d'une liste de sommets et d'aretes
+	 * Constructeur de la classe Graphe, permet de construire un graphe à partir
+	 * d'une liste de sommets et d'aretes
 	 * 
-	 * @param ensembleDeSommet la liste des sommets
-	 * @param   ensembleAretes la liste des aretes
+	 * @param listeSommets
+	 *            la liste des sommets
+	 * @param listeAretes
+	 *            la liste des aretes
 	 */
-	
-	public GrapheTheorique(ArrayList<Sommet> ensembleDeSommet, ArrayList<Arete> ensembleAretes) {
-		super();
-		this.ensembleDeSommet = ensembleDeSommet;
-		this.ensembleAretes = ensembleAretes;
-		this.latitudemax = latitudemax;
-		this.longitudemax = longitudemax;
-		this.longitudemin = longitudemin;
-		this.latitudemin = latitudemin;
-		calculExtremumDonnées();
+
+	public GrapheTheorique(ArrayList<Sommet> listeSommets, ArrayList<Arete> listeAretes) {
+
+		this.listeSommets = listeSommets;
+		this.listeAretes = listeAretes;
+
+		calculExtremumDonnees();
 	}
 
-	
-	 //Getters et Setters de la liste des Sommets et des aretes.
-	 
-	
-	
-	
-	public ArrayList<Sommet> getEnsembleDeSommet() {
-		return ensembleDeSommet;
-	}
-
-
-
-	public void setEnsembleDeSommet(ArrayList<Sommet> ensembleDeSommet) {
-		this.ensembleDeSommet = ensembleDeSommet;
-	}
-
-
-
-	public ArrayList<Arete> getEnsembleAretes() {
-		return ensembleAretes;
-	}
-
-
-
-	public void setEnsembleAretes(ArrayList<Arete> ensembleAretes) {
-		this.ensembleAretes = ensembleAretes;
-	}
-	/*
-	public boolean existeArc(Sommet sommetorigine, Sommet sommetdestination)
-	{
-		for(int i =0 ; i<ensembleAretes.size();i++)
-		{
-			if(ensembleAretes.get(i).getSommetOrigine() ==  )
-			
-			
-		}
+	private void calculExtremumDonnees() {
 		
-	}*/
-	/*
-	
-	private void calculExtremumDonnées2()
-	{
-		double longitudemin;
-		double longitudemax;
-		double longitudecourante = ensembleDeSommet.get(0).getLongitude();
-		for(int i =0 ; i<ensembleDeSommet.size(); i++)
-		{
-		
-			if(longitudecourante <= ensembleDeSommet.get(i).getLongitude())
-			{
-				
-				longitudemin = longitudecourante;
-				
-			}
-			if(z > ensembleDeSommet.get(i).getLongitude())
-			{
-				
-				z = ensembleDeSommet.get(i).getLongitude();
-				longitudemin = z;
-				
-				
-			}
-			
-		
-		
-		
-		}
-		System.out.println("la valeur du minimum est" + z);
-	}
-	*/
-	
-	private void calculExtremumDonnées()
-	{
-		longitudemin = ensembleDeSommet.get(0).getLongitude();
-		longitudemax = ensembleDeSommet.get(0).getLongitude();
-		
-		latitudemin = ensembleDeSommet.get(0).getLatitude();
-		latitudemax = ensembleDeSommet.get(0).getLatitude();
-		
+		longitudeMin = Double.MAX_VALUE;
+		longitudeMax = Double.MIN_VALUE;
+
+		latitudeMin = Double.MAX_VALUE;
+		latitudeMax = Double.MIN_VALUE;
+
 		double longitudeCourante, latitudeCourante;
-		//double z = ensembleDeSommet.get(0).getLongitude();
 		
-		for(int i =0 ; i<ensembleDeSommet.size(); i++)
-		{
-			longitudeCourante = ensembleDeSommet.get(i).getLongitude();
-			latitudeCourante = ensembleDeSommet.get(i).getLatitude();
+
+		for (int i = 0; i < listeSommets.size(); i++) {
 			
-			if(longitudeCourante < longitudemin)
-			{				
-				longitudemin = longitudeCourante;
-			}
-			if(longitudeCourante > longitudemax)
-			{
-				
-				longitudemax = longitudeCourante;
-				
+			longitudeCourante = listeSommets.get(i).getLongitude();
+			latitudeCourante = listeSommets.get(i).getLatitude();
+
+			if (longitudeCourante < longitudeMin) {
+				longitudeMin = longitudeCourante;
 			}
 			
-			if(latitudeCourante < latitudemin)
-			{
-				
-				latitudemin =latitudeCourante;
-				
+			if (longitudeCourante > longitudeMax) {
+				longitudeMax = longitudeCourante;
 			}
-			
-			if(latitudeCourante > latitudemax)
-			{
-				
-				latitudemax =latitudeCourante;
-				
+
+			if (latitudeCourante < latitudeMin) {
+				latitudeMin = latitudeCourante;
 			}
-			
-			
-			
+
+			if (latitudeCourante > latitudeMax) {
+				latitudeMax = latitudeCourante;
+			}
 		}
-		System.out.println("la valeur longitude minimum est " + longitudemin);
-		System.out.println("la valeur longitude max est " + longitudemax);
-		System.out.println("la valeur latitude minimum est " + latitudemin);
-		System.out.println("la valeur latitude max est " + latitudemax);
 	}
-
-
-	public double getLatitudemax() {
-		return latitudemax;
-	}
-
-
-	public void setLatitudemax(double latitudemax) {
-		this.latitudemax = latitudemax;
-	}
-
-
-	public double getLatitudemin() {
-		return latitudemin;
-	}
-
-
-	public void setLatitudemin(double latitudemin) {
-		this.latitudemin = latitudemin;
-	}
-
-
-	public double getLongitudemin() {
-		return longitudemin;
-	}
-
-
-	public void setLongitudemin(double longitudemin) {
-		this.longitudemin = longitudemin;
-	}
-
-
-	public double getLongitudemax() {
-		return longitudemax;
-	}
-
-
-	public void setLongitudemax(double longitudemax) {
-		this.longitudemax = longitudemax;
-	}
-
-
-
-
 	
+	
+	// Getters et Setters 
 
+	public ArrayList<Sommet> getListeSommets() {
+		return listeSommets;
+	}	
+
+	public ArrayList<Arete> getListeAretes() {
+		return listeAretes;
+	}
+
+	public double getLatitudeMax() {
+		return latitudeMax;
+	}
+
+	public double getLatitudeMin() {
+		return latitudeMin;
+	}
+
+	public double getLongitudeMin() {
+		return longitudeMin;
+	}
+
+	public double getLongitudeMax() {
+		return longitudeMax;
+	}
 }
-
-
-
-
-

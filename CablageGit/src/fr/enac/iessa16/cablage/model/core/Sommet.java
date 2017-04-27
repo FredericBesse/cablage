@@ -1,52 +1,38 @@
 package fr.enac.iessa16.cablage.model.core;
 
-import java.awt.Color;
-
+/**
+ * Classe Sommet théorique, possède en attributs une latitude, 
+ * une longitude ainsi qu'un nom.
+ *	
+ * @author Racha HEDIDI et Frédéric BESSE
+ */
 public class Sommet {
 
-	/**
-	 * 
-	 * Classe Sommet théorique , possède en attributs , une latitude, une longitude ainsi qu'un nom.
-	 * 
-	 * 
-	 * @author Frederic Besse et Hedidi Racha
-	 *
-	 */
-
 	private double longitude ;
-	@Override
-	public String toString() {
-		return nom;
-	}
-
 	private double latitude;
 	private String nom;
 	private boolean selected;
+
+	
 	/**
 	 * Constructeur de la classe sommet
 	 * 
 	 * @param latitude
 	 * @param longitude
 	 * @param nom
-	 */
-	
-	
-	
-	public Sommet(double longitude, double latitude,String nom) {
-		super();
+	 */	
+	public Sommet(double longitude, double latitude, String nom) {
+
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.nom = nom;
-		selected = false;
+		this.selected = false;
 	}
 	
 	
-	
-
 	/**
 	 * @return longitude 
-	 */
-	
+	 */	
 	public double getLongitude() {
 		return longitude;
 	}
@@ -55,39 +41,24 @@ public class Sommet {
 	 * Setter de la Longitude
 	 * @param longitude
 	 */
-
-
-
-
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
-
-
 	/**
 	 * @return latitude 
 	 */
-
-	
 	public double getLatitude() {
 		return latitude;
 	}
-
-
 
 	/**
 	 * Setter de la Latitude
 	 * @param latitude
 	 */
-
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
-
-
-
-    
 
 	/**
 	 * @return nom
@@ -97,38 +68,16 @@ public class Sommet {
 	}
 
 
-
-	/**setter du nom du sommet 
+	/**
+	 * Setter du nom du sommet 
 	 * @param nom
 	 */
-
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-
-
-
-	/**Methode qui determine la distance entre deux sommets.
-	 * @param : un sommet som
-	 * @return : distance 
-	 */
-
-	public double Calculdistance(Sommet som)
-	{
-		double distance = 0;
-		distance = Math.sqrt(Math.pow(som.latitude-this.latitude,2)+Math.pow(som.longitude-this.longitude,2));
-		return distance;
-	}
-
-
-
-
-
 	
-	public boolean getSelected()
-	{	
-		return selected;
-	
+	public boolean getSelected() {	
+		return selected;	
 	}
 	
 	public void setSelected(boolean value) {
@@ -136,6 +85,17 @@ public class Sommet {
 	}
 
 
+	/**
+	 * Méthode qui determine la distance entre deux sommets
+	 *   
+	 * @param sommet
+	 * @return la distance
+	 */
+	public double calculerDistance(Sommet sommet) {
+		double distance = 0;
+		distance = Math.sqrt(Math.pow(sommet.latitude-this.latitude,2)+Math.pow(sommet.longitude-this.longitude,2));
+		return distance;
+	}
 
 
 	@Override
@@ -149,9 +109,6 @@ public class Sommet {
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
-
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -169,6 +126,8 @@ public class Sommet {
 		return true;
 	}
 	
-	
-	
+	@Override
+	public String toString() {
+		return nom;
+	}	
 }

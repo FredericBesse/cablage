@@ -2,117 +2,72 @@ package fr.enac.iessa16.cablage.controller;
 
 import java.awt.event.ActionListener;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fr.enac.iessa16.cablage.model.Modele;
-import fr.enac.iessa16.cablage.model.core.Sommet;
 
 /**
- * Classe Controleur , qui prend en attribut le Controle du menu,
- * le controleur du clique sur le Sommet,
- * ainsi que le controle du Menu permettant de determiner le chemin le plus court (Djikstra et Kruskal)
+ * Classe Controleur, qui regroupe les différents sous-controleurs :
+ * le controle de chaque menu et le controleur pour la souris
  *
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
 public class Controleur {
-
 	
+	// Le logger
+	private Logger LOGGER = LogManager.getLogger(Controleur.class);
+		
+	// Les controleurs des menus (et de la toolbar)
+	private ControleurMenuFichier controleurMenuFichier;
+	private ControleurMenuCalcul controleurMenuCalcul;
+	private ControleurMenuAide controleurMenuAide;
+	private ControleurMenuEdition controleurMenuEdition;
+	
+	// Le controleur de la souris
+	private ControleurSouris controleurSouris;
+
+
 	/**
-	 Attrin
-	 */
-	/**
+	 * Constructeur de la classe Controleur
 	 * 
-	 */
-	private ControleDuMenu controleMenu;
-	private ControleurCliqueSommet controleurClique;
-	private ControleMenuCalcul controleCalcul;
-	private ControleurAide controleAide;
-	private ControleCreationGraphe controleCreationGraphe;
-	
-
-	/**
-	 * Constructeur de la classe Controleur.java
-	 * @param monModel
+	 * @param monModel le modele de l'application
 	 */
 	public Controleur(Modele monModel) {
 		
-		// TODO Auto-generated constructor stub
-		this.controleMenu = new ControleDuMenu(monModel);
-		this.controleurClique = new ControleurCliqueSommet( monModel);
-		this.controleCalcul = new ControleMenuCalcul(monModel);
-		this.controleAide = new ControleurAide(monModel);
-		//this.
-		this.controleCreationGraphe = new ControleCreationGraphe(monModel);
+		LOGGER.debug("Création du controleur");
+		
+		// Création des sous-controleurs
+		this.controleurMenuFichier = new ControleurMenuFichier(monModel);
+		this.controleurMenuCalcul = new ControleurMenuCalcul(monModel);
+		this.controleurMenuAide = new ControleurMenuAide(monModel);
+		this.controleurMenuEdition = new ControleurMenuEdition(monModel);		
+		this.controleurSouris = new ControleurSouris(monModel);
+	
 	}
-
-
-
-	/**
-	 * @param 
-	 * Getters et Setters
+	
+	
+	/*
+	 * Getters
 	 */
-	public ControleurCliqueSommet getControleurClique() {
-		return controleurClique;
+	public ControleurMenuFichier getControleurMenuFichier() {
+		return controleurMenuFichier;
 	}
 
-
-
-	public void setControleurClique(ControleurCliqueSommet controleurClique) {
-		this.controleurClique = controleurClique;
+	public ControleurMenuCalcul getControleurMenuCalcul() {
+		return controleurMenuCalcul;
 	}
 
-
-
-	public ControleDuMenu getControleMenu() {
-		return controleMenu;
+	public ControleurMenuAide getControleMenuAide() {
+		return controleurMenuAide;
 	}
 
-
-
-	public void setControleMenu(ControleDuMenu controleMenu) {
-		this.controleMenu = controleMenu;
+	public ActionListener getControleurMenuEdition() {
+		return controleurMenuEdition;
 	}
-
-
-
-	public ControleMenuCalcul getControleCalcul() {
-		return controleCalcul;
+	
+	public ControleurSouris getControleurSouris() {
+		return controleurSouris;
 	}
-
-
-
-	public void setControleCalcul(ControleMenuCalcul controleCalcul) {
-		this.controleCalcul = controleCalcul;
-	}
-
-
-
-	public ActionListener getControleAide() {
-		// TODO Auto-generated method stub
-		return controleAide;
-	}
-
-
-
-	
-	public ControleCreationGraphe getControleCreationGraphe() {
-		return controleCreationGraphe;
-	}
-
-
-	
-	
-
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

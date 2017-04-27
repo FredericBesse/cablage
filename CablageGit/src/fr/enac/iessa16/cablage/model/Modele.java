@@ -1,26 +1,25 @@
 package fr.enac.iessa16.cablage.model;
 
-import java.awt.Component;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Set;
-import java.util.logging.Logger;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
-import fr.enac.iessa16.cablage.model.algo.AlgoDijkstraJGrapht;
-import fr.enac.iessa16.cablage.model.algo.AlgoKruskalJGrapht;
+import fr.enac.iessa16.cablage.model.algorithm.AlgoDijkstraJGrapht;
+import fr.enac.iessa16.cablage.model.algorithm.AlgoKruskalJGrapht;
 import fr.enac.iessa16.cablage.model.core.Arete;
 import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
 import fr.enac.iessa16.cablage.model.core.Sommet;
 import fr.enac.iessa16.cablage.model.file.ConstructeurGrapheFichierTexte;
-import fr.enac.iessa16.cablage.view.DessinDuGrapheParDefaut;
+import fr.enac.iessa16.cablage.view.PanneauDessinGraphe;
 import fr.enac.iessa16.cablage.view.Fenetre;
+import fr.enac.iessa16.cablage.view.Imprimer;
 import fr.enac.iessa16.cablage.view.ParametresFenetre;
 
 /**
@@ -33,9 +32,10 @@ public class Modele extends Observable {
 	/*
 	 * Attributs de la classe Modele 
 	 */
+	
 	// Le logger
-	private static final Logger LOGGER = Logger.getLogger("Cablage");
-		
+	private Logger LOGGER = LogManager.getLogger(Modele.class);
+				
 	// Le graphe à afficher
 	private GrapheTheorique graphe;	
 
@@ -58,7 +58,7 @@ public class Modele extends Observable {
 	private ArrayList<Set<Sommet>> listeSousGraphesConnexes;
 
 	// La vue (pour affichage des boites de dialogue)
-	private JFrame parent;
+	private Fenetre fenetre;
 
 	
 	/**
@@ -66,8 +66,8 @@ public class Modele extends Observable {
 	 */
 	public Modele(){
 		
-		LOGGER.info("Création du modèle");
-		
+		LOGGER.debug("Création du modèle");
+							
 		// Initialisation des attributs
 		this.graphe = null;
 		
@@ -85,16 +85,28 @@ public class Modele extends Observable {
 		
 		this.listeSousGraphesConnexes = null;
 				
-		this.parent = null;
+		this.fenetre = null;
 	}
 
 
+	/* 
+	 * Fonctions appelées par le menu Fichier (et la toolbar)
+	 */
+	/**
+	 * Méthode permettant de créer un nouveau graphe vide
+	 */
+	public void nouveauGrapheVide() {
+		
+		// TODO Auto-generated method stub
+		message("Graphe Vide", "à faire");
+	}
+	
 	/**
 	 * Methode permettant de charger le graphe par defaut, apres avoir cliqué sur l'option adequate du menu
 	 */
 	public void chargerGrapheParDefaut() {
 		
-		LOGGER.info("Chargement du graphe par défaut");
+		LOGGER.debug("Chargement du graphe par défaut");
 
 		// Création du constructeur de graphe par defaut
 		ConstructeurGrapheParDefaut constructeurGrapheParDefaut = new ConstructeurGrapheParDefaut();
@@ -103,46 +115,213 @@ public class Modele extends Observable {
 		this.setGraphe(constructeurGrapheParDefaut.getGraphe());
 	}
 
+	/**
+	 * Méthode permettant de créer un nouveau graphe aléatoire 
+	 */
+	public void nouveauGrapheAleatoire() {
+		// TODO Auto-generated method stub
+		
+		message("graphe aleatoire", "à faire");
+		
+	}
 
 	/**
-	 * Méthode permettant de charger le graphe depuis un fichier texte.	 * 
+	 * Méthode permettant de charger le graphe depuis un fichier texte. 
 	 */
 	public void chargerGrapheFichierTexte() {
 		
-		LOGGER.info("Chargement du graphe depuis un fichier texte");
+		LOGGER.debug("Chargement du graphe depuis un fichier texte");
 		
 		// Création du lecteur de graphe depuis un fichier texte		
-		ConstructeurGrapheFichierTexte constructeurGrapheFichierTexte = new ConstructeurGrapheFichierTexte(parent);
+		ConstructeurGrapheFichierTexte constructeurGrapheFichierTexte = new ConstructeurGrapheFichierTexte(this, fenetre);
 		
 		// Récupération du graphe
 		setGraphe(constructeurGrapheFichierTexte.getGraphe());
 	}
+	
+	/**
+	 * Méthode permettant d'ouvrir un fichier XML  
+	 */
+	public void ouvrir() {
+		// TODO Auto-generated method stub
+		message("Ouvrir", "à faire");
+	}
+	
+	/**
+	 * Méthode permettant d'enregistrer un graphe dans un fichier XML  
+	 */
+	public void enregister() {
+		// TODO Auto-generated method stub
+		
+		message("Enregistrer", "à faire");
+		
+	}
+	
+	/**
+	 * Méthode permettant d'enregistrer un graphe dans un autre fichier XML  
+	 */
+	public void enregisterSous() {
+		// TODO Auto-generated method stub
+		
+		message("Enregistrer sous", "à faire");
+		
+	}
+	
+	/**
+	 * Méthode permettant d'imprimer le graphe  
+	 */
+	public void imprimer() {
+		
+		new Imprimer(fenetre.getDessin());
+		
+	}
 
 
+	public void fermer() {
+		// TODO Auto-generated method stub
+		message("Fermer", "à faire");
+	}
+
+	public void quitter() {
+		
+		// FIXME : demande si l'utilisateur est sur de vouloir quitter
+		
+		LOGGER.info("Fin de l'application ! Au revoir...");
+		System.exit(0);
+	}
+	
+	
+	
+	
+	
+	/* 
+	 * Fonctions appelées par le menu Edition (et la toolbar)
+	 */
+	
+	public void ajouterSommet() {
+		// TODO Auto-generated method stub
+		message("Ajouter Sommet", "à faire");	
+	}
+
+	public void supprimerSommet() {
+		// TODO Auto-generated method stub
+		message("Supprimer Sommet", "à faire");
+	}
+
+	public void ajouterArete() {
+		// TODO Auto-generated method stub
+		message("Ajouter Arete", "à faire");
+	}
+
+	public void supprimerArete() {
+		// TODO Auto-generated method stub
+		message("SupprimerArete", "à faire");
+	}
+	
+	public void preferences() {
+		// TODO Auto-generated method stub
+		message("preferences", "à faire");
+	}
+	
+
+	
+	
+	/* 
+	 * Fonctions appelées par le menu Calcul
+	 */
+	
+	/**
+	 * Methode permettant de calculer Dijkstra
+	 */
+	public void calculerDijkstra() {
+
+		this.algoDijkstra = new AlgoDijkstraJGrapht(graphe);
+		listeSommetsSelectionnes.clear();
+		int size = graphe.getListeSommets().size();
+		Sommet sommet;
+
+		for(int i = 0 ; i<size; i++) {	
+			
+			sommet = graphe.getListeSommets().get(i);
+			//Si le sommet est selectionné
+			if(sommet.getSelected() == true) {
+
+				//On rajoute le sommet à la liste de sommets sélectionnés.
+				listeSommetsSelectionnes.add(sommet);
+			}
+		}
+
+
+		LOGGER.trace("il y a "+ listeSommetsSelectionnes.size()+ " noeuds selectionnés");
+		
+		// Si on a selectionné deux noeuds 
+		if(listeSommetsSelectionnes.size()==2) {
+			
+			//On appelle Djikstra pour trouver le chemin le plus court pour aller du noued de depart au noeud d'arrivé.
+			this.sommetOrigineDijkstra = listeSommetsSelectionnes.get(0);
+			this.sommetDestinationDijkstra = listeSommetsSelectionnes.get(1);
+
+			this.listeAretesDijkstra = this.algoDijkstra.getDijkstraShortestPath(sommetOrigineDijkstra,sommetDestinationDijkstra);
+
+			this.coutCheminDijkstra = 0;
+			for (Arete arete : listeAretesDijkstra) {
+				coutCheminDijkstra += arete.getCout();
+			}
+
+			LOGGER.trace("Le chemin le plus court contient " + listeAretesDijkstra.size() +" aretes");
+			
+			//On notifie la vue que le modèle a changé:
+			changement();
+
+		} else {
+			erreur("Calcul de Dijkstra", "Il faut sélectionner deux noeuds !");
+		}
+		
+	}
+
+
+	/**
+	 * Methode permettant de calculer Kruskal
+	 */
+	public void calculerKruskal() {
+		
+		// FIXME a faire plutot dans le setGraphe, ou en cas de modification du graphe (ajout sommet, arete)
+		this.algoKruskal = new AlgoKruskalJGrapht(this);
+				
+		algoKruskal.calculerKruskal(this.listeSommetsSelectionnes);
+		
+		listeAretesKruskal = algoKruskal.getKruskalShortestPath();
+		
+		LOGGER.trace("Le chemin le plus court contient " + listeAretesKruskal.size() +" aretes");
+		
+		changement();
+
+	}
+	
+	
+	
+	/* 
+	 * Fonctions appelées par le menu Aide
+	 */
+	public void javaDoc() {
+		// TODO Auto-generated method stub
+		message("javadoc", "à faire");
+		
+	}
+
+
+	public void aPropos() {
+		// TODO Auto-generated method stub
+		message("apropos", "à faire");
+	}
 
 
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-
+	/* 
+	 * Fonctions appelées par le controleur de la souris
+	 */
 
 	/**
 	 * Méthode permettant de trouver le noeud le plus proche du clic souris
@@ -152,7 +331,7 @@ public class Modele extends Observable {
 	 */
 	public void touverSommetLePlusProcheDuClicSouris (int xClic, int yClic) {
 	
-		LOGGER.info("Recherche sommet le plus proche du clic souris x="+xClic+" y="+yClic);
+		LOGGER.debug("Recherche sommet le plus proche du clic souris x="+xClic+" y="+yClic);
 		
 		// Déclaration des variables locales
 		double distance;
@@ -170,32 +349,32 @@ public class Modele extends Observable {
 		if (this.graphe != null) {
 			
 			// on récupère la liste de sommets
-			listeSommets = graphe.getEnsembleDeSommet();
+			listeSommets = graphe.getListeSommets();
 			
 			// si la liste existe (non null)
 			if (listeSommets != null) {
 				
 				// on récupère le nombre de sommets
-				nombreSommet = this.graphe.getEnsembleDeSommet().size();
+				nombreSommet = this.graphe.getListeSommets().size();
 								
 				// on parcourt l'ensemble des sommets du graphe 
 				for(int i=0 ; i<nombreSommet;i++) {
 					
 					// on récupère le sommet i
-					sommet = graphe.getEnsembleDeSommet().get(i);
+					sommet = graphe.getListeSommets().get(i);
 					
 					// on recupère la longitude et latitude du sommet i.
 					longitude = sommet.getLongitude();
 					latitude  = sommet.getLatitude();
 
 					// on les convertit en coordonnées écran (pixel)
-					x = DessinDuGrapheParDefaut.conversionLongitudeEnX(longitude);
-					y = DessinDuGrapheParDefaut.conversionLatitudeEnY(latitude);
+					x = PanneauDessinGraphe.conversionLongitudeEnX(longitude);
+					y = PanneauDessinGraphe.conversionLatitudeEnY(latitude);
 
 					// on recupère la distance entre la position du clic et la position du sommet
 					distance = Math.sqrt(Math.pow(xClic-x,2)+Math.pow(yClic-y,2));
 					
-					LOGGER.finest("distance = "+distance);
+					LOGGER.trace("distance = "+distance);
 					//Le sommet est consideré comme "sélectionné" si la distance entre le clique et 
 					//la position du sommet du graphe est inférieur au rayon de chaque sommet 
 					if(distance<ParametresFenetre.rayonSommetClic)	{
@@ -203,7 +382,7 @@ public class Modele extends Observable {
 						if (distance<distanceMin) {
 							
 							distanceMin = distance;
-							sommetLePlusProcheDuClic = graphe.getEnsembleDeSommet().get(i);
+							sommetLePlusProcheDuClic = graphe.getListeSommets().get(i);
 							
 						}
 					}
@@ -235,45 +414,27 @@ public class Modele extends Observable {
 						this.listeSommetsSelectionnes.add(dernierSommetSelectionne);
 					}
 
-
 					//On notifie la vue que le modèle a changé
 					this.changement();
-					
-
-					
-				}
-				
-				
-			}
-			
+				}				
+			}		
 		}
-		
-		
-		
-
-
-		
-
-
-
-
-		//	System.out.println("MODELE : CLIC x="+x1+" y="+y);
-
 	}
 
+	
+	/**
+	 * Méthode permettant de déplacer la vue suite à un drag de la souris
+	 *   
+	 * @param dx
+	 * @param dy
+	 */
+	public void drag(int dx, int dy) {
 
-
-
-
-
-
-
-
-
-
-
-
-
+		ParametresFenetre.offsetX += dx;
+		ParametresFenetre.offsetY += dy;
+		
+		changement();
+	}
 
 
 
@@ -285,19 +446,15 @@ public class Modele extends Observable {
 	 */
 	private void testConnectivite() {
 
-		SimpleWeightedGraph graphPourJGrapht = new SimpleWeightedGraph<Sommet, Arete>(Arete.class);
+		SimpleWeightedGraph<Sommet, Arete> graphPourJGrapht = new SimpleWeightedGraph<Sommet, Arete>(Arete.class);
 
 		// Ajout de tous les sommets au graphe JGrapht
-		for (Sommet sommet: graphe.getEnsembleDeSommet()) {
+		for (Sommet sommet: graphe.getListeSommets()) {
 			graphPourJGrapht.addVertex(sommet);
 		}
-		/*  for (int i = 0; i< graphe.getEnsembleDeSommet().size();i++) {
-	        	Sommet sommet = graphe.getEnsembleDeSommet().get(i);
-	            graphPourJGrapht.addVertex(sommet);
-	        }*/
-
+		
 		// Ajout de toutes les aretes au graphe JGrapht
-		for (Arete arete : graphe.getEnsembleAretes()) {
+		for (Arete arete : graphe.getListeAretes()) {
 			graphPourJGrapht.addEdge(arete.getSommetOrigine(), arete.getSommetExtremité(), arete);
 			// FIXME graphPourJGrapht.setEdgeWeight(arete, arete.getCout());
 		}
@@ -306,308 +463,98 @@ public class Modele extends Observable {
 
 		listeSousGraphesConnexes = (ArrayList<Set<Sommet>>) connectivityInspector.connectedSets();
 
-		System.out.println(listeSousGraphesConnexes.size()+" composantes connexes trouvées");
+		LOGGER.trace(listeSousGraphesConnexes.size()+" composantes connexes trouvées");
 
 
 	}
 
 
-	/**
-	 * 
-	 * 
-	 * 
+	
+
+	
+
+	/*
+	 * Affichage des messages d'infos, erreur, warning à l'utilisateur
 	 */
-
-	public void calculerDjikstra() {
-		// TODO Auto-generated method stub
-
-		this.algoDijkstra = new AlgoDijkstraJGrapht(graphe);
-		listeSommetsSelectionnes.clear();
-		int size = graphe.getEnsembleDeSommet().size();
-		Sommet sommet;
-
-		for(int i = 0 ; i<size; i++)
-		{	
-			sommet = graphe.getEnsembleDeSommet().get(i);
-			//Si le sommet est selectionné
-			if(sommet.getSelected() == true)
-			{
-
-				//On rajoute le sommet à la liste de sommets sélectionnés.
-				listeSommetsSelectionnes.add(sommet);
-
-
-			}
-
-		}
-
-
-		System.out.println("il y a "+ listeSommetsSelectionnes.size()+ " noeuds selectionnés");
-		if(listeSommetsSelectionnes.size()==2)//Si on a selectionné deux noeuds 
-		{
-			//On appelle Djikstra pour trouver le chemin le plus court pour aller du noued de depart au noeud d'arrivé.
-			this.sommetOrigineDijkstra = listeSommetsSelectionnes.get(0);
-			this.sommetDestinationDijkstra = listeSommetsSelectionnes.get(1);
-
-			this.listeAretesDijkstra = this.algoDijkstra.getDijkstraShortestPath(sommetOrigineDijkstra,sommetDestinationDijkstra);
-
-			this.coutCheminDijkstra = 0;
-			for (Arete arete : listeAretesDijkstra) {
-				coutCheminDijkstra += arete.getCout();
-			}
-
-			System.out.println("Le chemin le plus court contient " + listeAretesDijkstra.size() +" aretes");
-			//On notifie la vue que le modèle a changé:
-			changement();
-
-		}
-		/*if(listeDeSommetsSelectionnés.size()==3)
-		{
-
-			this.listearetesCoresspondantauCheminLeplusCourt = this.djikstra.getDijkstraShortestPath(listeDeSommetsSelectionnés.get(0),listeDeSommetsSelectionnés.get(1));
-
-
-
-		}*/
-	}
-
-
-	/**
-	 * Methode permettant de calculer Kruskal
-	 */
-	public void calculerKruskal() {
-		
-		
-		if (this.algoKruskal == null) {
-			this.algoKruskal = new AlgoKruskalJGrapht(this);
-		}
-		
-		algoKruskal.calculerKruskal(this.listeSommetsSelectionnes);
-		
-		listeAretesKruskal = algoKruskal.getKruskalShortestPath();
-		
-		System.out.println("Le chemin le plus court contient " + listeAretesKruskal.size() +" aretes");
-		changement();
-
-	}
-
-	//Getters et Setters 
-
 	public void message(String titre, String message) {
-		
-		
-		JOptionPane.showMessageDialog(parent, message, titre, JOptionPane.INFORMATION_MESSAGE);
-		//default title and icon
-		/*JOptionPane.showMessageDialog(frame,
-		    "Eggs are not supposed to be green.");
-
-		Informational dialog with custom title, warning icon 	
-
-		//custom title, warning icon
-		JOptionPane.showMessageDialog(frame,
-		    "Eggs are not supposed to be green.",
-		    "Inane warning",
-		    JOptionPane.WARNING_MESSAGE);
-
-		Informational dialog with custom title, error icon 	
-
-		//custom title, error icon
-		JOptionPane.showMessageDialog(frame,
-		    "Eggs are not supposed to be green.",
-		    "Inane error",
-		    JOptionPane.ERROR_MESSAGE);*/
-
-		
+		JOptionPane.showMessageDialog(fenetre, message, titre, JOptionPane.INFORMATION_MESSAGE);	
+	}
+	public void warning(String titre, String message) {		
+		JOptionPane.showMessageDialog(fenetre, message, titre, JOptionPane.WARNING_MESSAGE);
+	}
+	public void erreur(String titre, String message) {		
+		JOptionPane.showMessageDialog(fenetre, message, titre, JOptionPane.ERROR_MESSAGE);
 	}
 
-
-	public List<Arete> getListearetesCoresspondantauCheminLeplusCourtDjikstra() {
+	
+	
+	
+	/*
+	 * Getters
+	 */
+	
+	public ArrayList<Arete> getListeAretesDijkstra() {
 		return listeAretesDijkstra;
 	}
 
-
-	/*public void setListearetesCoresspondantauCheminLeplusCourt(List<Arete> listearetesCoresspondantauCheminLeplusCourt) {
-		this.listearetesCoresspondantauCheminLeplusCourtDjikstra = listearetesCoresspondantauCheminLeplusCourt;
-	}*/
-
-
-	public List<Arete> getListearetesCoresspondantauCheminLeplusCourtKruskal() {
+	public ArrayList<Arete> getListeAretesKruskal() {
 		return listeAretesKruskal;
 	}
 
-
-
-
-	/**Getter Sommet
-	 * @return sommet
-	 */
 	public Sommet getdernierSommetSelectionne() {
 		return dernierSommetSelectionne;
 	}
 
-
-
-
-
-	public double getCoutCheminLeplusCourtDjikstra() {
-		// TODO Auto-generated method stub
+	public double getCoutCheminDijkstra() {
 		return coutCheminDijkstra;
 	}
-	public Sommet getSommetOrigine() {
+	
+	public Sommet getSommetOrigineDijkstra() {
 		return sommetOrigineDijkstra;
 	}
 
-
-	public List<Set<Sommet>> getConnectedSet() {
+	public ArrayList<Set<Sommet>> getListeSousGraphesConnexes() {
 		return listeSousGraphesConnexes;
 	}
-
 
 	public Sommet getSommetDestination() {
 		return sommetDestinationDijkstra;
 	}
-
-
-	
-	
-	public void setParent(JFrame parent) {
-		this.parent = parent;
-	}
-
-
-	public void nouveauGraphe() {
-		// TODO Auto-generated method stub
-		
-		message("nouveau", "à faire");
-		
-	}
-
-	public void OuvertureGrapheAleatoire() {
-		// TODO Auto-generated method stub
-		
-		message("graphe aleatoire", "à faire");
-		
-	}
-
-	public void OuvertureGrapheVide() {
-		// TODO Auto-generated method stub
-		
-		message("Graphe Vide", "à faire");
-		
-	}
-	public void EnregisterSous() {
-		// TODO Auto-generated method stub
-		
-		message("Enregistrer sous", "à faire");
-		
-	}
-	
-	public void Imprimer() {
-		// TODO Auto-generated method stub
-		fr.enac.iessa16.cablage.view.Imprimer monImpression = new fr.enac.iessa16.cablage.view.Imprimer(((Fenetre)parent).getDessin());
-		//message("Imprimer", "à faire");
-		
-	}
-
-
-	public void Fermer() {
-		// TODO Auto-generated method stub
-		message("Fermer", "à faire");
-	}
-
-
-	public void ouvrir() {
-		// TODO Auto-generated method stub
-		message("Ouvrir", "à faire");
-	}
-
-
-	public void drag(int dx, int dy) {
-		// TODO Auto-generated method stub
-		ParametresFenetre.offsetX += dx;
-		ParametresFenetre.offsetY += dy;
-		
-		//message("drag", "dx="+dx+" dy="+dy);
-		
-		changement();
-	}
-
-
-	public void aide() {
-		// TODO Auto-generated method stub
-		message("Aide", "à faire");
-	}
-
-
-	public void javaDoc() {
-		// TODO Auto-generated method stub
-		message("javadoc", "à faire");
-		
-	}
-
-
-	public void aPropos() {
-		// TODO Auto-generated method stub
-		message("apropos", "à faire");
-	}
-
-
-	public void ajoutSommet(int xClic, int yClic) {
-		// TODO Auto-generated method stub
-		message("Ajouter Sommet", "à faire");
-		
-		
-	}
-
-
-	public void suppSommet() {
-		// TODO Auto-generated method stub
-		message("Supprimer Sommet", "à faire");
-	}
-
-
-	public void ajoutArete() {
-		// TODO Auto-generated method stub
-		message("Ajouter Arete", "à faire");
-	}
-
-
-	public void supprimerArete() {
-		// TODO Auto-generated method stub
-		message("SupprimerArete", "à faire");
-	}
-
-
-
-
-
 	
 	public GrapheTheorique getGraphe() {
 		return graphe;
 	}
 
+	
+	
+	/*
+	 * Setters
+	 */
+	
+	public void setFenetre(Fenetre fenetre) {
+		this.fenetre = fenetre;
+	}
 
 	public void setGraphe(GrapheTheorique graphe) {
+		
 		this.graphe = graphe;
+		
 		testConnectivite();
-
 		changement();
 	}
 	
 	
 	
 	
+	/**
+	 * Méthode permettant de notifier la vue d'un changement du modèle  
+	 */
 	public void changement() {
-		// TODO Auto-generated method stub
-		this.setChanged();//Le modele change mais personne ne le sait
-		this.notifyObservers(); //on informe les autres que le modele change
-
+		
+		// Le modele change (mais personne ne le sait)
+		this.setChanged();
+		
+		// On informe les obverveurs que le modele a changé
+		this.notifyObservers(); 
 	}
-
-
-
 }
-
-
-
-

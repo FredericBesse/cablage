@@ -5,104 +5,68 @@ import java.util.ArrayList;
 import fr.enac.iessa16.cablage.model.core.Arete;
 import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
 import fr.enac.iessa16.cablage.model.core.Sommet;
+
 /**
- * Classe ConstructionGrapheParDefaut  permettant de construire un graphe par défaut (pour des tests)
+ * Classe ConstructeurGrapheParDefaut permettant de construire un graphe par défaut (pour des tests)
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
-
 public class ConstructeurGrapheParDefaut {
-	
-	
-	
-	//attribut graphe de la classe
+		
+	// le graphe
 	private GrapheTheorique graphe;
 
 	
-	
 	/**
-	 * Constructeur de la classe ConstructionGrapheParDefaut.java permettant de construire un 
-	 * graphe prédéfini.
+	 * Constructeur permettant de créer un graphe prédéfini.
 	 */
-	public ConstructeurGrapheParDefaut() { //super();
-		// TODO Auto-generated constructor stub
+	public ConstructeurGrapheParDefaut() { 
 		
-		//Construction de 5 sommets, dont les coordonnees sont fixes.	
+		// Construction de 5 sommets, dont les coordonnees sont fixes.	
 		Sommet a = new Sommet(50, 50, "A"); 	
 		Sommet b = new Sommet(50,500, "B");
 		Sommet c = new Sommet(50,900, "C");
 		Sommet d = new Sommet(400,275,"D");
 		Sommet e = new Sommet(400,750,"E");
 		
-		//On cree le tableau de sommets
+		// On cree le tableau de sommets
 		ArrayList<Sommet> tableaudeSommet = new ArrayList<Sommet>();
 		
 		// On ajoute chaque sommet au tableau de sommets
-		
-		
 		tableaudeSommet.add(a);
 		tableaudeSommet.add(b);
 		tableaudeSommet.add(c);
 		tableaudeSommet.add(d);
 		tableaudeSommet.add(e);
 		
-		//Creation de 5 aretes , qui relie donc les sommets prealablement crées.
+		// Creation de 4 aretes , qui relie donc les sommets prealablement crées.
 		Arete arete1 = new Arete(a,b,25);
 		Arete arete2 = new Arete(c,d,65);
 		Arete arete3 = new Arete(d,e,25);
-		//Arete arete4 = new Arete(a,c,69);
-		Arete arete5 = new Arete(a,d,69);
+		Arete arete4 = new Arete(a,d,69);
 		
-		//On cree le tableau d'aretes
-		
+		// On cree le tableau d'aretes
 		ArrayList<Arete> tableauAretes = new ArrayList<Arete>();
 		
-		//On ajoute chaque arete au tableau d'aretes.
-		
+		// On ajoute chaque arete au tableau d'aretes.
 		tableauAretes.add(arete1);
 		tableauAretes.add(arete2);
 		tableauAretes.add(arete3);
-	//	tableauAretes.add(arete4);
-		tableauAretes.add(arete5);
+		tableauAretes.add(arete4);
+				
 		
-		
-		
-		//on crée l'objet graphe de type GrapheTheorique, il prendra donc en argument le tableau de sommets et le tableau d'aretes prealablement crées.
-		
+		// On crée l'objet graphe de type GrapheTheorique, il prendra donc en argument le tableau de sommets et le tableau d'aretes prealablement crées.
 		this.graphe=new GrapheTheorique(tableaudeSommet,tableauAretes);
-		
-		
 	}
 	
-	
-	
-	
-	
-	
-	//Getters et Setters du graphe
+		
+	// Getter du graphe 
 	public GrapheTheorique getGraphe() {
 		return graphe;
 	}
 
-
-
-
-
-
-
+	// Setter du graphe
 	public void setGraphe(GrapheTheorique graphe) {
 		this.graphe = graphe;
 	}
-
-	/*public void setGraphe(GrapheTheorique graphe) {
-		this.graphe = graphe;
-	}*/
-	
-	
-	
-	
-	
-	
-	
-
 }

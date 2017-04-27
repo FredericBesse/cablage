@@ -221,10 +221,10 @@ public class PanneauParametres extends JPanel {
 			
 			if (graphe != null) {
 				
-				textFieldNombreSommets.setText(Integer.toString(graphe.getEnsembleDeSommet().size()));
-				textFieldNombreAretes.setText(Integer.toString(graphe.getEnsembleAretes().size()));
-				if (modele.getConnectedSet() != null)
-					textFieldCompConnexe.setText(Integer.toString(modele.getConnectedSet().size()));
+				textFieldNombreSommets.setText(Integer.toString(graphe.getListeSommets().size()));
+				textFieldNombreAretes.setText(Integer.toString(graphe.getListeAretes().size()));
+				if (modele.getListeSousGraphesConnexes() != null)
+					textFieldCompConnexe.setText(Integer.toString(modele.getListeSousGraphesConnexes().size()));
 				
 			}
 			
@@ -242,12 +242,12 @@ public class PanneauParametres extends JPanel {
 			
 			
 			// Mise à jour ^panneau dijkstra
-			double cout = modele.getCoutCheminLeplusCourtDjikstra();
+			double cout = modele.getCoutCheminDijkstra();
 			if (cout >= 0) {
 				textFieldCout.setText(Double.toString(cout));
 			}
 			
-			Sommet origine = modele.getSommetOrigine();
+			Sommet origine = modele.getSommetOrigineDijkstra();
 			if (origine != null) {
 				textFieldOrigine.setText(origine.getNom());
 			}
@@ -257,7 +257,7 @@ public class PanneauParametres extends JPanel {
 				textFieldDest.setText(destination.getNom());
 			}
 			
-			List<Arete> chemin = modele.getListearetesCoresspondantauCheminLeplusCourtDjikstra();
+			List<Arete> chemin = modele.getListeAretesDijkstra();
 			if (chemin != null) {
 				comboBoxAretesDijkstra.removeAllItems();
 				for (int i = 0; i < chemin.size(); i++) {

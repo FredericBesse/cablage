@@ -9,5 +9,11 @@
 	<classpathentry kind="lib" path="lib/jgrapht-1.0.1/lib/jgrapht-ext-1.0.1-uber.jar"/>
 	<classpathentry kind="lib" path="lib/jgrapht-1.0.1/lib/jgrapht-ext-1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/jgrapht-1.0.1/lib/jgraphx-2.0.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-2.8.2/log4j-api-2.8.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-2.8.2/log4j-api-2.8.2-sources.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-2.8.2/log4j-api-2.8.2.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-2.8.2/log4j-core-2.8.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-2.8.2/log4j-core-2.8.2-sources.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-2.8.2/log4j-core-2.8.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

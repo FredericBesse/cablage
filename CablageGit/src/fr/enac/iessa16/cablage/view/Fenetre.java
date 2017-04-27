@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -19,16 +21,22 @@ import javax.swing.UIManager;
 
 import fr.enac.iessa16.cablage.controller.Controleur;
 import fr.enac.iessa16.cablage.model.Modele;
+import fr.enac.iessa16.cablage.view.menu.BarreOutils;
+import fr.enac.iessa16.cablage.view.menu.MenuAide;
+import fr.enac.iessa16.cablage.view.menu.MenuCalcul;
+import fr.enac.iessa16.cablage.view.menu.MenuEdition;
+import fr.enac.iessa16.cablage.view.menu.MenuFichier;
 
 /**
  * Classe Fenetre qui correspond à la vue...
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
+@SuppressWarnings("serial")
 public class Fenetre extends JFrame implements Observer {
 
 	private Controleur controleur;
-	private DessinDuGrapheParDefaut dessin;
+	private PanneauDessinGraphe dessin;
 	private JMenuBar jbar;
 	private PanneauParametres panneauParametres;
 
@@ -48,17 +56,7 @@ public class Fenetre extends JFrame implements Observer {
 		this.controleur = controleur;
 		creerMenu();
 	
-		
-		/*JPanel toolboxPanel = new JPanel();
-		toolboxPanel.setLayout(new FlowLayout());
-		//toolboxPanel.setBorder(BorderFactory.createLineBorder(Color.RED));
-		toolboxPanel.add(new BarreOutilsFichier(controleur));
-		toolboxPanel.add(new BarreOutilsGraphe(controleur));
-		//this.getContentPane().add(new BarreOutilsFichier(controleur));
-				this.getContentPane().add(new BarreOutilsFichier(controleur), BorderLayout.NORTH);
-			    //this.getContentPane().add(new BarreOutilsGraphe(controleur), BorderLayout.);
-		this.getContentPane().add(toolboxPanel);//,BorderLayout.NORTH);
-		*/
+	
 		
 		
 		JPanel monContenair = new JPanel();
@@ -90,7 +88,7 @@ public class Fenetre extends JFrame implements Observer {
 		
 		//JTabbedPane tabbedPane = new JTabbedPane();
 		
-		this.dessin = new DessinDuGrapheParDefaut(model, controleur);
+		this.dessin = new PanneauDessinGraphe(model, controleur);
 		
 		
 		
@@ -111,15 +109,13 @@ public class Fenetre extends JFrame implements Observer {
 		//monContenair.add(tabbedPane);
 		monContenair.add(dessin);
 		
-		JPanel vide = new JPanel();
-		vide.setPreferredSize(new Dimension(60, 50));
-		monContenair.add(vide);
+		
 
 		
 		
 
 		this.getContentPane().add(monContenair);
-		this.getContentPane().add(new BarreOutilsFichier(controleur), BorderLayout.NORTH);
+		this.add(new BarreOutils(controleur), BorderLayout.NORTH);
 
 		// this.pack();
 		this.setVisible(true);
@@ -131,8 +127,17 @@ public class Fenetre extends JFrame implements Observer {
 	 */
 	public void proprieteFenetre() {
 		// Calcul de la dimension de l'écran
-		java.awt.Toolkit outil = getToolkit();
-		ParametresFenetre.dimensionEcran = outil.getScreenSize();
+		GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();
+		Rectangle maximumWindowBounds=graphicsEnvironment.getMaximumWindowBounds();
+		
+		ParametresFenetre.dimensionEcran = new Dimension(maximumWindowBounds.width, maximumWindowBounds.height);
+		
+		System.out.println("toolkit "+ParametresFenetre.dimensionEcran);
+		
+		
+		
+		System.out.println("GraphicsEnvironment "+maximumWindowBounds);
+		
 		this.setAlwaysOnTop(true);
 		this.setResizable(false);
 		this.setTitle("Cablage à cout minimum");
@@ -195,7 +200,7 @@ public class Fenetre extends JFrame implements Observer {
 
 	}
 
-	public DessinDuGrapheParDefaut getDessin() {
+	public PanneauDessinGraphe getDessin() {
 		return dessin;
 	}
 
