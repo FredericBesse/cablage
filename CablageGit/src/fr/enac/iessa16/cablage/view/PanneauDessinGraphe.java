@@ -57,12 +57,12 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		
 		
 		
-		this.setPreferredSize(ParametresFenetre.dimensionJPanelGraphe);
+		this.setPreferredSize(ParametresFenetre.dimensionJPanelDessin);
 		this.setBorder(BorderFactory.createTitledBorder("Vue 2D"));
 		this.imageFond = null;
 		
 	
-		System.out.println("taille du panneau "+ParametresFenetre.dimensionJPanelGraphe);
+		System.out.println("taille du panneau "+ParametresFenetre.dimensionJPanelDessin);
 		
 		//String center="Brooklyn+Bridge,New+York,NY";
 		String center="Paris-Charles+De+Gaulle+(CDG)";
@@ -498,13 +498,13 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	
 	
 	public static int conversionLongitudeEnX(double longitude) {
-		return (int) Math.round(ParametresFenetre.dimensionJPanelGraphe.getWidth() / 2 + ParametresFenetre.offsetX + longitude
+		return (int) Math.round(ParametresFenetre.dimensionJPanelDessin.getWidth() / 2 + ParametresFenetre.offsetX + longitude
 				* ParametresFenetre.echelle / ParametresFenetre.ECHELLE_BASE);
 
 	}
 
 	public static int conversionLatitudeEnY(double latitude) {
-		return (int) Math.round(ParametresFenetre.dimensionJPanelGraphe.getHeight() / 2 + ParametresFenetre.offsetY - latitude
+		return (int) Math.round(ParametresFenetre.dimensionJPanelDessin.getHeight() / 2 + ParametresFenetre.offsetY - latitude
 				* ParametresFenetre.echelle / ParametresFenetre.ECHELLE_BASE);
 
 	}
@@ -521,7 +521,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	 */
 	// TODO fonction a mettre dans le model ???
 	public static double getRealCoordX(double x) {
-		return (x - (ParametresFenetre.dimensionJPanelGraphe.getWidth() / 2 + ParametresFenetre.offsetX))
+		return (x - (ParametresFenetre.dimensionJPanelDessin.getWidth() / 2 + ParametresFenetre.offsetX))
 				* ParametresFenetre.ECHELLE_BASE / ParametresFenetre.echelle;
 	}
 
@@ -535,7 +535,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	 */
 	// TODO fonction a mettre dans le model ???
 	public static double getRealCoordY(double y) {
-		return (y - (ParametresFenetre.dimensionJPanelGraphe.getHeight() / 2 + ParametresFenetre.offsetY))
+		return (y - (ParametresFenetre.dimensionJPanelDessin.getHeight() / 2 + ParametresFenetre.offsetY))
 				* -ParametresFenetre.ECHELLE_BASE / ParametresFenetre.echelle;
 	}
 

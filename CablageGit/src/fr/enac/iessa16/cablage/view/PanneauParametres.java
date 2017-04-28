@@ -1,9 +1,6 @@
 package fr.enac.iessa16.cablage.view;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.List;
 
@@ -12,7 +9,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SpringLayout;
 
 import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.model.core.Arete;
@@ -24,6 +20,7 @@ import fr.enac.iessa16.cablage.model.core.Sommet;
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
+@SuppressWarnings("serial")
 public class PanneauParametres extends JPanel {
 	
 	private Modele modele;
@@ -44,6 +41,8 @@ public class PanneauParametres extends JPanel {
 	
 	/**
 	 * Constructeur de la classe JPanelParametres.java
+	 * 
+	 * @param modele
 	 */
 	public PanneauParametres(Modele modele) {
 		
@@ -102,6 +101,7 @@ public class PanneauParametres extends JPanel {
 		labelNbCompConnexe.setLabelFor(textFieldCompConnexe);
 		graphe.add(textFieldCompConnexe);
 		
+		//graphe.setPreferredSize(ParametresFenetre.dimensionJPanelParametresGraphe);
 		this.add(graphe);
 	}
 	
@@ -132,6 +132,7 @@ public class PanneauParametres extends JPanel {
 		labelNom.setLabelFor(textFieldLon);
 		sommet.add(textFieldLon);
 		
+		//sommet.setPreferredSize(ParametresFenetre.dimensionJPanelParametresSommet);
 		this.add(sommet);
 	}
 	
@@ -170,41 +171,38 @@ public class PanneauParametres extends JPanel {
 		labelCout.setLabelFor(textFieldCout);
 		dijkstra.add(textFieldCout);
 		
+	//	dijkstra.setPreferredSize(ParametresFenetre.dimensionJPanelParametresDijkstra);
 		this.add(dijkstra);
 	}
 	
 	private void creerPanneauKruskal() {
 	
-		JPanel dijkstra = new JPanel();
-		dijkstra.setBorder(BorderFactory.createTitledBorder("Kruskal"));
-		dijkstra.setLayout(new GridLayout(3,2));
+		JPanel kruskal = new JPanel();
+		kruskal.setBorder(BorderFactory.createTitledBorder("Kruskal"));
+		kruskal.setLayout(new GridLayout(3,2));
 		
 		
 		JLabel labelListeSommetSelectionne = new JLabel("Sommet Selec : ");
-		dijkstra.add(labelListeSommetSelectionne);
+		kruskal.add(labelListeSommetSelectionne);
 		comboBoxSommetSelectionne= new JComboBox<Sommet>();
 		//labelDest.setLabelFor(textFieldDest);
-		dijkstra.add(comboBoxSommetSelectionne);
+		kruskal.add(comboBoxSommetSelectionne);
 		
 		JLabel labelListeArete = new JLabel("Aretes : ");
-		dijkstra.add(labelListeArete);
+		kruskal.add(labelListeArete);
 		comboBoxAretesKruskal= new JComboBox<Arete>();
 		//labelDest.setLabelFor(textFieldDest);
-		dijkstra.add(comboBoxAretesKruskal);
+		kruskal.add(comboBoxAretesKruskal);
 		
 		
 		JLabel labelCout = new JLabel("Cout : ");
-		dijkstra.add(labelCout);
+		kruskal.add(labelCout);
 		textFieldCoutKruskal= new JTextField(10);
 		labelCout.setLabelFor(textFieldCoutKruskal);
-		dijkstra.add(textFieldCoutKruskal);
+		kruskal.add(textFieldCoutKruskal);
 		
-		this.add(dijkstra);
-		
-	}
-	
-	private void creerPanneauArete() {
-		// TODO Auto-generated method stub
+	//	kruskal.setPreferredSize(ParametresFenetre.dimensionJPanelParametresKruskal);
+		this.add(kruskal);
 		
 	}
 	
@@ -241,7 +239,7 @@ public class PanneauParametres extends JPanel {
 			}
 			
 			
-			// Mise à jour ^panneau dijkstra
+			// Mise à jour panneau dijkstra
 			double cout = modele.getCoutCheminDijkstra();
 			if (cout >= 0) {
 				textFieldCout.setText(Double.toString(cout));

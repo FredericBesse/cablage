@@ -16,14 +16,20 @@ public class ParametresFenetre {
 	
 	public static Dimension dimensionJPanelParametres;
 	
+	public static Dimension dimensionJPanelParametresGraphe;
 	public static Dimension dimensionJPanelParametresSommet;
-	public static Dimension dimensionJPanelParametresArete;
+	public static Dimension dimensionJPanelParametresDijkstra;
+	public static Dimension dimensionJPanelParametresKruskal;
+
 	
-	public static Dimension dimensionJPanelGraphe;
+	public static Dimension dimensionJPanelDessin;
 	public static double offsetX=0;
 	public static double echelle=1;
 	public static double ECHELLE_BASE=1;
 	public static double offsetY=0;
+	
+	// Titre de la fenetre
+	public static final String titreFenetre = "Cablage à cout minimum";
 	
 	
 	// Items du menu Fichier 
