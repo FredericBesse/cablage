@@ -42,8 +42,6 @@ public class ConstructeurGrapheFichierTexte {
 	
 	/**
 	 * Constructeur de la classe ConstructeurGrapheFichierTexte
-	 * 
-	 * @param fenetre
 	 */
 	public ConstructeurGrapheFichierTexte(Modele modele) {
 		

@@ -1,5 +1,7 @@
 package fr.enac.iessa16.cablage.model;
 
+import java.awt.Desktop;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Set;
@@ -310,9 +312,22 @@ public class Modele extends Observable {
 	 * Fonctions appelées par le menu Aide
 	 */
 	public void javaDoc() {
-		// TODO javadoc
-		message("javadoc", "à faire");
+	
 		
+		if(Desktop.isDesktopSupported()) {  
+			if(Desktop.getDesktop().isSupported(java.awt.Desktop.Action.BROWSE)) {  
+				try { 
+					// FIXME copier les fichiers javadoc chez l'utilisateur pour que ca marche en local
+					Desktop.getDesktop().browse(new URI("file:///home/eleve/IESSA/bessefc/git/cablageGit/CablageGit/doc/index.html"));
+				} catch (Exception ex) {  
+					erreur("Javadoc", "Impossible de trouver la Javadoc...");
+				} 
+			} else {  
+				erreur("Javadoc", "La fonction n'est pas supportée par votre système d'exploitation...");  
+			}  
+		} else {  
+			erreur("Javadoc", "Desktop pas supporté par votre système d'exploitation...");  
+		}		
 	}
 
 
