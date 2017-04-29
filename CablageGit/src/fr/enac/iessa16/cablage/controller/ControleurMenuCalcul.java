@@ -33,7 +33,7 @@ public class ControleurMenuCalcul implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		// On stocke l'action command du bouton cliqué dans une string.
+		// On stocke l'action commande du bouton cliqué dans une string.
 		String s = e.getActionCommand();
 		
 		// Puis on compare cette string aux differentes options possibles

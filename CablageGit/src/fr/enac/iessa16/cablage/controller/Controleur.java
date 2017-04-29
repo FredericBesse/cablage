@@ -63,7 +63,7 @@ public class Controleur {
 		return controleurMenuAide;
 	}
 
-	public ActionListener getControleurMenuEdition() {
+	public ControleurMenuEdition getControleurMenuEdition() {
 		return controleurMenuEdition;
 	}
 	
