@@ -20,7 +20,8 @@ public class Imprimer {
 		
 		// Affiche une boîte de choix d'imprimante
 		if (job.printDialog()) {
-			try {
+			
+			try {				
 				// Effectue l'impression
 				job.print();
 			} catch (PrinterException ex) {

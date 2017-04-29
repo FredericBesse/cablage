@@ -1,36 +1,13 @@
 package fr.enac.iessa16.cablage.view;
 
-import java.awt.Dimension;
+import java.awt.Color;
 
 public class ParametresFenetre {
-
 	
-	
-	
-	public static int rayonSommetAffichage = 5;
-	public static int rayonSommetClic = 25;
-	
-	public static Dimension dimensionEcran;
-	
-	//public static Dimension dimensionContentPane;
-	
-	public static Dimension dimensionJPanelParametres;
-	
-	public static Dimension dimensionJPanelParametresGraphe;
-	public static Dimension dimensionJPanelParametresSommet;
-	public static Dimension dimensionJPanelParametresDijkstra;
-	public static Dimension dimensionJPanelParametresKruskal;
-
-	
-	public static Dimension dimensionJPanelDessin;
-	public static double offsetX=0;
-	public static double echelle=1;
-	public static double ECHELLE_BASE=1;
-	public static double offsetY=0;
 	
 	// Titre de la fenetre
 	public static final String titreFenetre = "Cablage à cout minimum";
-	
+		
 	
 	// Items du menu Fichier 
 	public static final String menuFichier = "Fichier";
@@ -50,6 +27,7 @@ public class ParametresFenetre {
 	public static final String fermer = "Fermer";
 	public static final String quitter = "Quitter";
 	
+	
 	// Items du menu Edition
 	public static final String menuEdition = "\u00C9dition";
 	
@@ -61,14 +39,48 @@ public class ParametresFenetre {
 	
 	public static final String preferences = "Préférences...";
 		
+	
 	// Items du menu Calcul
 	public static final String menuCalcul = "Calcul";
 	public static final String dijkstra = "Calculer Djikstra";
 	public static final String kruskal = "Calculer Kruskal";
+	
 	
 	// Items du menu ?
 	public static final String menuAide = "?";
 	public static final String apropos = "\u00C0 propos...";
 	public static final String javadoc = "Javadoc...";
 
+	
+	// Titres des panneaux
+	public static final String titrePanneauVue2D = "Vue 2D";
+	public static final String titrePanneauParametres = "Param\u00e8tres";
+	public static final String titrePanneauParametresGraphe = "Graphe";
+	public static final String titrePanneauParametresSommet = "Sommet";
+	public static final String titrePanneauParametresDijkstra = "Dijkstra";
+	public static final String titrePanneauParametresKruskal = "Kruskal";
+	public static final String titrePanneauParametresInformation = "Informations";
+	
+	
+	// Parametre du zoom
+	public static double offsetX=0;
+	public static double echelle=1;
+	public static double ECHELLE_BASE=1;
+	public static double offsetY=0;
+	
+	
+	// Parametre d'affichage des sommets
+	public static int rayonSommetAffichage = 5;
+	public static int rayonSommetClic = 25; // zone cliquable autour du sommet permettant sa sélection
+	public static Color couleurSommetNonSelectionne = Color.BLUE;
+	public static Color couleurSommetSelectionne = Color.PINK;	
+	public static Color couleurNomSommet = Color.BLACK;
+	public static Color couleurDernierSommetSelectionne = Color.GREEN;	
+	
+	// Parametre d'affichage des aretes
+	public static Color couleurArete = Color.RED;
+	public static Color couleurAreteDijkstra = Color.MAGENTA;
+	public static Color couleurAreteKruskal = Color.ORANGE;
+	
+	
 }

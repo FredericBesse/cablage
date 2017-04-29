@@ -50,7 +50,7 @@ public class GrapheTheorique {
 
 		double longitudeCourante, latitudeCourante;
 		
-
+		// FIXME optimiser boucle for
 		for (int i = 0; i < listeSommets.size(); i++) {
 			
 			longitudeCourante = listeSommets.get(i).getLongitude();

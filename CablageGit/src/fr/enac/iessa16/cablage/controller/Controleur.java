@@ -1,7 +1,5 @@
 package fr.enac.iessa16.cablage.controller;
 
-import java.awt.event.ActionListener;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

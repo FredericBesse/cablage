@@ -1,19 +1,22 @@
 package fr.enac.iessa16.cablage.view;
 
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.model.core.Arete;
 import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
 import fr.enac.iessa16.cablage.model.core.Sommet;
+
 
 /**
  * Classe définissant le panneau paramètres (à gauche)
@@ -24,6 +27,7 @@ import fr.enac.iessa16.cablage.model.core.Sommet;
 public class PanneauParametres extends JPanel {
 	
 	private Modele modele;
+	
 	private JTextField textFieldNom;
 	private JTextField textFieldLat;
 	private JTextField textFieldLon;
@@ -37,6 +41,7 @@ public class PanneauParametres extends JPanel {
 	private JComboBox<Sommet> comboBoxSommetSelectionne;
 	private JComboBox<Arete> comboBoxAretesKruskal;
 	private JTextField textFieldCoutKruskal;
+	private JTextArea infoArea;
 	
 	
 	/**
@@ -52,13 +57,10 @@ public class PanneauParametres extends JPanel {
 		this.modele = modele;
 		
 		// Création de la bordure
-		this.setBorder(BorderFactory.createTitledBorder("Paramètres"));
-		
-		// Taille du panneau
-		this.setPreferredSize(ParametresFenetre.dimensionJPanelParametres);
+		this.setBorder(BorderFactory.createTitledBorder(ParametresFenetre.titrePanneauParametres));
 		
 		// Layout
-		this.setLayout(new FlowLayout());
+		this.setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
 		
 		// Création du sous-panneau graphe
 		creerPanneauGraphe();
@@ -70,17 +72,20 @@ public class PanneauParametres extends JPanel {
 		creerPanneauDijkstra();		
 		
 		// Création du sous-panneau Kruskal
-		creerPanneauKruskal();		
+		creerPanneauKruskal();	
+		
+		// Création du sous-panneau Info
+		creerPanneauInfo();
 	}
 	
-	
+
 	/**
-	 * Méthode permettant de créer le sous-panneau sommet
+	 * Méthode permettant de créer le sous-panneau graphe
 	 */
 	private void creerPanneauGraphe() {
 		
 		JPanel graphe = new JPanel();
-		graphe.setBorder(BorderFactory.createTitledBorder("Graphe"));
+		graphe.setBorder(BorderFactory.createTitledBorder(ParametresFenetre.titrePanneauParametresGraphe));
 		graphe.setLayout(new GridLayout(3,2));
 		
 		JLabel labelNbSommet = new JLabel("Nb sommet(s) : ");
@@ -101,9 +106,9 @@ public class PanneauParametres extends JPanel {
 		labelNbCompConnexe.setLabelFor(textFieldCompConnexe);
 		graphe.add(textFieldCompConnexe);
 		
-		//graphe.setPreferredSize(ParametresFenetre.dimensionJPanelParametresGraphe);
 		this.add(graphe);
 	}
+	
 	
 	/**
 	 * Méthode permettant de créer le sous-panneau sommet
@@ -111,7 +116,7 @@ public class PanneauParametres extends JPanel {
 	private void creerPanneauSommet() {
 		
 		JPanel sommet = new JPanel();
-		sommet.setBorder(BorderFactory.createTitledBorder("Sommet"));
+		sommet.setBorder(BorderFactory.createTitledBorder(ParametresFenetre.titrePanneauParametresSommet));
 		sommet.setLayout(new GridLayout(3,2));
 		
 		JLabel labelNom = new JLabel("Nom : ");
@@ -132,7 +137,6 @@ public class PanneauParametres extends JPanel {
 		labelNom.setLabelFor(textFieldLon);
 		sommet.add(textFieldLon);
 		
-		//sommet.setPreferredSize(ParametresFenetre.dimensionJPanelParametresSommet);
 		this.add(sommet);
 	}
 	
@@ -143,7 +147,7 @@ public class PanneauParametres extends JPanel {
 	private void creerPanneauDijkstra() {
 		
 		JPanel dijkstra = new JPanel();
-		dijkstra.setBorder(BorderFactory.createTitledBorder("Dijkstra"));
+		dijkstra.setBorder(BorderFactory.createTitledBorder(ParametresFenetre.titrePanneauParametresDijkstra));
 		dijkstra.setLayout(new GridLayout(4,2));
 		
 		JLabel labelOrigine = new JLabel("Origine : ");
@@ -161,9 +165,8 @@ public class PanneauParametres extends JPanel {
 		JLabel labelListeArete = new JLabel("Aretes : ");
 		dijkstra.add(labelListeArete);
 		comboBoxAretesDijkstra= new JComboBox<Arete>();
-		//labelDest.setLabelFor(textFieldDest);
-		dijkstra.add(comboBoxAretesDijkstra);
-		
+		labelDest.setLabelFor(textFieldDest);
+		dijkstra.add(comboBoxAretesDijkstra);	
 		
 		JLabel labelCout = new JLabel("Cout : ");
 		dijkstra.add(labelCout);
@@ -171,27 +174,27 @@ public class PanneauParametres extends JPanel {
 		labelCout.setLabelFor(textFieldCout);
 		dijkstra.add(textFieldCout);
 		
-	//	dijkstra.setPreferredSize(ParametresFenetre.dimensionJPanelParametresDijkstra);
 		this.add(dijkstra);
 	}
 	
+	
+	/**
+	 * Méthode permettant de créer le sous-panneau Kruskal
+	 */
 	private void creerPanneauKruskal() {
 	
 		JPanel kruskal = new JPanel();
-		kruskal.setBorder(BorderFactory.createTitledBorder("Kruskal"));
+		kruskal.setBorder(BorderFactory.createTitledBorder(ParametresFenetre.titrePanneauParametresKruskal));
 		kruskal.setLayout(new GridLayout(3,2));
-		
 		
 		JLabel labelListeSommetSelectionne = new JLabel("Sommet Selec : ");
 		kruskal.add(labelListeSommetSelectionne);
 		comboBoxSommetSelectionne= new JComboBox<Sommet>();
-		//labelDest.setLabelFor(textFieldDest);
 		kruskal.add(comboBoxSommetSelectionne);
 		
 		JLabel labelListeArete = new JLabel("Aretes : ");
 		kruskal.add(labelListeArete);
 		comboBoxAretesKruskal= new JComboBox<Arete>();
-		//labelDest.setLabelFor(textFieldDest);
 		kruskal.add(comboBoxAretesKruskal);
 		
 		
@@ -201,43 +204,51 @@ public class PanneauParametres extends JPanel {
 		labelCout.setLabelFor(textFieldCoutKruskal);
 		kruskal.add(textFieldCoutKruskal);
 		
-	//	kruskal.setPreferredSize(ParametresFenetre.dimensionJPanelParametresKruskal);
 		this.add(kruskal);
+	}
+	
+	
+	/**
+	 * Méthode permettant de créer le sous-panneau Info
+	 */
+	private void creerPanneauInfo() {
 		
+		infoArea = new JTextArea(20, 20);
+		JScrollPane info = new JScrollPane(infoArea); 
+		infoArea.setEditable(false);
+		info.setBorder(BorderFactory.createTitledBorder(ParametresFenetre.titrePanneauParametresInformation));			
+		this.add(info);
 	}
 	
 	
 	
 	
+	/**
+	 * Méthode permettant de mettre à jour le panneau 
+	 */
 	public void update() {
 		
 		if (modele != null) {
-			
-			
+						
 			// Mise à jour panneau graphe
 			GrapheTheorique graphe = modele.getGraphe();
-			
 			if (graphe != null) {
 				
+				//FIXME mettre à jour le nom du lable pour gérer le singulier pluriel
 				textFieldNombreSommets.setText(Integer.toString(graphe.getListeSommets().size()));
 				textFieldNombreAretes.setText(Integer.toString(graphe.getListeAretes().size()));
 				if (modele.getListeSousGraphesConnexes() != null)
 					textFieldCompConnexe.setText(Integer.toString(modele.getListeSousGraphesConnexes().size()));
-				
 			}
 			
-			
-			// Mise à jour sommet
+			// Mise à jour panneau sommet
 			Sommet sommetSelectionne = modele.getdernierSommetSelectionne();
 		
-			if (sommetSelectionne != null) {
-			
-				
+			if (sommetSelectionne != null) {				
 				textFieldNom.setText(sommetSelectionne.getNom());
 				textFieldLat.setText(Double.toString(sommetSelectionne.getLatitude()));
 				textFieldLon.setText(Double.toString(sommetSelectionne.getLongitude()));
-			}
-			
+			}			
 			
 			// Mise à jour panneau dijkstra
 			double cout = modele.getCoutCheminDijkstra();
@@ -260,15 +271,8 @@ public class PanneauParametres extends JPanel {
 				comboBoxAretesDijkstra.removeAllItems();
 				for (int i = 0; i < chemin.size(); i++) {
 					comboBoxAretesDijkstra.addItem(chemin.get(i));
-				}
-				
-				
+				}				
 			}
-			
-			
-		}
-		
+		}		
 	}
-	
-
 }

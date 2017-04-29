@@ -96,7 +96,7 @@ public class Modele extends Observable {
 	 */
 	public void nouveauGrapheVide() {
 		
-		// TODO Auto-generated method stub
+		// TODO nouveauGrapheVide
 		message("Graphe Vide", "à faire");
 	}
 	
@@ -118,7 +118,7 @@ public class Modele extends Observable {
 	 * Méthode permettant de créer un nouveau graphe aléatoire 
 	 */
 	public void nouveauGrapheAleatoire() {
-		// TODO Auto-generated method stub
+		// TODO nouveauGrapheAleatoire
 		
 		message("graphe aleatoire", "à faire");
 		
@@ -142,7 +142,7 @@ public class Modele extends Observable {
 	 * Méthode permettant d'ouvrir un fichier XML  
 	 */
 	public void ouvrir() {
-		// TODO Auto-generated method stub
+		// TODO ouvrir
 		message("Ouvrir", "à faire");
 	}
 	
@@ -150,7 +150,7 @@ public class Modele extends Observable {
 	 * Méthode permettant d'enregistrer un graphe dans un fichier XML  
 	 */
 	public void enregister() {
-		// TODO Auto-generated method stub
+		// TODO enregistrer
 		
 		message("Enregistrer", "à faire");
 		
@@ -160,7 +160,7 @@ public class Modele extends Observable {
 	 * Méthode permettant d'enregistrer un graphe dans un autre fichier XML  
 	 */
 	public void enregisterSous() {
-		// TODO Auto-generated method stub
+		// TODO enregistrer sous
 		
 		message("Enregistrer sous", "à faire");
 		
@@ -177,7 +177,7 @@ public class Modele extends Observable {
 
 
 	public void fermer() {
-		// TODO Auto-generated method stub
+		// TODO fermer
 		message("Fermer", "à faire");
 	}
 
@@ -198,27 +198,27 @@ public class Modele extends Observable {
 	 */
 	
 	public void ajouterSommet() {
-		// TODO Auto-generated method stub
+		// TODO ajouter sommet
 		message("Ajouter Sommet", "à faire");	
 	}
 
 	public void supprimerSommet() {
-		// TODO Auto-generated method stub
+		// TODO supprimer sommet
 		message("Supprimer Sommet", "à faire");
 	}
 
 	public void ajouterArete() {
-		// TODO Auto-generated method stub
+		// TODO ajouter arete
 		message("Ajouter Arete", "à faire");
 	}
 
 	public void supprimerArete() {
-		// TODO Auto-generated method stub
+		// TODO supprimer arete
 		message("SupprimerArete", "à faire");
 	}
 	
 	public void preferences() {
-		// TODO Auto-generated method stub
+		// TODO preferences
 		message("preferences", "à faire");
 	}
 	
@@ -303,14 +303,14 @@ public class Modele extends Observable {
 	 * Fonctions appelées par le menu Aide
 	 */
 	public void javaDoc() {
-		// TODO Auto-generated method stub
+		// TODO javadoc
 		message("javadoc", "à faire");
 		
 	}
 
 
 	public void aPropos() {
-		// TODO Auto-generated method stub
+		// TODO apropos
 		message("apropos", "à faire");
 	}
 
@@ -445,7 +445,7 @@ public class Modele extends Observable {
 		
 		// on calcule les nouveaux offset en fonction de la position de la souris
 		double newOffsetX = ParametresFenetre.offsetX
-				+ fenetre.getDessin().getRealCoordX(xs) / ParametresFenetre.ECHELLE_BASE
+				+ fenetre.getDessin().conversionXenLongitude(xs) / ParametresFenetre.ECHELLE_BASE
 				* (ParametresFenetre.echelle - newEchelle);
 		double newOffsetY = ParametresFenetre.offsetY
 				- fenetre.getDessin().getRealCoordY(ys) / ParametresFenetre.ECHELLE_BASE
