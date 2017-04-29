@@ -38,7 +38,7 @@ public class AlgoKruskalJGrapht {
 	private AlgoDijkstraJGrapht djikstra;
 
 	// Cablage obtenu par l'algorithme de Kruskal
-	private  ArrayList<Arete> listeAretes;
+	private  ArrayList<Arete> listeAretesKruskal;
 
 	// FIXME utiliser plutot l'objet cablage pour stocker le résultat
 	private Cablage cablage;
@@ -60,7 +60,7 @@ public class AlgoKruskalJGrapht {
 	    // Création de l'objet permettant le calcul de Dijkstra
         djikstra = new AlgoDijkstraJGrapht(this.graphe);    
         
-        this.listeAretes = null;
+        this.listeAretesKruskal = null;
 	}
 	
 	
@@ -147,7 +147,7 @@ public class AlgoKruskalJGrapht {
         SpanningTree<Arete> tree = kruskalShortestPath.getSpanningTree();
         
         // On récupère la liste des aretes
-        this.listeAretes = new ArrayList<Arete>(tree.getEdges());
+        this.listeAretesKruskal = new ArrayList<Arete>(tree.getEdges());
         
         // On crée le cablage correspondant
         this.cablage = new Cablage(listeDeSommetsSelectionnés, sousSommets, sousAretes);
@@ -200,7 +200,7 @@ public class AlgoKruskalJGrapht {
 						cablage.getSommetsUtiles().remove(sommet);
 						cablage.getChemin().remove(areteASupprimer);
 						
-						LOGGER.trace("test size "+cablage.getChemin().size()+" = "+this.listeAretes.size());
+						LOGGER.trace("test size "+cablage.getChemin().size()+" = "+this.listeAretesKruskal.size());
 						
 						nbNoeudSupprime++;
 						
@@ -236,6 +236,6 @@ public class AlgoKruskalJGrapht {
 	 * @return la liste des aretes constituant un chemin le plus court
 	 */
 	public  ArrayList<Arete> getKruskalShortestPath() {
-        return listeAretes;
+        return listeAretesKruskal;
     }
 }
