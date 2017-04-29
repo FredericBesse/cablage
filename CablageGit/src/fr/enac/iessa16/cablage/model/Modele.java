@@ -17,7 +17,6 @@ import fr.enac.iessa16.cablage.model.core.Arete;
 import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
 import fr.enac.iessa16.cablage.model.core.Sommet;
 import fr.enac.iessa16.cablage.model.file.ConstructeurGrapheFichierTexte;
-import fr.enac.iessa16.cablage.view.PanneauDessinGraphe;
 import fr.enac.iessa16.cablage.view.Fenetre;
 import fr.enac.iessa16.cablage.view.Imprimer;
 import fr.enac.iessa16.cablage.view.ParametresFenetre;
@@ -368,8 +367,8 @@ public class Modele extends Observable {
 					latitude  = sommet.getLatitude();
 
 					// on les convertit en coordonnées écran (pixel)
-					x = PanneauDessinGraphe.conversionLongitudeEnX(longitude);
-					y = PanneauDessinGraphe.conversionLatitudeEnY(latitude);
+					x = fenetre.getDessin().conversionLongitudeEnX(longitude);
+					y = fenetre.getDessin().conversionLatitudeEnY(latitude);
 
 					// on recupère la distance entre la position du clic et la position du sommet
 					distance = Math.sqrt(Math.pow(xClic-x,2)+Math.pow(yClic-y,2));
@@ -434,6 +433,31 @@ public class Modele extends Observable {
 		ParametresFenetre.offsetY += dy;
 		
 		changement();
+	}
+	
+	
+	public void zoom(int xs, int ys, int rotation) {
+
+			
+		// on calcule la nouvelle échelle pour la vue
+		double newEchelle = ParametresFenetre.echelle * 
+				 Math.pow(1.01, -5 * rotation);
+		
+		// on calcule les nouveaux offset en fonction de la position de la souris
+		double newOffsetX = ParametresFenetre.offsetX
+				+ fenetre.getDessin().getRealCoordX(xs) / ParametresFenetre.ECHELLE_BASE
+				* (ParametresFenetre.echelle - newEchelle);
+		double newOffsetY = ParametresFenetre.offsetY
+				- fenetre.getDessin().getRealCoordY(ys) / ParametresFenetre.ECHELLE_BASE
+				* (ParametresFenetre.echelle - newEchelle);
+		
+		// On met à jour les paramètres de la fenetre
+		ParametresFenetre.echelle = newEchelle;
+		ParametresFenetre.offsetX = newOffsetX;
+		ParametresFenetre.offsetY = newOffsetY;
+				
+		// On notifie la vue
+		this.changement();
 	}
 
 
@@ -557,4 +581,7 @@ public class Modele extends Observable {
 		// On informe les obverveurs que le modele a changé
 		this.notifyObservers(); 
 	}
+
+
+	
 }
