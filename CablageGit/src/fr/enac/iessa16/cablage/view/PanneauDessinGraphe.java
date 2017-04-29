@@ -539,37 +539,33 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	
 	
 	
-	
-	
-	
-	/*private void centerView() {
+	public void centrerVue() {
 
 		double echelleX = 0;
 		double echelleY = 0;
+		double latMin, latMax, lonMin, lonMax;
+		
+		latMin = modele.getGraphe().getLatitudeMin();
+		latMax = modele.getGraphe().getLatitudeMax();
+		lonMin = modele.getGraphe().getLongitudeMin();
+		lonMax = modele.getGraphe().getLongitudeMax();
 
-		double[] boundingBox = this.getBoundingBox();
+		echelleX = (this.getWidth() - 100) * ParametresFenetre.ECHELLE_BASE
+					/ (lonMax - lonMin);
+			echelleY = (this.getHeight() - 100) * ParametresFenetre.ECHELLE_BASE
+					/ (latMax - latMin);
 
-		if ((boundingBox[1] - boundingBox[0] != Double.NEGATIVE_INFINITY)
-				&& (boundingBox[3] - boundingBox[2] != Double.NEGATIVE_INFINITY)) {
-			echelleX = (this.getWidth() - 100) * ViewParameters.ECHELLE_BASE
-					/ (boundingBox[1] - boundingBox[0]);
-			echelleY = (this.getHeight() - 100) * ViewParameters.ECHELLE_BASE
-					/ (boundingBox[3] - boundingBox[2]);
+		ParametresFenetre.echelle = Math.min(echelleX, echelleY);
 
-			this.echelle = Math.min(echelleX, echelleY);
-
-			this.offsetX = -(this
-					.getLocalCoordX((boundingBox[1] + boundingBox[0]) / 2) - this
-					.getLocalCoordX(0));
-			this.offsetY = -(this
-					.getLocalCoordY((boundingBox[3] + boundingBox[2]) / 2) - this
-					.getLocalCoordY(0));
-
-		} else { // pas de contenu
-			Model.logger
-					.warning("Pas de contenu trouvé lors du centrage de la vue 2D...");
-		}
-	}*/
+		ParametresFenetre.offsetX = -(this.conversionLongitudeEnX((lonMax + lonMin) / 2)
+				- this.conversionLongitudeEnX(0));
+		
+		ParametresFenetre.offsetY = -(this.conversionLatitudeEnY((latMax + latMin) / 2)
+				- this.conversionLatitudeEnY(0));
+		
+		this.repaint();
+		
+	}
 	
 		
 	
@@ -621,11 +617,10 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	 * Méthode permettant de convertir une ordonnée locale (repère JPanel) en
 	 * latitude réelle
 	 * 
-	 * @param y
-	 *            l'ordonnée locale
-	 * @return l'ordonnée réelle
+	 * @param y l'ordonnée locale en pixel
+	 * @return la latitude réelle
 	 */
-	public double getRealCoordY(double y) {
+	public double conversionYenLatitude(double y) {
 			
 		return (y - (this.getHeight() / 2 + ParametresFenetre.offsetY))
 				* -ParametresFenetre.ECHELLE_BASE / ParametresFenetre.echelle;

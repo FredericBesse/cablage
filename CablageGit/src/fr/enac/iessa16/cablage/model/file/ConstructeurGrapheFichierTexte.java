@@ -124,7 +124,7 @@ public class ConstructeurGrapheFichierTexte {
 		if (tab.length == 4) {
 			String[] tab1 = tab[3].split(",");
 			double longitude1 = Double.parseDouble(tab1[0]);
-			double latitude1 = -Double.parseDouble(tab1[1]);
+			double latitude1 = Double.parseDouble(tab1[1]);
 			String nom1 = tab[1];
 
 			// System.out.println("lat="+latitude1+" lon="+longitude1);
@@ -156,7 +156,7 @@ public class ConstructeurGrapheFichierTexte {
 			if (tab3.length == 2) {
 
 				longitude1 = Double.parseDouble(tab3[0]);
-				latitude1 = -Double.parseDouble(tab3[1]);
+				latitude1 = Double.parseDouble(tab3[1]);
 
 				sommet1 = new Sommet(longitude1, latitude1, "");
 

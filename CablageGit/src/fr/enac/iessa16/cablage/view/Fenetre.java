@@ -37,8 +37,8 @@ public class Fenetre extends JFrame implements Observer {
 	/**
 	 * Constructeur de la classe Fenetre.java
 	 * 
-	 * @param controleur
-	 * @param model
+	 * @param controleur le controleur
+	 * @param modele le modele
 	 */
 	public Fenetre(Controleur controleur, Modele modele) {
 
@@ -88,11 +88,8 @@ public class Fenetre extends JFrame implements Observer {
 
 	
 
-	/**
-	 * 
+	/** 
 	 * Methode qui cree le menu
-	 * 
-	 * @param controleur
 	 */
 	public void creerMenu() {
 
@@ -151,6 +148,11 @@ public class Fenetre extends JFrame implements Observer {
 		panneauDessin.update();
 		
 		panneauParametres.update();
+	}
+	
+	
+	public void centrerVue() {
+		panneauDessin.centrerVue();
 	}
 
 	

@@ -448,7 +448,7 @@ public class Modele extends Observable {
 				+ fenetre.getDessin().conversionXenLongitude(xs) / ParametresFenetre.ECHELLE_BASE
 				* (ParametresFenetre.echelle - newEchelle);
 		double newOffsetY = ParametresFenetre.offsetY
-				- fenetre.getDessin().getRealCoordY(ys) / ParametresFenetre.ECHELLE_BASE
+				- fenetre.getDessin().conversionYenLatitude(ys) / ParametresFenetre.ECHELLE_BASE
 				* (ParametresFenetre.echelle - newEchelle);
 		
 		// On met à jour les paramètres de la fenetre
@@ -564,6 +564,9 @@ public class Modele extends Observable {
 		this.graphe = graphe;
 		
 		testConnectivite();
+		
+		this.fenetre.centrerVue();
+		
 		changement();
 	}
 	

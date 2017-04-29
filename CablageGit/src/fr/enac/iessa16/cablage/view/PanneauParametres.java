@@ -47,7 +47,7 @@ public class PanneauParametres extends JPanel {
 	/**
 	 * Constructeur de la classe JPanelParametres.java
 	 * 
-	 * @param modele
+	 * @param modele le modele
 	 */
 	public PanneauParametres(Modele modele) {
 		
