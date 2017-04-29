@@ -577,9 +577,9 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	 * @param longitude
 	 * @return x en pixel
 	 */
-	public int conversionLongitudeEnX(double longitude) {
+	public static int conversionLongitudeEnX(double longitude) {
 		
-		return (int) Math.round(this.getWidth() / 2 + ParametresFenetre.offsetX + longitude
+		return (int) Math.round(ParametresFenetre.panneauDessinWidth / 2 + ParametresFenetre.offsetX + longitude
 				* ParametresFenetre.echelle / ParametresFenetre.ECHELLE_BASE);
 
 	}
@@ -591,9 +591,9 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	 * @param latitude
 	 * @return y en pixel
 	 */
-	public int conversionLatitudeEnY(double latitude) {
+	public static int conversionLatitudeEnY(double latitude) {
 		
-		return (int) Math.round(this.getHeight() / 2 + ParametresFenetre.offsetY - latitude
+		return (int) Math.round(ParametresFenetre.panneauDessinHeight / 2 + ParametresFenetre.offsetY - latitude
 				* ParametresFenetre.echelle / ParametresFenetre.ECHELLE_BASE);
 
 	}
@@ -607,9 +607,9 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	 * @param x l'abscisse locale en pixel
 	 * @return la longitude réelle
 	 */
-	public double conversionXenLongitude(double x) {
+	public static double conversionXenLongitude(double x) {
 		
-		return (x - (this.getWidth() / 2 + ParametresFenetre.offsetX))
+		return (x - (ParametresFenetre.panneauDessinWidth / 2 + ParametresFenetre.offsetX))
 				* ParametresFenetre.ECHELLE_BASE / ParametresFenetre.echelle;
 	}
 
@@ -620,9 +620,9 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	 * @param y l'ordonnée locale en pixel
 	 * @return la latitude réelle
 	 */
-	public double conversionYenLatitude(double y) {
+	public static double conversionYenLatitude(double y) {
 			
-		return (y - (this.getHeight() / 2 + ParametresFenetre.offsetY))
+		return (y - (ParametresFenetre.panneauDessinHeight / 2 + ParametresFenetre.offsetY))
 				* -ParametresFenetre.ECHELLE_BASE / ParametresFenetre.echelle;
 	}
 
@@ -632,6 +632,12 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	 * Méthode permettant de redessiner le panneau 
 	 */
 	public void update() {
+		
+		if (modele.isCentreVueDemande()) {
+			this.centrerVue();
+			modele.setCentreVueDemande(false);
+		}
+		
 		repaint();
 	}
 

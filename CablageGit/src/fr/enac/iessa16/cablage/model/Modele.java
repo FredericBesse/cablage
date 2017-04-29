@@ -19,6 +19,7 @@ import fr.enac.iessa16.cablage.model.core.Sommet;
 import fr.enac.iessa16.cablage.model.file.ConstructeurGrapheFichierTexte;
 import fr.enac.iessa16.cablage.view.Fenetre;
 import fr.enac.iessa16.cablage.view.Imprimer;
+import fr.enac.iessa16.cablage.view.PanneauDessinGraphe;
 import fr.enac.iessa16.cablage.view.ParametresFenetre;
 
 /**
@@ -56,9 +57,11 @@ public class Modele extends Observable {
 	// Connectivité
 	private ArrayList<Set<Sommet>> listeSousGraphesConnexes;
 
-	// La vue (pour affichage des boites de dialogue)
-	private Fenetre fenetre;
+	private boolean imprimerDemande;
 
+	private boolean centreVueDemande;
+
+	
 	
 	/**
 	 * Constructeur de la classe DonneesAAfficher.java
@@ -84,7 +87,10 @@ public class Modele extends Observable {
 		
 		this.listeSousGraphesConnexes = null;
 				
-		this.fenetre = null;
+		this.imprimerDemande = false;
+		this.centreVueDemande = false;
+		
+		//this.fenetre = null;
 	}
 
 
@@ -132,7 +138,7 @@ public class Modele extends Observable {
 		LOGGER.debug("Chargement du graphe depuis un fichier texte");
 		
 		// Création du lecteur de graphe depuis un fichier texte		
-		ConstructeurGrapheFichierTexte constructeurGrapheFichierTexte = new ConstructeurGrapheFichierTexte(this, fenetre);
+		ConstructeurGrapheFichierTexte constructeurGrapheFichierTexte = new ConstructeurGrapheFichierTexte(this);
 		
 		// Récupération du graphe
 		setGraphe(constructeurGrapheFichierTexte.getGraphe());
@@ -171,7 +177,8 @@ public class Modele extends Observable {
 	 */
 	public void imprimer() {
 		
-		new Imprimer(fenetre.getDessin());
+		this.imprimerDemande = true;
+		//new Imprimer(fenetre.getDessin());
 		
 	}
 
@@ -367,8 +374,8 @@ public class Modele extends Observable {
 					latitude  = sommet.getLatitude();
 
 					// on les convertit en coordonnées écran (pixel)
-					x = fenetre.getDessin().conversionLongitudeEnX(longitude);
-					y = fenetre.getDessin().conversionLatitudeEnY(latitude);
+					x = PanneauDessinGraphe.conversionLongitudeEnX(longitude);
+					y = PanneauDessinGraphe.conversionLatitudeEnY(latitude);
 
 					// on recupère la distance entre la position du clic et la position du sommet
 					distance = Math.sqrt(Math.pow(xClic-x,2)+Math.pow(yClic-y,2));
@@ -445,10 +452,10 @@ public class Modele extends Observable {
 		
 		// on calcule les nouveaux offset en fonction de la position de la souris
 		double newOffsetX = ParametresFenetre.offsetX
-				+ fenetre.getDessin().conversionXenLongitude(xs) / ParametresFenetre.ECHELLE_BASE
+				+ PanneauDessinGraphe.conversionXenLongitude(xs) / ParametresFenetre.ECHELLE_BASE
 				* (ParametresFenetre.echelle - newEchelle);
 		double newOffsetY = ParametresFenetre.offsetY
-				- fenetre.getDessin().conversionYenLatitude(ys) / ParametresFenetre.ECHELLE_BASE
+				- PanneauDessinGraphe.conversionYenLatitude(ys) / ParametresFenetre.ECHELLE_BASE
 				* (ParametresFenetre.echelle - newEchelle);
 		
 		// On met à jour les paramètres de la fenetre
@@ -501,13 +508,13 @@ public class Modele extends Observable {
 	 * Affichage des messages d'infos, erreur, warning à l'utilisateur
 	 */
 	public void message(String titre, String message) {
-		JOptionPane.showMessageDialog(fenetre, message, titre, JOptionPane.INFORMATION_MESSAGE);	
+		JOptionPane.showMessageDialog(null, message, titre, JOptionPane.INFORMATION_MESSAGE);	
 	}
 	public void warning(String titre, String message) {		
-		JOptionPane.showMessageDialog(fenetre, message, titre, JOptionPane.WARNING_MESSAGE);
+		JOptionPane.showMessageDialog(null, message, titre, JOptionPane.WARNING_MESSAGE);
 	}
 	public void erreur(String titre, String message) {		
-		JOptionPane.showMessageDialog(fenetre, message, titre, JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(null, message, titre, JOptionPane.ERROR_MESSAGE);
 	}
 
 	
@@ -555,17 +562,14 @@ public class Modele extends Observable {
 	 * Setters
 	 */
 	
-	public void setFenetre(Fenetre fenetre) {
-		this.fenetre = fenetre;
-	}
-
+	
 	public void setGraphe(GrapheTheorique graphe) {
 		
 		this.graphe = graphe;
 		
 		testConnectivite();
 		
-		this.fenetre.centrerVue();
+		this.centreVueDemande = true;
 		
 		changement();
 	}
@@ -586,5 +590,44 @@ public class Modele extends Observable {
 	}
 
 
+	public void centrerVue() {
+		this.centreVueDemande = true;
+		
+		this.changement();
+	}
+
+
+	public void zoomer() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void dezoomer() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public boolean isImprimerDemande() {
+		return imprimerDemande;
+	}
+	
+	
+
+
+	public boolean isCentreVueDemande() {
+		return centreVueDemande;
+	}
+
+
+	public void setImprimerDemande(boolean imprimerDemande) {
+		this.imprimerDemande = imprimerDemande;
+	}
+
+
+	public void setCentreVueDemande(boolean centreVueDemande) {
+		this.centreVueDemande = centreVueDemande;
+	}
 	
 }

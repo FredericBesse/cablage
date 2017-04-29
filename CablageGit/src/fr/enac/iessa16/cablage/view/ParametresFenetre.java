@@ -95,4 +95,8 @@ public class ParametresFenetre {
 	public static Color couleurAreteKruskal = Color.ORANGE;
 	
 	
+	// Taille du panneau dessin (pour les fonctions de conversion)
+	public static int panneauDessinWidth;
+	public static int panneauDessinHeight;
+	
 }

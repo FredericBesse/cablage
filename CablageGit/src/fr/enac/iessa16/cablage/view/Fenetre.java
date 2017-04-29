@@ -57,6 +57,10 @@ public class Fenetre extends JFrame implements Observer {
 		setProprietesFenetre();
 		
 		this.setVisible(true);
+		
+		// Récupération de la taille du panneau dessin (pour les fonctions de conversion)
+		ParametresFenetre.panneauDessinWidth = this.panneauDessin.getWidth();
+		ParametresFenetre.panneauDessinHeight = this.panneauDessin.getHeight();
 	}
 	
 	
@@ -155,11 +159,6 @@ public class Fenetre extends JFrame implements Observer {
 		panneauParametres.update();
 	}
 	
-	
-	public void centrerVue() {
-		panneauDessin.centrerVue();
-	}
-
 	
 	/*
 	 * Getters

@@ -33,7 +33,7 @@ public class ApplicationCablage {
 				
 		// Création de la fenetre
 		Fenetre fenetre = new Fenetre(controleur, modele);
-		modele.setFenetre(fenetre); // pour l'affichage des boites de dialogue
+		//modele.setFenetre(fenetre); // pour l'affichage des boites de dialogue
 	
 	}
 

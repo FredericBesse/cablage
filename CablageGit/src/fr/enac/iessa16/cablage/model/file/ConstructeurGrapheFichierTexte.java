@@ -36,7 +36,7 @@ public class ConstructeurGrapheFichierTexte {
 	private ArrayList<Sommet> sommets;
 	private ArrayList<Arete> aretes;
 	
-	private Fenetre fenetre;
+	//private Fenetre fenetre;
 	private Modele modele;
 
 	
@@ -45,7 +45,7 @@ public class ConstructeurGrapheFichierTexte {
 	 * 
 	 * @param fenetre
 	 */
-	public ConstructeurGrapheFichierTexte(Modele modele, Fenetre fenetre) {
+	public ConstructeurGrapheFichierTexte(Modele modele) {
 		
 		// Initialisation des variables
 		this.graphe = null;
@@ -53,7 +53,7 @@ public class ConstructeurGrapheFichierTexte {
 		this.points = new ArrayList<Sommet>();
 		this.aretes = new ArrayList<Arete>();
 		
-		this.fenetre = fenetre;
+		//this.fenetre = fenetre;
 		this.modele = modele;
 		
 		this.chargerFichier();
@@ -68,7 +68,7 @@ public class ConstructeurGrapheFichierTexte {
 
 		// Création du JFileChooser
 		JFileChooser fc = new JFileChooser("file/");
-		returnVal = fc.showOpenDialog(fenetre);
+		returnVal = fc.showOpenDialog(null);
 		fc.setVisible(true);
 		
 
