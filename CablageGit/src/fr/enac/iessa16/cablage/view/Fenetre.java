@@ -8,6 +8,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -15,6 +16,7 @@ import javax.swing.UIManager;
 import fr.enac.iessa16.cablage.controller.Controleur;
 import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.view.menu.BarreOutils;
+import fr.enac.iessa16.cablage.view.menu.MenuAffichage;
 import fr.enac.iessa16.cablage.view.menu.MenuAide;
 import fr.enac.iessa16.cablage.view.menu.MenuCalcul;
 import fr.enac.iessa16.cablage.view.menu.MenuEdition;
@@ -101,9 +103,12 @@ public class Fenetre extends JFrame implements Observer {
 		MenuEdition menuEdition = new MenuEdition(controleur);
 		jMenuBar.add(menuEdition);
 		
+		MenuAffichage menuAffichage = new MenuAffichage(controleur); 
+		jMenuBar.add(menuAffichage);
+		
 		MenuCalcul menuCalcul = new MenuCalcul(controleur); 
 		jMenuBar.add(menuCalcul);
-			
+		
 		MenuAide menuAide = new MenuAide(controleur);
 		jMenuBar.add(menuAide);
 		
