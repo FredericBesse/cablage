@@ -20,14 +20,14 @@ import fr.enac.iessa16.cablage.model.core.Sommet;
  */
 public class AlgoDijkstraJGrapht {
 	
-	// Référence vers le graphe du modèle
+	// Attribut graphe du modèle
 	private GrapheTheorique graphe;
 	
 	// Graphe théorique au format JGrapht		
-	private SimpleWeightedGraph<Sommet, Arete> graphPourJGrapht = null;
+	private SimpleWeightedGraph<Sommet, Arete> graphPourJGrapht;
 	
 	// Objet permettant de calculer Dijkstra sur un graphe JGrapht
-	private DijkstraShortestPath<Sommet, Arete> dijkstraShortestPath = null;
+	private DijkstraShortestPath<Sommet, Arete> dijkstraShortestPath;
 		
 	
 	/**
@@ -37,24 +37,45 @@ public class AlgoDijkstraJGrapht {
 	 */
 	public AlgoDijkstraJGrapht(GrapheTheorique g){	
 	
-		// Enregistrement d'une référence vers le graphe à afficher
+
 		this.graphe = g;
-		
+	
 		// Construction du graphPourJGrapht à partir le l'objet graphe donné
         graphPourJGrapht = new SimpleWeightedGraph<Sommet, Arete>(Arete.class);
-
+	  
         // Ajout de tous les sommets au graphe JGrapht
         for (Sommet sommet: graphe.getListeSommets()) {
             graphPourJGrapht.addVertex(sommet);
         }
+        /* equivalent à
+     	Sommet sommet1 ;
+     	int size = graphe.getListeSommets().size();
+      
+       	for(int i = 0; i< size ; i++) {
+        	sommet1 = graphe.getListeSommets().get(i);
+        	graphPourJGrapht.addVertex(sommet1);	
+        }	
+        */        
               
         // Ajout de toutes les aretes au graphe JGrapht
         for (Arete arete : graphe.getListeAretes()) {
             graphPourJGrapht.addEdge(arete.getSommetOrigine(), arete.getSommetExtremité(), arete);
             // FIXME graphPourJGrapht.setEdgeWeight(arete, arete.getCout());
         }
-	}
-	
+        /* equivalent à :
+        Arete arete;
+        size = graphe.getListeAretes().size();
+        
+        for(int i=0 ; i<size ; i++) {
+        	arete = graphe.getListeAretes().get(i);
+        	graphPourJGrapht.addEdge(arete.getSommetOrigine(), arete.getSommetExtremité(), arete);
+        }
+        */
+        
+        // Création de l'objet Jgrapht permettant de calculer dijkstra
+        this.dijkstraShortestPath = new DijkstraShortestPath<Sommet,Arete>(graphPourJGrapht);
+	}        
+		
 
 	/**
 	 * Méthode permettant de calculer le chemin le plus court entre le sommet origine et le sommet destination
@@ -63,12 +84,7 @@ public class AlgoDijkstraJGrapht {
 	 * @param destination
 	 * @return la liste des aretes constituant un chemin le plus court
 	 */
-	public ArrayList<Arete> getDijkstraShortestPath(Sommet origine, Sommet destination) {
-
-		// Si l'objet permettant le calcul dans JGrapht n'est pas déjà créé, on le crée
-        if (dijkstraShortestPath == null) {
-            dijkstraShortestPath = new DijkstraShortestPath<Sommet, Arete>(graphPourJGrapht);
-        }
+	public ArrayList<Arete> getCheminLePlusCourtDijkstra(Sommet origine, Sommet destination) {
 
         // On utilise la méthode fournie par la bibliothèque JGrapht
         GraphPath<Sommet, Arete> path = dijkstraShortestPath.getPath(origine, destination);
@@ -76,12 +92,15 @@ public class AlgoDijkstraJGrapht {
         // On renvoie la liste des aretes
         // FIXME gerer le cas erreur dijk
         
-        ArrayList<Arete> arete = null;
+        ArrayList<Arete> listeAretesDijkstra = null;
         
-        if (path != null)
-        	arete = new ArrayList<Arete>(path.getEdgeList());
+        if (path != null) {
+        	
+        	listeAretesDijkstra = new ArrayList<Arete>();
+        	listeAretesDijkstra.addAll(path.getEdgeList());
+
+        }      	
         
-        return arete;
-       
+        return listeAretesDijkstra;
     }
 }

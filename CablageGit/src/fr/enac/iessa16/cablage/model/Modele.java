@@ -260,7 +260,7 @@ public class Modele extends Observable {
 			this.sommetOrigineDijkstra = listeSommetsSelectionnes.get(0);
 			this.sommetDestinationDijkstra = listeSommetsSelectionnes.get(1);
 
-			this.listeAretesDijkstra = this.algoDijkstra.getDijkstraShortestPath(sommetOrigineDijkstra,sommetDestinationDijkstra);
+			this.listeAretesDijkstra = this.algoDijkstra.getCheminLePlusCourtDijkstra(sommetOrigineDijkstra,sommetDestinationDijkstra);
 
 			this.coutCheminDijkstra = 0;
 			for (Arete arete : listeAretesDijkstra) {

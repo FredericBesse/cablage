@@ -91,7 +91,7 @@ public class AlgoKruskalJGrapht {
 				sommetJ = listeDeSommetsSelectionnés.get(j);
 
 				// calcul du chemin le plus court entre les sommets i et j
-				chemin = this.djikstra.getDijkstraShortestPath(sommetI,sommetJ);
+				chemin = this.djikstra.getCheminLePlusCourtDijkstra(sommetI,sommetJ);
 				
 				// on ajoute toutes les aretes du chemin le plus court aux sous Aretes
 				sousAretes.addAll(chemin);
