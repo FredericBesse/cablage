@@ -526,7 +526,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 				y2 = conversionLatitudeEnY(lat2);
 
 				// on l'affiche
-				g.setColor(ParametresFenetre.couleurAreteDijkstra);
+				g.setColor(ParametresFenetre.couleurAreteKruskal);
 				g.drawLine(x1, y1, x2, y2);
 			}
 		}
