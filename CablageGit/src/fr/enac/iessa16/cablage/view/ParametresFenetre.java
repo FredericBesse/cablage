@@ -1,6 +1,7 @@
 package fr.enac.iessa16.cablage.view;
 
 import java.awt.Color;
+import java.awt.Component;
 
 public class ParametresFenetre {
 	
@@ -38,6 +39,17 @@ public class ParametresFenetre {
 	public static final String supprimerArete = "Supprimer une arete...";
 	
 	public static final String preferences = "Préférences...";
+	
+	
+	// Item du menu Affichage
+	public static final String menuAffichage = "Affichage";
+	public static final String centrage = "Centrer vue";
+	public static final String zoomPlus = "Zoomer";
+	public static final String zoomMoins = "Dezoomer";
+	
+	
+	
+	
 		
 	
 	// Items du menu Calcul
@@ -51,7 +63,7 @@ public class ParametresFenetre {
 	public static final String apropos = "\u00C0 propos...";
 	public static final String javadoc = "Javadoc...";
 
-	
+		
 	// Titres des panneaux
 	public static final String titrePanneauVue2D = "Vue 2D";
 	public static final String titrePanneauParametres = "Param\u00e8tres";

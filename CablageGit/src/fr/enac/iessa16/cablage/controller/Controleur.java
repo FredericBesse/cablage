@@ -22,6 +22,7 @@ public class Controleur {
 	private ControleurMenuCalcul controleurMenuCalcul;
 	private ControleurMenuAide controleurMenuAide;
 	private ControleurMenuEdition controleurMenuEdition;
+	private ControleurMenuAffichage controleurMenuAffichage;
 	
 	// Le controleur de la souris
 	private ControleurSouris controleurSouris;
@@ -41,8 +42,9 @@ public class Controleur {
 		this.controleurMenuCalcul = new ControleurMenuCalcul(monModel);
 		this.controleurMenuAide = new ControleurMenuAide(monModel);
 		this.controleurMenuEdition = new ControleurMenuEdition(monModel);		
+		this.controleurMenuAffichage = new ControleurMenuAffichage(monModel);
 		this.controleurSouris = new ControleurSouris(monModel);
-	
+
 	}
 	
 	
@@ -68,4 +70,10 @@ public class Controleur {
 	public ControleurSouris getControleurSouris() {
 		return controleurSouris;
 	}
+
+
+	public  ControleurMenuAffichage getControleurMenuAffichage() {
+		return controleurMenuAffichage;
+	}	
+	
 }
