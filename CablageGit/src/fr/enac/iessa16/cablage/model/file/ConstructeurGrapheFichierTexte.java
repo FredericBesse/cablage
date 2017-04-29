@@ -185,5 +185,6 @@ public class ConstructeurGrapheFichierTexte {
 	
 	public GrapheTheorique getGraphe() {
 		return graphe;
-	}	
+	}		
+	
 }

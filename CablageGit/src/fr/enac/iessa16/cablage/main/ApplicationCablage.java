@@ -13,12 +13,13 @@ import fr.enac.iessa16.cablage.view.Fenetre;
  * @author Racha HEDIDI et Frédéric BESSE
  */
 public class ApplicationCablage {
+
 	
 	/**
 	 * Le constructeur de l'application
 	 */
 	public ApplicationCablage() {
-		
+			
 		// Configuration du logger
 		System.setProperty("log4j.configurationFile","lib/configurationLogger.xml");
 		Logger LOGGER = LogManager.getLogger(ApplicationCablage.class);
