@@ -16,9 +16,11 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 import fr.enac.iessa16.cablage.model.algorithm.AlgoDijkstraJGrapht;
 import fr.enac.iessa16.cablage.model.algorithm.AlgoKruskalJGrapht;
 import fr.enac.iessa16.cablage.model.core.Arete;
+import fr.enac.iessa16.cablage.model.core.ContenuFichierXML;
 import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
 import fr.enac.iessa16.cablage.model.core.Sommet;
 import fr.enac.iessa16.cablage.model.file.ConstructeurGrapheFichierTexte;
+import fr.enac.iessa16.cablage.model.file.ConstructeurGrapheFichierXML;
 import fr.enac.iessa16.cablage.view.Fenetre;
 import fr.enac.iessa16.cablage.view.Imprimer;
 import fr.enac.iessa16.cablage.view.PanneauDessinGraphe;
@@ -58,9 +60,9 @@ public class Modele extends Observable {
 	
 	// Connectivité
 	private ArrayList<Set<Sommet>> listeSousGraphesConnexes;
-
+	
+	
 	private boolean imprimerDemande;
-
 	private boolean centreVueDemande;
 
 	
@@ -150,8 +152,9 @@ public class Modele extends Observable {
 	 * Méthode permettant d'ouvrir un fichier XML  
 	 */
 	public void ouvrir() {
-		// TODO ouvrir
-		message("Ouvrir", "à faire");
+		message("ouvrir", "à faire");
+		
+
 	}
 	
 	/**
@@ -160,7 +163,11 @@ public class Modele extends Observable {
 	public void enregister() {
 		// TODO enregistrer
 		
-		message("Enregistrer", "à faire");
+		//message("Enregistrer", "à faire");
+		ConstructeurGrapheFichierXML constructeurGrapheFichierXML = new ConstructeurGrapheFichierXML(this);
+		ContenuFichierXML contenuFichierXML = new ContenuFichierXML(this.graphe);
+		System.out.println("ecriture xml nbsommets="+this.graphe.getListeSommets().size());
+		constructeurGrapheFichierXML.enregistrerFichierXML("toto.txt", contenuFichierXML);
 		
 	}
 	
