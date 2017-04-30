@@ -1,14 +1,22 @@
 package fr.enac.iessa16.cablage.model.core;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+
 /**
  * Classe Arete
  *	
  * @author Racha HEDIDI et Frédéric BESSE
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Arete {
 	
+	@XmlAttribute
 	private double distance;
+	@XmlAttribute
 	private double cout;
+	@XmlAttribute
 	private double poids;
 	private Sommet sommetOrigine;
 	private Sommet sommetExtremite;

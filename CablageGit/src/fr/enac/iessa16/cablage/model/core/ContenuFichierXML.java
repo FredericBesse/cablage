@@ -19,6 +19,8 @@ public class ContenuFichierXML {
 	
 	private GrapheTheorique graphe;
 	
+	@XmlElementWrapper(name = "cablages")
+	@XmlElement(name = "cablage")
 	private ArrayList<Cablage> cablages;
 	
 	public ContenuFichierXML() {

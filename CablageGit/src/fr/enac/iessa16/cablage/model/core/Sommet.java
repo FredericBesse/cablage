@@ -1,6 +1,10 @@
 package fr.enac.iessa16.cablage.model.core;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.sun.xml.internal.txw2.annotation.XmlElement;
 
@@ -10,12 +14,16 @@ import com.sun.xml.internal.txw2.annotation.XmlElement;
  *	
  * @author Racha HEDIDI et Frédéric BESSE
  */
-@XmlElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Sommet {
 
-	private double longitude ;
-	private double latitude;
+	@XmlAttribute
 	private String nom;
+	@XmlAttribute
+	private double longitude ;
+	@XmlAttribute
+	private double latitude;
+	@XmlTransient
 	private boolean selected;
 
 	

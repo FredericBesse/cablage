@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Classe GrapheTheorique définissant le modèle théorique d'un graphe.
@@ -18,14 +20,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class GrapheTheorique {
 
 	// La liste des sommets du graphe
+	@XmlElementWrapper(name = "sommets")
+	@XmlElement(name = "sommet")
 	private ArrayList<Sommet> listeSommets;
 
 	// La liste des aretes du graphe
+	@XmlElementWrapper(name = "aretes")
+	@XmlElement(name = "arete")
 	private ArrayList<Arete> listeAretes;
 
+	@XmlTransient
 	private double latitudeMax;
+	@XmlTransient
 	private double latitudeMin;
+	@XmlTransient
 	private double longitudeMin;
+	@XmlTransient
 	private double longitudeMax;
 
 	

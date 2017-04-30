@@ -3,11 +3,15 @@ package fr.enac.iessa16.cablage.model.core;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
 /**
  * Classe Cablage
  *	
  * @author Racha HEDIDI et Frédéric BESSE
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Cablage {
 	
 	private ArrayList<Sommet> sommetsSelectionnes;
