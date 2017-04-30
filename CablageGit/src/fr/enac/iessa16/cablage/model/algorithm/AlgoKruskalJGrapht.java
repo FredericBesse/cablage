@@ -38,10 +38,7 @@ public class AlgoKruskalJGrapht {
 	private AlgoDijkstraJGrapht djikstra;
 
 	// Cablage obtenu par l'algorithme de Kruskal
-	private  ArrayList<Arete> listeAretesKruskal;
-
-	// FIXME utiliser plutot l'objet cablage pour stocker le résultat
-	private Cablage cablage;
+	private Cablage cablageKruskal;
 	
 	
 	/**
@@ -58,9 +55,10 @@ public class AlgoKruskalJGrapht {
 		this.graphe = model.getGraphe();
 		
 	    // Création de l'objet permettant le calcul de Dijkstra
-        djikstra = new AlgoDijkstraJGrapht(this.graphe);    
+		this.djikstra = new AlgoDijkstraJGrapht(model,this.graphe);    
         
-        this.listeAretesKruskal = null;
+		// Initialisation du cablage
+        this.cablageKruskal = null;
 	}
 	
 	
@@ -113,7 +111,7 @@ public class AlgoKruskalJGrapht {
 		
 		if (nbNoeudSupplémentaire > 0) {
 			
-			modele.message("Algorithme de Kruskal", nbNoeudSupplémentaire+" noeud(s) non sélectionné(s) ont du etre rajouté pour le calcul du chemin à cout minimum");
+			// FIXME modele.message("Algorithme de Kruskal", nbNoeudSupplémentaire+" noeud(s) non sélectionné(s) ont du etre rajouté pour le calcul du chemin à cout minimum");
 			
 		}
 		
@@ -137,7 +135,7 @@ public class AlgoKruskalJGrapht {
         // Ajout de toutes les aretes au graphe JGrapht
         for (Arete arete : sousAretes) {
             sousGraphe.addEdge(arete.getSommetOrigine(), arete.getSommetExtremité(), arete);
-            //FIXME graphPourJGrapht.setEdgeWeight(arete, arete.getCout());
+            sousGraphe.setEdgeWeight(arete, arete.getCout());
         }
         
         // Création de l'objet permettant le calcul de Kruskal sur le sous graphe
@@ -147,15 +145,60 @@ public class AlgoKruskalJGrapht {
         SpanningTree<Arete> tree = kruskalShortestPath.getSpanningTree();
         
         // On récupère la liste des aretes
-        this.listeAretesKruskal = new ArrayList<Arete>(tree.getEdges());
+        ArrayList<Arete> listeAretesKruskal = new ArrayList<Arete>(tree.getEdges());
         
         // On crée le cablage correspondant
-        this.cablage = new Cablage(listeDeSommetsSelectionnés, sousSommets, sousAretes);
+        this.cablageKruskal = new Cablage(listeDeSommetsSelectionnés, sousSommets, listeAretesKruskal);
+        
+        
+        
+        
+        ArrayList<Sommet> test = modele.getListeSommetsSelectionnes();
+        ArrayList<Arete> testsarete;
+		for (Sommet sommet : test) {
+			LOGGER.info("noeud selectionne : "+sommet.getId());
+			
+			testsarete = cablageKruskal.getAretesParSommet().get(sommet);
+			
+			for (Arete arete : testsarete) {
+				LOGGER.info("   -> arete : "+arete.getSommetOrigine().getId()+" -> "+arete.getSommetExtremité().getId());
+			}
+			
+		}
+        
+        
+        
+		for (Sommet sommet : listeDeSommetsSelectionnés) {
+			LOGGER.info("noeud selectionne : "+sommet.getId());
+			
+			testsarete = cablageKruskal.getAretesParSommet().get(sommet);
+			
+			for (Arete arete : testsarete) {
+				LOGGER.info("   -> arete : "+arete.getSommetOrigine().getId()+" -> "+arete.getSommetExtremité().getId());
+			}
+			
+		}
+        
+        
         
         // On élague le graphe si nécessaire
         if (nbNoeudSupplémentaire > 0) {
         	this.elague();
         }
+        
+        
+        for (Sommet sommet : listeDeSommetsSelectionnés) {
+			LOGGER.info("apres elagage noeud selectionne : "+sommet.getId());
+			
+			testsarete = cablageKruskal.getAretesParSommet().get(sommet);
+			
+			for (Arete arete : testsarete) {
+				LOGGER.info("   -> arete : "+arete.getSommetOrigine().getId()+" -> "+arete.getSommetExtremité().getId());
+			}
+			
+		}
+        
+        // FIXME modele.message("kruskal", "nb aretes="+listeAretesKruskal.size()+"  cout="+cablageKruskal.getCout());
 	}
 	
 	
@@ -168,82 +211,115 @@ public class AlgoKruskalJGrapht {
 		int nbPasses = 0;
 		boolean hasElague = true;
 		int nbAreteSupprime = 0;
-		int nbNoeudSupprime = 0;
+		int nbNoeudSupprimePasse = 0;
+		int nbNoeudSupprimeTotal = 0;
 		
-		HashMap<Sommet, ArrayList<Arete>> areteParSommet = this.cablage.getAretesParSommet();
+		ArrayList<Sommet> sommetsASupprimer = new ArrayList<Sommet>();
+		ArrayList<Arete> aretesASupprimer = new ArrayList<Arete>();
+		
+		HashMap<Sommet, ArrayList<Arete>> areteParSommet = this.cablageKruskal.getAretesParSommet();
 		Arete areteASupprimer;
+		
 		Sommet origine, extremite;
 		
-		while (hasElague) {
+		
+		
+		
+		while (hasElague && nbPasses < 100) {
 			nbPasses ++;
+			nbNoeudSupprimePasse = 0;
 			hasElague = false;
 			
-			LOGGER.trace("Phase "+nbPasses+" de l'élagage");
+			LOGGER.trace("Phase "+nbPasses+" de l'élagage nbSommet="+areteParSommet.keySet().size());
 			
 			for (Sommet sommet : areteParSommet.keySet()) {
 				
 				// Si le sommet n'est pas sélectionné
 				if (!sommet.getSelected()) {
 					
+					//LOGGER.trace("som non sel "+sommet.getId()+" "+areteParSommet.get(sommet).size());
+					
 					// S'il est relié au graphe par une seule arete, on peut le supprimer
 					if (areteParSommet.get(sommet).size() == 1) {
 						
-						LOGGER.trace(" -> Sommet inutile relié par une seule arete trouvé : "+sommet);
-						nbAreteSupprime ++;
 						
+												
 						hasElague = true;
-						
+												
+						// on ajoute l'arete dans la liste des aretes a supprimer
 						areteASupprimer = areteParSommet.get(sommet).get(0);
+						aretesASupprimer.add(areteASupprimer);
+						nbAreteSupprime++;
 						
-						// on supprime le sommet inutile
-						areteParSommet.remove(sommet);
-						cablage.getSommetsUtiles().remove(sommet);
-						cablage.getChemin().remove(areteASupprimer);
+						// on ajoute l'arete dans la liste des aretes a supprimer
+						sommetsASupprimer.add(sommet);
+						nbNoeudSupprimePasse++;
+						nbNoeudSupprimeTotal++;
 						
-						LOGGER.trace("test size "+cablage.getChemin().size()+" = "+this.listeAretesKruskal.size());
-						
-						nbNoeudSupprime++;
-						
-						// on supprime l'arete de la liste des aretes du sommet de l'autre extremite
-						origine = areteASupprimer.getSommetOrigine();
-						extremite = areteASupprimer.getSommetOrigine();
-						
-						if (sommet.equals(origine)) {
-							
-							areteParSommet.get(extremite).remove(areteASupprimer);
-							
-						} else {
-							
-							areteParSommet.get(origine).remove(areteASupprimer);
-							
-						} 						
+						//LOGGER.trace("    -> Sommet inutile :"+sommet.getId()+" arete "+areteASupprimer.getSommetOrigine().getId()+"->"+areteASupprimer.getSommetExtremité().getId());
+									
 					}					
 				}				
-			}			
+			}
+			
+			
+			// on supprime l'arete de la liste des aretes du sommet de l'autre extremite
+			for (Arete arete : aretesASupprimer) {
+				
+				origine = arete.getSommetOrigine();
+				extremite = arete.getSommetExtremité();
+	
+				//LOGGER.trace("        -> ext:"+extremite.getId()+" avant:"+areteParSommet.get(extremite).size());
+				areteParSommet.get(extremite).remove(arete);
+				//LOGGER.trace("        -> ext:"+extremite.getId()+" apres:"+areteParSommet.get(extremite).size());
+				
+				//LOGGER.trace("        -> ori:"+origine.getId()+" avant:"+areteParSommet.get(origine).size());
+				areteParSommet.get(origine).remove(arete);
+				//LOGGER.trace("        -> ori:"+origine.getId()+" apres:"+areteParSommet.get(origine).size());
+				
+				
+				if(origine.getSelected()) {
+					LOGGER.trace("        -> ORIGINE="+origine.getId()+" -> "+extremite.getId());
+				}
+				if(extremite.getSelected()) {
+					LOGGER.trace("        -> "+origine.getId()+" -> EXTREMITE"+extremite.getId());
+				}
+				
+				
+				cablageKruskal.getAretes().remove(arete);
+			}
+			aretesASupprimer.clear();
+			
+			
+			LOGGER.trace("nbNoeudSupprimePasse="+nbNoeudSupprimePasse);
+			for (Sommet sommet : sommetsASupprimer) {
+				
+				if (sommet.getSelected() || areteParSommet.get(sommet).size()>0)
+					LOGGER.info("ERRRROOOOOOOORRRRR   Suppression du sommet "+sommet.getId()+" nbAretes="+areteParSommet.get(sommet).size());
+				areteParSommet.remove(sommet);
+				cablageKruskal.getSommetsUtiles().remove(sommet);
+				//nbNoeudSupprime++;
+			}
+			sommetsASupprimer.clear();
+						
 		}
+		
+		
+		
+		
 		
 		// On informe l'utilisateur si besoin
 		if (nbAreteSupprime > 0) {
-			
-			modele.message("Algorithme de Kruskal", nbNoeudSupprime+" noeud(s) et "+nbAreteSupprime+" aretes inutiles ont été supprimés.");
-			
+			modele.message("Algorithme de Kruskal", nbNoeudSupprimeTotal+" noeud(s) et "+nbAreteSupprime+" arete(s) inutile(s) ont été supprimés en "+nbPasses+" passes.");
 		}		
 	}	
 
-	/**
-	 * Méthode permettant de récupérer le chemin le plus court entre le sommet origine et le sommet destination
-	 * 
-	 * @return la liste des aretes constituant un chemin le plus court
-	 */
-	public  ArrayList<Arete> getKruskalShortestPath() {
-        return listeAretesKruskal;
-    }
 	
 	/**
-	 * Méthode permettant de récupérer le cablage 
+	 * Méthode permettant de récupérer le cablage le plus court 
 	 * @return
 	 */
-	public Cablage getCablage() {
-        return cablage;
+	public Cablage getCablageLePlusCourtKruskal() {
+        return cablageKruskal;
     }
 }

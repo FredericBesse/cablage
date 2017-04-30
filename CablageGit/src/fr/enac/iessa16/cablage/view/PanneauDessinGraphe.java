@@ -1,7 +1,11 @@
 package fr.enac.iessa16.cablage.view;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
@@ -22,6 +26,7 @@ import org.apache.logging.log4j.Logger;
 import fr.enac.iessa16.cablage.controller.Controleur;
 import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.model.core.Arete;
+import fr.enac.iessa16.cablage.model.core.Cablage;
 import fr.enac.iessa16.cablage.model.core.Sommet;
 
 
@@ -43,7 +48,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		
 	public Modele modele;
 	
-	private BufferedImage imageFond;
+	//private BufferedImage imageFond;
 
 	/**
 	 * Constructeur de la classe PanneauDessinGraphe
@@ -59,7 +64,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
         //Cursor Curseur;
        // Curseur = tk.createCustomCursor( image1, new Point( 1, 1 ), "Pointeur" );
 		this.modele = model;
-		this.imageFond = null;
+		//this.imageFond = null;
 		
 		// Ajout des listeners
 		this.addMouseListener(controleur.getControleurSouris());
@@ -70,7 +75,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		this.setBorder(BorderFactory.createTitledBorder(ParametresFenetre.titrePanneauVue2D));
 		
 		// FIXME Chargement image de fond uniquement si besoin apres chargement du graphe
-		this.chargerImageFond();
+		//this.chargerImageFond();
 	
 	
 	}
@@ -79,7 +84,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	/**
 	 * Méthode permettant de charger une image de fond google maps  
 	 */
-	private void chargerImageFond() {		
+	/*private void chargerImageFond() {		
 				
 		String center="Paris-Charles+De+Gaulle+(CDG)";
 		String zoom = "12";
@@ -98,7 +103,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
             e.printStackTrace();
         }
 		
-	}
+	}*/
 
 
 	/* (non-Javadoc)
@@ -113,20 +118,28 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			// Si le graphe n'est pas vide
 			if (modele.getGraphe() != null) {
 
-				dessinerFondCarte(g);
+				//dessinerFondCarte(g);
+								
+				//dessinerSommets(g);
+			//	dessinerSommets1(g);
+				//dessinerSommets2(g);
 				
-				dessinerSommets(g);
-				dessinerSommets1(g);
-				dessinerSommets2(g);
 
-				dessinerAretes(g);
-				dessinerAretes2(g);
+				//dessinerAretes(g);
+				//dessinerAretes2(g);
 				
-				dessinerDernierSommetSelectionne(g);
+				
+				dessinerSommets3(g);
+				
+				dessinerAretes3(g);
 
 				dessinerCheminDijkstra(g);
-
 				dessinerCheminKruskal(g);
+				
+				dessinerAreteSelectionne(g);
+				
+				dessinerSommetsSelectionnes(g);
+				dessinerDernierSommetSelectionne(g);
 				
 			}
 		}
@@ -134,17 +147,20 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 
 	
 
+	
+
+
 	/**
 	 * Méthode permettant de dessiner l'image de fond
 	 *  
 	 * @param g
 	 */
-	private void dessinerFondCarte(Graphics g) {
+	/*private void dessinerFondCarte(Graphics g) {
 		
 		if (this.imageFond != null) {
 			g.drawImage(imageFond, 16, 20, this);
 		}
-	}
+	}*/
 
 	
 	
@@ -180,16 +196,13 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			
 			// On choisit la couleur selon que le sommet est sélectionné ou non
 			if (sommet.getSelected() == false)
-				g.setColor(ParametresFenetre.couleurSommetNonSelectionne);
+				g.setColor(ParametresFenetre.couleurSommet);
 			else
 				g.setColor(ParametresFenetre.couleurSommetSelectionne);
 			
 			// On dessine les sommets
 			g.fillOval(x - ParametresFenetre.rayonSommetAffichage, y - ParametresFenetre.rayonSommetAffichage, 
 					2 * ParametresFenetre.rayonSommetAffichage,	2 * ParametresFenetre.rayonSommetAffichage);
-			
-			// On choisit la couleur d'affichage du nom des sommets
-			g.setColor(ParametresFenetre.couleurNomSommet);
 			
 			// On affiche les noms de chaque sommet
 			g.drawString(sommet.getNom(), x, y);
@@ -233,16 +246,13 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			
 			// On choisit la couleur selon que le sommet est sélectionné ou non
 			if (sommet.getSelected() == false)
-				g.setColor(ParametresFenetre.couleurSommetNonSelectionne);
+				g.setColor(ParametresFenetre.couleurSommet);
 			else
 				g.setColor(ParametresFenetre.couleurSommetSelectionne);
 			
 			// On dessine les sommets
 			g.fillOval(x - ParametresFenetre.rayonSommetAffichage, y - ParametresFenetre.rayonSommetAffichage, 
 					2 * ParametresFenetre.rayonSommetAffichage,	2 * ParametresFenetre.rayonSommetAffichage);
-			
-			// On choisit la couleur d'affichage du nom des sommets
-			g.setColor(ParametresFenetre.couleurNomSommet);
 			
 			// On affiche les noms de chaque sommet
 			g.drawString(sommet.getNom(), x, y);
@@ -282,16 +292,13 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			
 			// On choisit la couleur selon que le sommet est sélectionné ou non
 			if (sommet.getSelected() == false)
-				g.setColor(ParametresFenetre.couleurSommetNonSelectionne);
+				g.setColor(ParametresFenetre.couleurSommet);
 			else
 				g.setColor(ParametresFenetre.couleurSommetSelectionne);
 			
 			// On dessine les sommets
 			g.fillOval(x - ParametresFenetre.rayonSommetAffichage, y - ParametresFenetre.rayonSommetAffichage, 
 					2 * ParametresFenetre.rayonSommetAffichage,	2 * ParametresFenetre.rayonSommetAffichage);
-			
-			// On choisit la couleur d'affichage du nom des sommets
-			g.setColor(ParametresFenetre.couleurNomSommet);
 			
 			// On affiche les noms de chaque sommet
 			g.drawString(sommet.getNom(), x, y);
@@ -300,6 +307,61 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		
 		long duree = System.currentTimeMillis() - start;
 		LOGGER.debug("affichage 3 (for each sommet)    des "+sommets.size()+" sommets en " + duree + " ms");
+	}
+	
+	
+	/**
+	 * Méthode permettant de dessiner les sommets
+	 * @param g
+	 */
+	private void dessinerSommets3(Graphics g) {
+
+		long start = System.currentTimeMillis();
+		
+		// On récupère l'ensemble des sommets
+		ArrayList<Sommet> sommets = modele.getGraphe().getListeSommets();
+		
+		// On choisit la couleur des sommets
+		g.setColor(ParametresFenetre.couleurSommet);
+		
+		// On parcourt l'ensemble des sommets
+		for (Sommet sommet : sommets) {
+			
+			// on dessine chaque sommet
+			dessinerSommet(sommet, g);
+
+		}
+		
+		long duree = System.currentTimeMillis() - start;
+		LOGGER.debug("affichage 4 (sous fonction)      des "+sommets.size()+" sommets en " + duree + " ms");
+	}
+	
+	
+	/**
+	 * Méthode permettant de dessiner un sommet 
+	 * @param sommet
+	 * @param g
+	 */
+	void dessinerSommet(Sommet sommet, Graphics g) {
+		
+		int x, y;
+		double longitude;
+		double latitude;
+		
+		// On récupère ses coordonnees
+		longitude = sommet.getLongitude();
+		latitude = sommet.getLatitude();
+		
+		// On convertit les coordonnees pour l'affichage
+		x = conversionLongitudeEnX(longitude);
+		y = conversionLatitudeEnY(latitude);
+		
+		// On dessine le sommet
+		g.fillOval(x - ParametresFenetre.rayonSommetAffichage, y - ParametresFenetre.rayonSommetAffichage, 
+				2 * ParametresFenetre.rayonSommetAffichage,	2 * ParametresFenetre.rayonSommetAffichage);
+		
+		// On affiche les noms de chaque sommet
+		g.drawString(sommet.getNom(), x, y);
 	}
 	
 	
@@ -393,7 +455,115 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		LOGGER.debug("affichage 2 des "+modele.getGraphe().getListeAretes().size()+" aretes en " + duree + " ms");
 	
 	}
+	
+	
+	/**
+	 * Méthode permettant de dessiner les aretes
+	 * 
+	 * @param g
+	 */
+	private void dessinerAretes3(Graphics g) {
 
+		int nombreAretes;		
+		Arete arete;
+		Graphics2D g2D = (Graphics2D) g;
+		
+		long start = System.currentTimeMillis();
+		
+		// on récupère la liste des aretes
+		ArrayList<Arete> listeAretes = modele.getGraphe().getListeAretes();
+		nombreAretes = listeAretes.size();
+		
+		// on choisit la couleur d'affichage des aretes
+		g2D.setColor(ParametresFenetre.couleurArete);
+		
+		// on parcourt toutes les aretes
+		for (int i = 0; i < nombreAretes; i++) {
+
+			// on récupère l'arete i
+			arete = listeAretes.get(i);
+			
+			dessinerArete(arete, g2D);
+		}
+		
+		long duree = System.currentTimeMillis() - start;
+		LOGGER.debug("affichage 2 des "+modele.getGraphe().getListeAretes().size()+" aretes en " + duree + " ms");
+	
+	}
+
+	
+	private void dessinerArete(Arete arete, Graphics2D g) {
+		
+		int x1, y1, x2, y2;
+		double long1, long2;
+		double lat1, lat2;
+		Sommet origine, extremite;
+		
+		// on récupère les sommets origine et destination
+		origine = arete.getSommetOrigine();
+		extremite = arete.getSommetExtremité();
+			
+		// on récupère leurs coordonnées
+		long1 = origine.getLongitude();
+		long2 = extremite.getLongitude();
+		lat1 = origine.getLatitude();
+		lat2 = extremite.getLatitude();
+
+		// on les convertit pour l'affichage
+		x1 = conversionLongitudeEnX(long1);
+		x2 = conversionLongitudeEnX(long2);
+		y1 = conversionLatitudeEnY(lat1);
+		y2 = conversionLatitudeEnY(lat2);
+		
+		// on dessine l'arete
+		g.drawLine(x1, y1, x2, y2);	
+	}
+	
+	
+	private void dessinerAreteSelectionne(Graphics g) {
+		// TODO Auto-generated method stub
+		Graphics2D g2D = (Graphics2D) g;
+		
+		Arete a = modele.getDerniereAreteSelectionne();
+		
+		if (a!=null)
+			dessinerArete(a, g2D);
+	}
+
+
+	/**
+	 * Méthode permettant de dessiner les sommets
+	 * @param g
+	 */
+	private void dessinerSommetsSelectionnes(Graphics g) {
+
+		int x, y;
+		double longitude;
+		double latitude;
+					
+		// On récupère l'ensemble des sommets selectionnes
+		ArrayList<Sommet> sommets = modele.getListeSommetsSelectionnes();
+
+		// On choisit la couleur des sommets sélectionnés
+		g.setColor(ParametresFenetre.couleurSommetSelectionne);
+		
+		// On parcourt l'ensemble des sommets
+		for (Sommet sommet : sommets) {
+			
+			// On récupère ses coordonnees
+			longitude = sommet.getLongitude();
+			latitude = sommet.getLatitude();
+			
+			// On convertit les coordonnees pour l'affichage
+			x = conversionLongitudeEnX(longitude);
+			y = conversionLatitudeEnY(latitude);
+			
+			// On dessine le sommets
+			g.fillOval(x - ParametresFenetre.rayonSommetSelectionneAffichage, y - ParametresFenetre.rayonSommetSelectionneAffichage, 
+					2 * ParametresFenetre.rayonSommetSelectionneAffichage,	2 * ParametresFenetre.rayonSommetSelectionneAffichage);
+		}
+	}
+	
 	
 	/**
 	 * Méthode permettant de dessiner les sommets sélectionnes
@@ -423,9 +593,15 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			y = conversionLatitudeEnY(lat);
 			
 			// on l'affiche
+			if (sommet.getSelected())
+				g.setColor(ParametresFenetre.couleurSommetSelectionne);
+			else 
+				g.setColor(ParametresFenetre.couleurSommet);
+			g.fillOval(x - ParametresFenetre.rayonSommetSelectionneAffichage, y - ParametresFenetre.rayonSommetSelectionneAffichage,
+					2*ParametresFenetre.rayonSommetSelectionneAffichage, 2*ParametresFenetre.rayonSommetSelectionneAffichage);
 			g.setColor(ParametresFenetre.couleurDernierSommetSelectionne);
-			g.fillOval(x - ParametresFenetre.rayonSommetAffichage/2, y - ParametresFenetre.rayonSommetAffichage/2,
-					ParametresFenetre.rayonSommetAffichage, ParametresFenetre.rayonSommetAffichage);
+			g.fillOval(x - ParametresFenetre.rayonSommetSelectionneAffichage/2, y - ParametresFenetre.rayonSommetSelectionneAffichage/2,
+					ParametresFenetre.rayonSommetSelectionneAffichage, ParametresFenetre.rayonSommetSelectionneAffichage);
 		
 			// on affiche le nom
 			nom = sommet.getNom();
@@ -453,6 +629,12 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		// on récupère le chemin le plus court dijkstra
 		listeAretesDijkstra = modele.getListeAretesDijkstra();
 		
+		Graphics2D g2D = (Graphics2D) g;
+		Stroke s = g2D.getStroke();
+		// trait épais
+		g2D.setStroke(new BasicStroke(5));
+		g2D.setColor(ParametresFenetre.couleurAreteDijkstra);
+		
 		// s'il existe
 		if (listeAretesDijkstra != null) {
 			
@@ -463,27 +645,13 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 				// on récupère l'arete i
 				arete = listeAretesDijkstra.get(i);
 				
-				// on récupère les sommets origine et extremite
-				origine = arete.getSommetOrigine();
-				extremite = arete.getSommetExtremité();
-				
-				// on récupère leurs coordonnées
-				long1 = origine.getLongitude();
-				long2 = extremite.getLongitude();
-				lat1 = origine.getLatitude();
-				lat2 = extremite.getLatitude();
-
-				// on les convertit pour l'affichage
-				x1 = conversionLongitudeEnX(long1);
-				x2 = conversionLongitudeEnX(long2);
-				y1 = conversionLatitudeEnY(lat1);
-				y2 = conversionLatitudeEnY(lat2);
-
-				// on l'affiche
-				g.setColor(ParametresFenetre.couleurAreteDijkstra);
-				g.drawLine(x1, y1, x2, y2);
+				dessinerArete(arete, g2D);
 			}
 		}
+		
+		
+		// retour au trait "normal"
+		g2D.setStroke(s);
 	}
 
 	
@@ -500,41 +668,33 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		double lat1, lat2;
 		Arete arete;
 		Sommet origine, extremite;
+		Cablage cablage;
 		ArrayList<Arete> listeAretesKruskal;
 		
 		// on récupère le chemin le plus court kruskal
-		listeAretesKruskal = modele.getListeAretesKruskal();
+		cablage = modele.getCablage();
+		if (cablage != null) {
+			listeAretesKruskal = cablage.getAretes();
 		
-		// s'il existe
-		if (listeAretesKruskal != null) {
-			
-			// on parcourt toutes les aretes du chemin
-			nombreAretes = listeAretesKruskal.size();
-			for (int i = 0; i < nombreAretes; i++) {
-
-				// on récupère l'arete i
-				arete = listeAretesKruskal.get(i);
+			// s'il existe
+			if (listeAretesKruskal != null) {
 				
-				// on récupère les sommets origine et extremite
-				origine = arete.getSommetOrigine();
-				extremite = arete.getSommetExtremité();
+				Graphics2D g2D = (Graphics2D) g;
+				Stroke s = g2D.getStroke();
+				// trait épais
+				g2D.setStroke(new BasicStroke(5));
+				g2D.setColor(ParametresFenetre.couleurAreteKruskal);
 				
-				// on récupère leurs coordonnées
-				long1 = origine.getLongitude();
-				long2 = extremite.getLongitude();
-				lat1 = origine.getLatitude();
-				lat2 = extremite.getLatitude();
-
-				// on les convertit pour l'affichage
-				x1 = conversionLongitudeEnX(long1);
-				x2 = conversionLongitudeEnX(long2);
-				y1 = conversionLatitudeEnY(lat1);
-				y2 = conversionLatitudeEnY(lat2);
-
-				// on l'affiche
-				g.setColor(ParametresFenetre.couleurAreteKruskal);
-				g.drawLine(x1, y1, x2, y2);
-			}
+				// on parcourt toutes les aretes du chemin
+				nombreAretes = listeAretesKruskal.size();
+				for (int i = 0; i < nombreAretes; i++) {
+	
+					// on récupère l'arete i
+					arete = listeAretesKruskal.get(i);
+					
+					dessinerArete(arete, g2D);
+				}
+			}		
 		}
 	}
 	
@@ -680,7 +840,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 				// Si le graphe n'est pas vide
 				if (modele.getGraphe() != null) {
 					
-					dessinerFondCarte(g);
+					//dessinerFondCarte(g);
 					
 					dessinerSommets(g);
 	

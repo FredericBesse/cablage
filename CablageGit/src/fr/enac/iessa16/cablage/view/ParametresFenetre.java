@@ -83,14 +83,15 @@ public class ParametresFenetre {
 	
 	// Parametre d'affichage des sommets
 	public static int rayonSommetAffichage = 5;
+	public static int rayonSommetSelectionneAffichage = 8;
 	public static int rayonSommetClic = 25; // zone cliquable autour du sommet permettant sa sélection
-	public static Color couleurSommetNonSelectionne = Color.BLUE;
-	public static Color couleurSommetSelectionne = Color.PINK;	
-	public static Color couleurNomSommet = Color.BLACK;
+	public static Color couleurSommet = Color.BLUE;
+	public static Color couleurSommetSelectionne = Color.RED;	
 	public static Color couleurDernierSommetSelectionne = Color.GREEN;	
 	
 	// Parametre d'affichage des aretes
-	public static Color couleurArete = Color.RED;
+	public static Color couleurArete = Color.PINK;
+	public static Color couleurAreteSelectionne = Color.MAGENTA;
 	public static Color couleurAreteDijkstra = Color.MAGENTA;
 	public static Color couleurAreteKruskal = Color.ORANGE;
 	

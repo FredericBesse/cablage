@@ -3,10 +3,7 @@ package fr.enac.iessa16.cablage.model.core;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
-import com.sun.xml.internal.txw2.annotation.XmlElement;
 
 /**
  * Classe Sommet théorique, possède en attributs une latitude, 
@@ -25,9 +22,16 @@ public class Sommet {
 	private double latitude;
 	@XmlTransient
 	private boolean selected;
+	
+	private int id;
+	
+	private static int nbSommetCree = 0;
 
 	
 	public Sommet() {
+		
+		nbSommetCree++;
+		this.id = nbSommetCree;
 		
 	}
 	
@@ -44,6 +48,9 @@ public class Sommet {
 		this.latitude = latitude;
 		this.nom = nom;
 		this.selected = false;
+		
+		nbSommetCree++;
+		this.id = nbSommetCree;
 	}
 	
 	
@@ -83,6 +90,10 @@ public class Sommet {
 	public String getNom() {
 		return nom;
 	}
+	
+	public int getId() {
+		return id;
+	}
 
 
 	/**
@@ -117,30 +128,12 @@ public class Sommet {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(latitude);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(longitude);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
+		return id;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Sommet other = (Sommet) obj;
-		if (Double.doubleToLongBits(latitude) != Double.doubleToLongBits(other.latitude))
-			return false;
-		if (Double.doubleToLongBits(longitude) != Double.doubleToLongBits(other.longitude))
-			return false;
-		return true;
+		return (this.latitude == ((Sommet)obj).getLatitude())&&(this.longitude == ((Sommet)obj).getLongitude());
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package fr.enac.iessa16.cablage.model;
 
 import java.awt.Desktop;
+import java.awt.geom.Line2D;
 import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
@@ -47,6 +48,12 @@ public class Modele extends Observable {
 	private Sommet dernierSommetSelectionne;
 	private ArrayList<Sommet> listeSommetsSelectionnes;
 
+	
+	private Arete derniereAreteSelectionne;
+	
+
+
+
 	// Dijkstra
 	private AlgoDijkstraJGrapht algoDijkstra;
 	private Sommet sommetOrigineDijkstra;
@@ -56,9 +63,7 @@ public class Modele extends Observable {
 
 	// Kruskal
 	private AlgoKruskalJGrapht algoKruskal;
-	//FIXME a supprimer au profit des cablages
-	private ArrayList<Arete> listeAretesKruskal;
-	private ArrayList<Cablage> cablages;
+	private Cablage cablageKruskal;
 	
 	
 
@@ -90,6 +95,8 @@ public class Modele extends Observable {
 		this.dernierSommetSelectionne = null;
 		this.listeSommetsSelectionnes = new ArrayList<Sommet>();
 		
+		this.derniereAreteSelectionne = null;
+		
 		this.algoDijkstra = null;
 		this.sommetOrigineDijkstra = null;
 		this.sommetDestinationDijkstra = null;
@@ -97,8 +104,8 @@ public class Modele extends Observable {
 		this.coutCheminDijkstra = 0;
 		
 		this.algoKruskal = null;
-		this.listeAretesKruskal = new ArrayList<Arete>();
-		this.cablages = new ArrayList<Cablage>();
+		//this.listeAretesKruskal = new ArrayList<Arete>();
+		this.cablageKruskal = null;
 		
 		this.listeSousGraphesConnexes = null;
 		this.modeAjouterSommet = false;
@@ -176,7 +183,7 @@ public class Modele extends Observable {
 		
 		ContenuFichierXML contenuFichierXML = constructeurGrapheFichierXML.getContenuFichierXML();
 		this.setGraphe(contenuFichierXML.getGraphe());
-		this.setCablages(contenuFichierXML.getCablages());
+		this.setCablage(contenuFichierXML.getCablage());
 
 	}
 	
@@ -188,7 +195,7 @@ public class Modele extends Observable {
 		
 		if (fichierXML != null) {
 			ConstructeurGrapheFichierXML constructeurGrapheFichierXML = new ConstructeurGrapheFichierXML(this);
-			ContenuFichierXML contenuFichierXML = new ContenuFichierXML(this.graphe, this.cablages);
+			ContenuFichierXML contenuFichierXML = new ContenuFichierXML(this.graphe, this.cablageKruskal);
 			System.out.println("ecriture xml nbsommets="+this.graphe.getListeSommets().size());
 			constructeurGrapheFichierXML.enregistrerFichierXML(fichierXML, contenuFichierXML);
 		} else {
@@ -204,7 +211,7 @@ public class Modele extends Observable {
 	public void enregisterSous() {
 		
 		ConstructeurGrapheFichierXML constructeurGrapheFichierXML = new ConstructeurGrapheFichierXML(this);
-		ContenuFichierXML contenuFichierXML = new ContenuFichierXML(this.graphe, this.cablages);
+		ContenuFichierXML contenuFichierXML = new ContenuFichierXML(this.graphe, this.cablageKruskal);
 		System.out.println("ecriture xml nbsommets="+this.graphe.getListeSommets().size());
 		this.fichierXML = constructeurGrapheFichierXML.enregistrerSousFichierXML(contenuFichierXML);
 		
@@ -284,22 +291,8 @@ public class Modele extends Observable {
 	 */
 	public void calculerDijkstra() {
 
-		this.algoDijkstra = new AlgoDijkstraJGrapht(graphe);
-		listeSommetsSelectionnes.clear();
-		int size = graphe.getListeSommets().size();
-		Sommet sommet;
-
-		for(int i = 0 ; i<size; i++) {	
-			
-			sommet = graphe.getListeSommets().get(i);
-			//Si le sommet est selectionné
-			if(sommet.getSelected() == true) {
-
-				//On rajoute le sommet à la liste de sommets sélectionnés.
-				listeSommetsSelectionnes.add(sommet);
-			}
-		}
-
+		this.algoDijkstra = new AlgoDijkstraJGrapht(this, graphe);
+		
 
 		LOGGER.trace("il y a "+ listeSommetsSelectionnes.size()+ " noeuds selectionnés");
 		
@@ -339,10 +332,11 @@ public class Modele extends Observable {
 				
 		algoKruskal.calculerKruskal(this.listeSommetsSelectionnes);
 		
-		listeAretesKruskal = algoKruskal.getKruskalShortestPath();
-		this.cablages.add(algoKruskal.getCablage());
 		
-		LOGGER.trace("Le chemin le plus court contient " + listeAretesKruskal.size() +" aretes");
+		this.cablageKruskal = algoKruskal.getCablageLePlusCourtKruskal();
+		
+		// FIXME gerer null ?
+		LOGGER.trace("Le chemin le plus court contient " + cablageKruskal.getAretes().size() +" aretes");
 		
 		changement();
 
@@ -437,7 +431,7 @@ public class Modele extends Observable {
 					// on recupère la distance entre la position du clic et la position du sommet
 					distance = Math.sqrt(Math.pow(xClic-x,2)+Math.pow(yClic-y,2));
 					
-					LOGGER.trace("distance = "+distance);
+					//LOGGER.trace("distance = "+distance);
 					//Le sommet est consideré comme "sélectionné" si la distance entre le clique et 
 					//la position du sommet du graphe est inférieur au rayon de chaque sommet 
 					if(distance<ParametresFenetre.rayonSommetClic)	{
@@ -445,7 +439,7 @@ public class Modele extends Observable {
 						if (distance<distanceMin) {
 							
 							distanceMin = distance;
-							sommetLePlusProcheDuClic = graphe.getListeSommets().get(i);
+							sommetLePlusProcheDuClic = sommet;
 							
 						}
 					}
@@ -482,6 +476,90 @@ public class Modele extends Observable {
 				}				
 			}		
 		}
+	}
+	
+	
+	
+	/**
+	 * Méthode permettant de trouver l'arete le plus proche du clic souris
+	 * 
+	 * @param xClic
+	 * @param yClic
+	 */
+	public void touverAreteLPlusProcheDuClicSouris (int xClic, int yClic) {
+	
+		LOGGER.debug("Recherche arete le plus proche du clic souris x="+xClic+" y="+yClic);
+		
+		// Déclaration des variables locales
+		double distance;
+		double distanceMin = Double.MAX_VALUE;
+		double latitudeOrigine;
+		double latitudeExtremite;
+		double longitudeOrigine;
+		double longitudeExtremite;
+		double xOrigine, xExtremite;
+		double yOrigine, yExtremite;
+		Arete areteLaPlusProcheDuClic = null;
+		Arete arete;
+		int nombreArete;
+		ArrayList<Arete> listeAretes;
+		
+		// si le graphe existe
+		if (this.graphe != null) {
+			
+			// on récupère la liste des aretes
+			listeAretes = graphe.getListeAretes();
+			
+				
+				// on récupère le nombre d'arete
+				nombreArete = this.graphe.getListeAretes().size();
+								
+				// on parcourt l'ensemble des aretes du graphe 
+				for(int i=0 ; i<nombreArete;i++) {
+					
+					// on récupère l'arete i
+					arete = listeAretes.get(i);
+					
+					// on recupère la longitude et latitude du sommet origine.
+					longitudeOrigine = arete.getSommetOrigine().getLongitude();
+					latitudeOrigine  = arete.getSommetOrigine().getLatitude();
+
+					// on les convertit en coordonnées écran (pixel)
+					xOrigine = PanneauDessinGraphe.conversionLongitudeEnX(longitudeOrigine);
+					yOrigine = PanneauDessinGraphe.conversionLatitudeEnY(latitudeOrigine);
+					
+					// on recupère la longitude et latitude du sommet extremite.
+					longitudeExtremite = arete.getSommetExtremité().getLongitude();
+					latitudeExtremite  = arete.getSommetExtremité().getLatitude();
+
+					// on les convertit en coordonnées écran (pixel)
+					xExtremite = PanneauDessinGraphe.conversionLongitudeEnX(longitudeExtremite);
+					yExtremite = PanneauDessinGraphe.conversionLatitudeEnY(latitudeExtremite);
+
+					// on recupère la distance entre la position du clic et la position du sommet
+					distance = Line2D.ptSegDist(xOrigine, yOrigine, xExtremite, yExtremite, xClic, yClic);
+					
+					//LOGGER.trace("distance = "+distance);
+					//Le sommet est consideré comme "sélectionné" si la distance entre le clique et 
+					//la position du sommet du graphe est inférieur au rayon de chaque sommet 
+					if(distance<ParametresFenetre.rayonSommetClic)	{
+						
+						if (distance<distanceMin) {
+							
+							distanceMin = distance;
+							areteLaPlusProcheDuClic = arete;
+							
+						}
+					}
+				}
+				
+				this.derniereAreteSelectionne = areteLaPlusProcheDuClic;
+				
+				//On notifie la vue que le modèle a changé
+				this.changement();
+								
+			}		
+		
 	}
 
 	
@@ -585,8 +663,9 @@ public class Modele extends Observable {
 		return listeAretesDijkstra;
 	}
 
-	public ArrayList<Arete> getListeAretesKruskal() {
-		return listeAretesKruskal;
+	
+	public Cablage getListeAretesKruskal() {
+		return cablageKruskal;
 	}
 
 	public Sommet getdernierSommetSelectionne() {
@@ -633,13 +712,13 @@ public class Modele extends Observable {
 	}
 	
 	
-	public ArrayList<Cablage> getCablages() {
-		return cablages;
+	public Cablage getCablage() {
+		return cablageKruskal;
 	}
 
 
-	public void setCablages(ArrayList<Cablage> cablages) {
-		this.cablages = cablages;
+	public void setCablage(Cablage cablage) {
+		this.cablageKruskal = cablage;
 		changement();
 	}
 	
@@ -706,6 +785,15 @@ public class Modele extends Observable {
 
 	public void setCentreVueDemande(boolean centreVueDemande) {
 		this.centreVueDemande = centreVueDemande;
+	}
+	
+	public ArrayList<Sommet> getListeSommetsSelectionnes() {
+		return listeSommetsSelectionnes;
+	}
+
+
+	public Arete getDerniereAreteSelectionne() {
+		return derniereAreteSelectionne;
 	}
 
 

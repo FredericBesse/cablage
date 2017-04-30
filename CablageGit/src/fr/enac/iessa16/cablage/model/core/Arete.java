@@ -4,13 +4,16 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
+import org.jgrapht.graph.DefaultWeightedEdge;
+
 /**
  * Classe Arete
  *	
  * @author Racha HEDIDI et Frédéric BESSE
  */
+@SuppressWarnings("serial")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Arete {
+public class Arete extends DefaultWeightedEdge {
 	
 	@XmlAttribute
 	private double distance;
@@ -21,7 +24,14 @@ public class Arete {
 	private Sommet sommetOrigine;
 	private Sommet sommetExtremite;
 	
+	
+	/**
+	 * Constructeur par défaut de la classe 
+	 */
 	public Arete() {
+		
+		super();
+		
 		
 	}
 	
@@ -34,13 +44,26 @@ public class Arete {
 	 */
 	public Arete(Sommet origine, Sommet extremite, double poids) {
 		
+		super();
+		
 		this.sommetOrigine = origine;
 		this.sommetExtremite = extremite;
 		this.poids = poids;
 		
 		this.distance = origine.calculerDistance(extremite);
 		this.cout = distance * poids;
+		
+		
+		
 	}
+	
+	
+	@Override
+	protected double getWeight() {
+		return cout;
+	}
+	
+	
 
 	/* 
 	 * Getters et Setters des attributs de la classe

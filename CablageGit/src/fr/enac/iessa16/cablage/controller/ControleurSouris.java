@@ -45,6 +45,7 @@ public class ControleurSouris implements MouseListener, MouseMotionListener, Mou
 		}
 		else {
 			modele.touverSommetLePlusProcheDuClicSouris(e.getX(), e.getY());
+			modele.touverAreteLPlusProcheDuClicSouris(e.getX(), e.getY());
 		}
 	}
 

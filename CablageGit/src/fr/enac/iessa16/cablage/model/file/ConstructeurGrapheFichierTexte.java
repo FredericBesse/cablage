@@ -145,6 +145,7 @@ public class ConstructeurGrapheFichierTexte {
 		Sommet sommet1;
 		Arete arete;
 		Sommet sommetPrecedent = null;
+		int index;
 		
 
 		for (int i = 5; i < tab2.length; i++) {
@@ -158,14 +159,22 @@ public class ConstructeurGrapheFichierTexte {
 
 				sommet1 = new Sommet(longitude1, latitude1, "");
 
-				if (!sommets.contains(sommet1))
+				//if (!sommets.contains(sommet1))
+				//	sommets.add(sommet1);
+				index = sommets.indexOf(sommet1);
+				// si le sommet n'existe pas
+				if (index == -1) {
 					sommets.add(sommet1);
-
+				} else { // sinon on récupère celui qui existe déja (meme lat et meme lon (.equals))
+					sommet1=sommets.get(index);
+				}
+				
+				
 				if (sommetPrecedent != null) {
 
 					if (!sommetPrecedent.equals(sommet1)) {
 
-						arete = new Arete(sommet1, sommetPrecedent, 25);
+						arete = new Arete(sommet1, sommetPrecedent, 1);
 						
 						// TODO ajouter un test pour vérifier l'unicité des aretes (ajouter .equals dans Aretes)
 						aretes.add(arete);

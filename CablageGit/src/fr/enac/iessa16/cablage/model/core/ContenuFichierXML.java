@@ -1,11 +1,7 @@
 package fr.enac.iessa16.cablage.model.core;
 
-import java.util.ArrayList;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -19,23 +15,35 @@ public class ContenuFichierXML {
 	
 	private GrapheTheorique graphe;
 	
-	@XmlElementWrapper(name = "cablages")
-	@XmlElement(name = "cablage")
-	private ArrayList<Cablage> cablages;
+	private Cablage cablage;
 	
+	/**
+	 * Constructeur par défaut de la classe Cablage
+	 */
 	public ContenuFichierXML() {
 		
+		this.graphe = new GrapheTheorique();
+		this.cablage = new Cablage();
 		
 	}
 	
-	public ContenuFichierXML(GrapheTheorique graphe, ArrayList<Cablage> cablages) {
+	/**
+	 * Constructeur de la classe ContenuFichierXML
+	 * 
+	 * @param graphe le graphe
+	 * @param cablage le cablage
+	 */
+	public ContenuFichierXML(GrapheTheorique graphe, Cablage cablage) {
 		
 		this.graphe = graphe;
-		this.setCablages(cablages);
-		
+		this.cablage = cablage;
 	}
 	
 
+	/* 
+	 * Getters et Setters
+	 */
+	
 	public GrapheTheorique getGraphe() {
 		return graphe;
 	}
@@ -44,14 +52,12 @@ public class ContenuFichierXML {
 		this.graphe = graphe;
 	}
 
-	public ArrayList<Cablage> getCablages() {
-		return cablages;
+	public Cablage getCablage() {
+		return cablage;
 	}
 
-	public void setCablages(ArrayList<Cablage> cablages) {
-		this.cablages = cablages;
-	}
-
-	
+	public void setCablage(Cablage cablage) {
+		this.cablage = cablage;
+	}	
 
 }

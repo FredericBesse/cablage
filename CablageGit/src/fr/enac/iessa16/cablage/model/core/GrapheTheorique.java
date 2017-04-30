@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.jgrapht.graph.SimpleWeightedGraph;
+
 /**
  * Classe GrapheTheorique définissant le modèle théorique d'un graphe.
  * 
@@ -17,7 +19,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Racha HEDIDI et Frédéric BESSE
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GrapheTheorique {
+public class GrapheTheorique extends SimpleWeightedGraph<Sommet, Arete>{
 
 	// La liste des sommets du graphe
 	@XmlElementWrapper(name = "sommets")
@@ -44,6 +46,8 @@ public class GrapheTheorique {
 	 */
 	public GrapheTheorique() {
 		
+		super(Arete.class);
+		
 		this.listeSommets = new ArrayList<Sommet>();
 		this.listeAretes = new ArrayList<Arete>();
 		
@@ -61,13 +65,59 @@ public class GrapheTheorique {
 	 */
 	public GrapheTheorique(ArrayList<Sommet> listeSommets, ArrayList<Arete> listeAretes) {
 
-		this.listeSommets = listeSommets;
-		this.listeAretes = listeAretes;
-
+		super(Arete.class);
+		
+		this.ajouterSommets(listeSommets);
+		
+		this.ajouterAretes(listeAretes);
+		
 		calculExtremumDonnees();
 	}
+	
+	
+	private void ajouterSommets(ArrayList<Sommet> listeSommets) {
+		if (listeSommets != null) {
+			this.listeSommets = listeSommets;
+			
+			
+			for (Sommet sommet : listeSommets) {
+				this.addVertex(sommet);
+			}
+		}
+		
+		
+		else 
+			this.listeSommets = new ArrayList<Sommet>();
+		
+	}
+	
+	
+	
+
+	private void ajouterAretes(ArrayList<Arete> listeAretes) {
+		if (listeAretes != null) {
+			this.listeAretes = listeAretes;
+			
+			for (Arete arete : listeAretes) {
+				
+				this.addEdge(arete.getSommetOrigine(), arete.getSommetExtremité(), arete);
+				
+			}
+			
+		} else
+			this.listeAretes = new ArrayList<Arete>();
+
+		
+	}
+
+
+	
+
 
 	public void calculExtremumDonnees() {
+		
+		double longitudeCourante, latitudeCourante;
+		int size;
 		
 		longitudeMin = Double.MAX_VALUE;
 		longitudeMax = Double.MIN_VALUE;
@@ -75,10 +125,10 @@ public class GrapheTheorique {
 		latitudeMin = Double.MAX_VALUE;
 		latitudeMax = Double.MIN_VALUE;
 
-		double longitudeCourante, latitudeCourante;
 		
-		// FIXME optimiser boucle for
-		for (int i = 0; i < listeSommets.size(); i++) {
+		size = listeSommets.size();
+		
+		for (int i = 0; i < size; i++) {
 			
 			longitudeCourante = listeSommets.get(i).getLongitude();
 			latitudeCourante = listeSommets.get(i).getLatitude();
