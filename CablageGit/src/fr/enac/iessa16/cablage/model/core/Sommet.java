@@ -1,11 +1,16 @@
 package fr.enac.iessa16.cablage.model.core;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.sun.xml.internal.txw2.annotation.XmlElement;
+
 /**
  * Classe Sommet théorique, possède en attributs une latitude, 
  * une longitude ainsi qu'un nom.
  *	
  * @author Racha HEDIDI et Frédéric BESSE
  */
+@XmlElement
 public class Sommet {
 
 	private double longitude ;

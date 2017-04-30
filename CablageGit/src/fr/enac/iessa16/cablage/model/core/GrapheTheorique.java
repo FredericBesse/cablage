@@ -2,6 +2,11 @@ package fr.enac.iessa16.cablage.model.core;
 
 import java.util.ArrayList;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Classe GrapheTheorique définissant le modèle théorique d'un graphe.
  * 
@@ -9,6 +14,7 @@ import java.util.ArrayList;
  * 
  * @author Racha HEDIDI et Frédéric BESSE
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class GrapheTheorique {
 
 	// La liste des sommets du graphe
@@ -22,6 +28,18 @@ public class GrapheTheorique {
 	private double longitudeMin;
 	private double longitudeMax;
 
+	
+	/**
+	 * Constructeur par défaut de la classe GrapheTheorique, crée un graphe vide 
+	 */
+	public GrapheTheorique() {
+		
+		this.listeSommets = new ArrayList<Sommet>();
+		this.listeAretes = new ArrayList<Arete>();
+		
+	}
+	
+	
 	/**
 	 * Constructeur de la classe Graphe, permet de construire un graphe à partir
 	 * d'une liste de sommets et d'aretes
@@ -31,7 +49,6 @@ public class GrapheTheorique {
 	 * @param listeAretes
 	 *            la liste des aretes
 	 */
-
 	public GrapheTheorique(ArrayList<Sommet> listeSommets, ArrayList<Arete> listeAretes) {
 
 		this.listeSommets = listeSommets;

@@ -1,4 +1,4 @@
-package fr.enac.iessa16.cablage.main;
+package fr.enac.iessa16.cablage;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
