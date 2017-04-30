@@ -27,6 +27,10 @@ public class Sommet {
 	private boolean selected;
 
 	
+	public Sommet() {
+		
+	}
+	
 	/**
 	 * Constructeur de la classe sommet
 	 * 

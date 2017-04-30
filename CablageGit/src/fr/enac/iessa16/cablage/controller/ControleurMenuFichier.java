@@ -66,7 +66,6 @@ public class ControleurMenuFichier implements ActionListener {
 		}
 
 		if (s.equals(ParametresFenetre.ouvrir)) {
-
 			model.ouvrir();
 		}
 

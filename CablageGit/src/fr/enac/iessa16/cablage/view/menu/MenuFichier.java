@@ -66,7 +66,7 @@ public class MenuFichier extends JMenu {
 		JMenuItem optionOuvrir = new JMenuItem(ParametresFenetre.ouvrir);
 		optionOuvrir.setMnemonic(KeyEvent.VK_O);
 		optionOuvrir.setAccelerator(KeyStroke.getKeyStroke("control O"));
-		optionOuvrir.setActionCommand("Ouvrir");
+		optionOuvrir.setActionCommand(ParametresFenetre.ouvrir);
 		optionOuvrir.addActionListener(controleur.getControleurMenuFichier());
 		this.add(optionOuvrir);
 		

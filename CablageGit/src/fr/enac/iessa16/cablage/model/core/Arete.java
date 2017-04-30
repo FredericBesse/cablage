@@ -21,7 +21,9 @@ public class Arete {
 	private Sommet sommetOrigine;
 	private Sommet sommetExtremite;
 	
-	
+	public Arete() {
+		
+	}
 	
 	/**
 	 * Constructeur de la classe Arete

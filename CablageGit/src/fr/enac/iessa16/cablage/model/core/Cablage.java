@@ -5,6 +5,10 @@ import java.util.HashMap;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Classe Cablage
@@ -14,14 +18,23 @@ import javax.xml.bind.annotation.XmlAccessorType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Cablage {
 	
+	@XmlElementWrapper(name = "sommetsSelectionnes")
+	@XmlElement(name = "sommet")
 	private ArrayList<Sommet> sommetsSelectionnes;
+	@XmlElementWrapper(name = "sommetsUtiles")
+	@XmlElement(name = "sommet")
 	private ArrayList<Sommet> sommetsUtiles;
+	@XmlElementWrapper(name = "chemin")
+	@XmlElement(name = "arete")
 	private ArrayList<Arete> aretes;
+	@XmlAttribute
 	private double cout;
-	
+	@XmlTransient
 	private HashMap<Sommet, ArrayList<Arete>> aretesParSommet;
 	
-
+	public Cablage(){
+		
+	}
 	/**
 	 * Constructeur de la classe Cablage
 	 * 

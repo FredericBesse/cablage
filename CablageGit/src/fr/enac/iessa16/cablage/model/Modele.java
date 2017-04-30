@@ -1,6 +1,7 @@
 package fr.enac.iessa16.cablage.model;
 
 import java.awt.Desktop;
+import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -16,13 +17,12 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 import fr.enac.iessa16.cablage.model.algorithm.AlgoDijkstraJGrapht;
 import fr.enac.iessa16.cablage.model.algorithm.AlgoKruskalJGrapht;
 import fr.enac.iessa16.cablage.model.core.Arete;
+import fr.enac.iessa16.cablage.model.core.Cablage;
 import fr.enac.iessa16.cablage.model.core.ContenuFichierXML;
 import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
 import fr.enac.iessa16.cablage.model.core.Sommet;
 import fr.enac.iessa16.cablage.model.file.ConstructeurGrapheFichierTexte;
 import fr.enac.iessa16.cablage.model.file.ConstructeurGrapheFichierXML;
-import fr.enac.iessa16.cablage.view.Fenetre;
-import fr.enac.iessa16.cablage.view.Imprimer;
 import fr.enac.iessa16.cablage.view.PanneauDessinGraphe;
 import fr.enac.iessa16.cablage.view.ParametresFenetre;
 
@@ -56,10 +56,18 @@ public class Modele extends Observable {
 
 	// Kruskal
 	private AlgoKruskalJGrapht algoKruskal;
+	//FIXME a supprimer au profit des cablages
 	private ArrayList<Arete> listeAretesKruskal;
+	private ArrayList<Cablage> cablages;
 	
+	
+
+
 	// Connectivité
 	private ArrayList<Set<Sommet>> listeSousGraphesConnexes;
+	
+	// Fichier XML
+	private File fichierXML;
 	
 	
 	private boolean imprimerDemande;
@@ -90,12 +98,15 @@ public class Modele extends Observable {
 		
 		this.algoKruskal = null;
 		this.listeAretesKruskal = new ArrayList<Arete>();
+		this.cablages = new ArrayList<Cablage>();
 		
 		this.listeSousGraphesConnexes = null;
 		this.modeAjouterSommet = false;
 				
 		this.imprimerDemande = false;
 		this.centreVueDemande = false;
+		
+		this.fichierXML = null;
 		
 		//this.fenetre = null;
 	}
@@ -155,8 +166,17 @@ public class Modele extends Observable {
 	 * Méthode permettant d'ouvrir un fichier XML  
 	 */
 	public void ouvrir() {
-		message("ouvrir", "à faire");
 		
+		
+		
+		ConstructeurGrapheFichierXML constructeurGrapheFichierXML = new ConstructeurGrapheFichierXML(this);
+		//ContenuFichierXML contenuFichierXML = new ContenuFichierXML(this.graphe);
+		//System.out.println("ecriture xml nbsommets="+this.graphe.getListeSommets().size());
+		this.fichierXML = constructeurGrapheFichierXML.ouvrirFichierXML();
+		
+		ContenuFichierXML contenuFichierXML = constructeurGrapheFichierXML.getContenuFichierXML();
+		this.setGraphe(contenuFichierXML.getGraphe());
+		this.setCablages(contenuFichierXML.getCablages());
 
 	}
 	
@@ -164,13 +184,17 @@ public class Modele extends Observable {
 	 * Méthode permettant d'enregistrer un graphe dans un fichier XML  
 	 */
 	public void enregister() {
-		// TODO enregistrer
+		// FIXME enregistrer : interdire le bouton enregistrer si enregistrer sous n'a pas ete fait
 		
-		//message("Enregistrer", "à faire");
-		ConstructeurGrapheFichierXML constructeurGrapheFichierXML = new ConstructeurGrapheFichierXML(this);
-		ContenuFichierXML contenuFichierXML = new ContenuFichierXML(this.graphe);
-		System.out.println("ecriture xml nbsommets="+this.graphe.getListeSommets().size());
-		constructeurGrapheFichierXML.enregistrerFichierXML("toto.txt", contenuFichierXML);
+		if (fichierXML != null) {
+			ConstructeurGrapheFichierXML constructeurGrapheFichierXML = new ConstructeurGrapheFichierXML(this);
+			ContenuFichierXML contenuFichierXML = new ContenuFichierXML(this.graphe, this.cablages);
+			System.out.println("ecriture xml nbsommets="+this.graphe.getListeSommets().size());
+			constructeurGrapheFichierXML.enregistrerFichierXML(fichierXML, contenuFichierXML);
+		} else {
+			erreur("enregistrement impossible", "le fichier xml n'existe pas");
+		}
+		
 		
 	}
 	
@@ -178,9 +202,12 @@ public class Modele extends Observable {
 	 * Méthode permettant d'enregistrer un graphe dans un autre fichier XML  
 	 */
 	public void enregisterSous() {
-		// TODO enregistrer sous
 		
-		message("Enregistrer sous", "à faire");
+		ConstructeurGrapheFichierXML constructeurGrapheFichierXML = new ConstructeurGrapheFichierXML(this);
+		ContenuFichierXML contenuFichierXML = new ContenuFichierXML(this.graphe, this.cablages);
+		System.out.println("ecriture xml nbsommets="+this.graphe.getListeSommets().size());
+		this.fichierXML = constructeurGrapheFichierXML.enregistrerSousFichierXML(contenuFichierXML);
+		
 		
 	}
 	
@@ -313,6 +340,7 @@ public class Modele extends Observable {
 		algoKruskal.calculerKruskal(this.listeSommetsSelectionnes);
 		
 		listeAretesKruskal = algoKruskal.getKruskalShortestPath();
+		this.cablages.add(algoKruskal.getCablage());
 		
 		LOGGER.trace("Le chemin le plus court contient " + listeAretesKruskal.size() +" aretes");
 		
@@ -603,6 +631,16 @@ public class Modele extends Observable {
 		changement();
 	}
 	
+	
+	public ArrayList<Cablage> getCablages() {
+		return cablages;
+	}
+
+
+	public void setCablages(ArrayList<Cablage> cablages) {
+		this.cablages = cablages;
+		changement();
+	}
 	
 	
 	

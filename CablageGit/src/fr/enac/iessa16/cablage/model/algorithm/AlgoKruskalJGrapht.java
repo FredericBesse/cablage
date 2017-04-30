@@ -238,4 +238,12 @@ public class AlgoKruskalJGrapht {
 	public  ArrayList<Arete> getKruskalShortestPath() {
         return listeAretesKruskal;
     }
+	
+	/**
+	 * Méthode permettant de récupérer le cablage 
+	 * @return
+	 */
+	public Cablage getCablage() {
+        return cablage;
+    }
 }

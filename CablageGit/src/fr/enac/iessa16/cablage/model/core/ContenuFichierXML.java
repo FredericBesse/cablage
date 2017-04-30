@@ -28,13 +28,6 @@ public class ContenuFichierXML {
 		
 	}
 	
-	public ContenuFichierXML(GrapheTheorique graphe) {
-		
-		this.graphe = graphe;
-		this.setCablages(new ArrayList<Cablage>());
-		
-	}
-	
 	public ContenuFichierXML(GrapheTheorique graphe, ArrayList<Cablage> cablages) {
 		
 		this.graphe = graphe;
