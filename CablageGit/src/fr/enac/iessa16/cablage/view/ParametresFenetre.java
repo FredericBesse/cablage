@@ -69,6 +69,7 @@ public class ParametresFenetre {
 	public static final String titrePanneauParametres = "Param\u00e8tres";
 	public static final String titrePanneauParametresGraphe = "Graphe";
 	public static final String titrePanneauParametresSommet = "Sommet";
+	public static final String titrePanneauParametresArete = "Arete";
 	public static final String titrePanneauParametresDijkstra = "Dijkstra";
 	public static final String titrePanneauParametresKruskal = "Kruskal";
 	public static final String titrePanneauParametresInformation = "Informations";

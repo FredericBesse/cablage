@@ -93,6 +93,17 @@ public class Arete extends DefaultWeightedEdge {
 		this.cout = poids * distance;
 	}
 	
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		Arete a = (Arete) obj;
+		
+		return (a.sommetExtremite.equals(this.sommetExtremite) && a.sommetOrigine.equals(this.sommetOrigine))
+				|| (a.sommetExtremite.equals(this.sommetOrigine) && a.sommetOrigine.equals(this.sommetExtremite));
+
+	}
+	
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

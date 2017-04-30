@@ -231,7 +231,8 @@ public class Modele extends Observable {
 
 	public void fermer() {
 		// TODO fermer
-		message("Fermer", "à faire");
+		this.graphe = null;
+		this.changement();
 	}
 
 	public void quitter() {
@@ -261,7 +262,56 @@ public class Modele extends Observable {
 
 	public void supprimerSommet() {
 		// TODO supprimer sommet
-		message("Supprimer Sommet", "à faire");
+		//message("Supprimer Sommet", "à faire");
+		
+		if (this.dernierSommetSelectionne == null) {
+			erreur("Suppression sommet impossible", "Vous devez selectionnee un sommet !");
+		} else {
+			Set<Arete> aretesTouchantLeSommetSet = graphe.edgesOf(dernierSommetSelectionne);
+			ArrayList<Arete> aretesTouchantLeSommet = new ArrayList<Arete>(aretesTouchantLeSommetSet); 
+			
+			
+			
+			int n = JOptionPane.showConfirmDialog(
+				    null,
+				    "La suppression du sommet selectionné provoquera\n"
+						    + " la suppression des "+aretesTouchantLeSommet.size()+" aretes qui le touche.\n"
+						    + "Voulez-vous continuer ?",
+				    "Suppression du sommet",
+				    JOptionPane.YES_NO_OPTION);
+			
+			if (n == JOptionPane.YES_OPTION) {
+				
+				//message("suppr","Avant : sommet:"+graphe.getListeSommets().size()+" "+graphe.vertexSet().size()+" aretes:"+graphe.getListeAretes().size()+" "+graphe.edgeSet().size());
+				
+				Arete arete;
+				for (int i = 0; i < aretesTouchantLeSommet.size(); i++) {
+					arete = aretesTouchantLeSommet.get(i);
+					graphe.getListeAretes().remove(arete);
+					graphe.removeEdge(arete);
+				}
+				
+				
+				
+				
+				graphe.getListeSommets().remove(dernierSommetSelectionne);
+				graphe.removeVertex(dernierSommetSelectionne);
+				listeSommetsSelectionnes.remove(dernierSommetSelectionne);
+				derniereAreteSelectionne = null;
+				dernierSommetSelectionne = null;
+				
+				
+				//message("suppr","Apres : sommet:"+graphe.getListeSommets().size()+" "+graphe.vertexSet().size()+" aretes:"+graphe.getListeAretes().size()+" "+graphe.edgeSet().size());
+				
+				
+				this.changement();
+				
+				
+			} 
+			
+			
+			
+		}
 	}
 
 	public void ajouterArete() {
@@ -445,11 +495,15 @@ public class Modele extends Observable {
 					}
 				}
 				
+				
+				// on  stocke le noeud cliqué dans l'attribut dernierSommetSelectionne
+				this.dernierSommetSelectionne = sommetLePlusProcheDuClic;
+				
+				
 				if (sommetLePlusProcheDuClic != null) 
 				{
 						
-					// on  stocke le noeud cliqué dans l'attribut dernierSommetSelectionne
-					this.dernierSommetSelectionne = sommetLePlusProcheDuClic;
+					
 
 					//System.out.println(sommet.getNom());
 					//this.dessin1.paint(model.getGrapheàafficher());

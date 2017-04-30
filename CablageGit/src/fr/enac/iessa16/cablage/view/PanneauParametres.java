@@ -42,6 +42,14 @@ public class PanneauParametres extends JPanel {
 	private JComboBox<Arete> comboBoxAretesKruskal;
 	private JTextField textFieldCoutKruskal;
 	private JTextArea infoArea;
+
+	private JTextField textFieldAreteOrigine;
+
+	private JTextField textFieldAreteExtremite;
+
+	private JTextField textFieldAretePoids;
+
+	private JTextField textFieldAreteCout;
 	
 	
 	/**
@@ -67,6 +75,9 @@ public class PanneauParametres extends JPanel {
 		
 		// Création du sous-panneau sommet
 		creerPanneauSommet();
+		
+		// Création du sous-panneau arete
+		creerPanneauArete();
 		
 		// Création du sous-panneau dijkstra
 		creerPanneauDijkstra();		
@@ -128,16 +139,53 @@ public class PanneauParametres extends JPanel {
 		JLabel labelLat = new JLabel("Lat : ");
 		sommet.add(labelLat);
 		textFieldLat = new JTextField(10);
-		labelNom.setLabelFor(textFieldLat);
+		labelLat.setLabelFor(textFieldLat);
 		sommet.add(textFieldLat);
 		
 		JLabel labelLon = new JLabel("Long : ");
 		sommet.add(labelLon);
 		textFieldLon = new JTextField(10);
-		labelNom.setLabelFor(textFieldLon);
+		labelLon.setLabelFor(textFieldLon);
 		sommet.add(textFieldLon);
 		
 		this.add(sommet);
+	}
+	
+	
+	/**
+	 * Méthode permettant de créer le sous-panneau arete
+	 */
+	private void creerPanneauArete() {
+		
+		JPanel arete = new JPanel();
+		arete.setBorder(BorderFactory.createTitledBorder(ParametresFenetre.titrePanneauParametresArete));
+		arete.setLayout(new GridLayout(4,2));
+		
+		JLabel labelOrigine = new JLabel("Origine : ");
+		arete.add(labelOrigine);
+		textFieldAreteOrigine = new JTextField(10);
+		labelOrigine.setLabelFor(textFieldAreteOrigine);
+		arete.add(textFieldAreteOrigine);
+		
+		JLabel labelExtremite = new JLabel("Extremite : ");
+		arete.add(labelExtremite);
+		textFieldAreteExtremite = new JTextField(10);
+		labelExtremite.setLabelFor(textFieldAreteExtremite);
+		arete.add(textFieldAreteExtremite);
+		
+		JLabel labelPoids= new JLabel("Poids : ");
+		arete.add(labelPoids);
+		textFieldAretePoids = new JTextField(10);
+		labelPoids.setLabelFor(textFieldAretePoids);
+		arete.add(textFieldAretePoids);
+		
+		JLabel labelCout= new JLabel("Cout : ");
+		arete.add(labelCout);
+		textFieldAreteCout = new JTextField(10);
+		labelCout.setLabelFor(textFieldAreteCout);
+		arete.add(textFieldAreteCout);
+		
+		this.add(arete);
 	}
 	
 	
@@ -168,7 +216,7 @@ public class PanneauParametres extends JPanel {
 		labelDest.setLabelFor(textFieldDest);
 		dijkstra.add(comboBoxAretesDijkstra);	
 		
-		JLabel labelCout = new JLabel("Cout : ");
+		JLabel labelCout = new JLabel("Cout total : ");
 		dijkstra.add(labelCout);
 		textFieldCout= new JTextField(10);
 		labelCout.setLabelFor(textFieldCout);
@@ -198,7 +246,7 @@ public class PanneauParametres extends JPanel {
 		kruskal.add(comboBoxAretesKruskal);
 		
 		
-		JLabel labelCout = new JLabel("Cout : ");
+		JLabel labelCout = new JLabel("Cout total : ");
 		kruskal.add(labelCout);
 		textFieldCoutKruskal= new JTextField(10);
 		labelCout.setLabelFor(textFieldCoutKruskal);
@@ -248,7 +296,25 @@ public class PanneauParametres extends JPanel {
 				textFieldNom.setText(sommetSelectionne.getNom());
 				textFieldLat.setText(Double.toString(sommetSelectionne.getLatitude()));
 				textFieldLon.setText(Double.toString(sommetSelectionne.getLongitude()));
-			}			
+			} else {
+				textFieldNom.setText("");
+				textFieldLat.setText("");
+				textFieldLon.setText("");
+			}
+			
+			// Mise à jour panneau arete
+			Arete a = modele.getDerniereAreteSelectionne();
+			if (a != null) {
+				textFieldAreteOrigine.setText(a.getSommetOrigine().toString());
+				textFieldAreteExtremite.setText(a.getSommetExtremité().toString());
+				textFieldAreteCout.setText(Double.toString(a.getCout()));
+				textFieldAretePoids.setText(Double.toString(a.getPoids()));
+			} else {
+				textFieldAreteOrigine.setText("");
+				textFieldAreteExtremite.setText("");
+				textFieldAreteCout.setText("");
+				textFieldAretePoids.setText("");
+			}
 			
 			// Mise à jour panneau dijkstra
 			double cout = modele.getCoutCheminDijkstra();
