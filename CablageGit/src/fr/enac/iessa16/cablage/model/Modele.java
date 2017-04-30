@@ -65,6 +65,8 @@ public class Modele extends Observable {
 	private boolean imprimerDemande;
 	private boolean centreVueDemande;
 
+	private boolean modeAjouterSommet;
+
 	
 	
 	/**
@@ -90,6 +92,7 @@ public class Modele extends Observable {
 		this.listeAretesKruskal = new ArrayList<Arete>();
 		
 		this.listeSousGraphesConnexes = null;
+		this.modeAjouterSommet = false;
 				
 		this.imprimerDemande = false;
 		this.centreVueDemande = false;
@@ -215,7 +218,11 @@ public class Modele extends Observable {
 	
 	public void ajouterSommet() {
 		// TODO ajouter sommet
-		message("Ajouter Sommet", "à faire");	
+		//message("Ajouter Sommet", "à faire");	
+		//return true;
+		modeAjouterSommet = true;
+		
+		this.changement();
 	}
 
 	public void supprimerSommet() {
@@ -599,6 +606,16 @@ public class Modele extends Observable {
 	
 	
 	
+	public boolean isModeAjouterSommet() {
+		return modeAjouterSommet;
+	}
+
+
+	public void setModeAjouterSommet(boolean modeAjouterSommet) {
+		this.modeAjouterSommet = modeAjouterSommet;
+	}
+
+
 	/**
 	 * Méthode permettant de notifier la vue d'un changement du modèle  
 	 */
@@ -650,6 +667,19 @@ public class Modele extends Observable {
 
 	public void setCentreVueDemande(boolean centreVueDemande) {
 		this.centreVueDemande = centreVueDemande;
+	}
+
+
+	public void ajouterSommetEffectif(int x, int y) {
+		// TODO Auto-generated method stub
+		double longitude = PanneauDessinGraphe.conversionXenLongitude(x);
+		double latitude = PanneauDessinGraphe.conversionYenLatitude(y);
+        Sommet sommet = new Sommet(longitude,latitude, "toto");
+        graphe.getListeSommets().add(sommet);
+        this.modeAjouterSommet = false;
+        changement();
+		
+		
 	}
 	
 }

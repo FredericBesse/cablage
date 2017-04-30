@@ -1,5 +1,6 @@
 package fr.enac.iessa16.cablage.view;
 
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
@@ -16,6 +17,7 @@ import javax.swing.JPanel;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 
 import fr.enac.iessa16.cablage.controller.Controleur;
 import fr.enac.iessa16.cablage.model.Modele;
@@ -52,7 +54,10 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	public PanneauDessinGraphe(Modele model, Controleur controleur) {
 
 		super();
-		
+
+        //  Toolkit tk =Toolkit.getToolkit();
+        //Cursor Curseur;
+       // Curseur = tk.createCustomCursor( image1, new Point( 1, 1 ), "Pointeur" );
 		this.modele = model;
 		this.imageFond = null;
 		
@@ -66,6 +71,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		
 		// FIXME Chargement image de fond uniquement si besoin apres chargement du graphe
 		this.chargerImageFond();
+	
 	
 	}
 
@@ -637,6 +643,20 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			this.centrerVue();
 			modele.setCentreVueDemande(false);
 		}
+		if(modele.isModeAjouterSommet()==true) {
+			
+			//On modifie la forme du curseur
+		    setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR) );
+			      
+			
+			
+		}
+		else
+		{
+			 setCursor(Cursor.getDefaultCursor());
+	      
+		}
+		
 		
 		repaint();
 	}
