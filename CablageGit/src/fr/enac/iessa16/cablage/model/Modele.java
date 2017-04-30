@@ -623,6 +623,7 @@ public class Modele extends Observable {
 	public void setGraphe(GrapheTheorique graphe) {
 		
 		this.graphe = graphe;
+		this.graphe.calculExtremumDonnees();
 		
 		testConnectivite();
 		

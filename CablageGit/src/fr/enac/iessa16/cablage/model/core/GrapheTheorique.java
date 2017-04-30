@@ -67,7 +67,7 @@ public class GrapheTheorique {
 		calculExtremumDonnees();
 	}
 
-	private void calculExtremumDonnees() {
+	public void calculExtremumDonnees() {
 		
 		longitudeMin = Double.MAX_VALUE;
 		longitudeMax = Double.MIN_VALUE;
