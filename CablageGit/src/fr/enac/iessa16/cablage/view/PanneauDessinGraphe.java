@@ -72,7 +72,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		this.addMouseWheelListener(controleur.getControleurSouris());
 		
 		// Bordure 	
-		this.setBorder(BorderFactory.createTitledBorder(Parametres.titrePanneauVue2D));
+		//this.setBorder(BorderFactory.createTitledBorder(Parametres.titrePanneauVue2D));
 		
 		// FIXME Chargement image de fond uniquement si besoin apres chargement du graphe
 		//this.chargerImageFond();
@@ -816,7 +816,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	 * @param x l'abscisse locale en pixel
 	 * @return la longitude réelle
 	 */
-	public static double conversionXenLongitude(double x) {
+	public static double conversionXenLongitude(int x) {
 		
 		return (x - (Parametres.panneauDessinWidth / 2 + Parametres.offsetX))
 				* Parametres.ECHELLE_BASE / Parametres.echelle;
@@ -829,7 +829,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	 * @param y l'ordonnée locale en pixel
 	 * @return la latitude réelle
 	 */
-	public static double conversionYenLatitude(double y) {
+	public static double conversionYenLatitude(int y) {
 			
 		return (y - (Parametres.panneauDessinHeight / 2 + Parametres.offsetY))
 				* -Parametres.ECHELLE_BASE / Parametres.echelle;
@@ -852,16 +852,19 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		}
 		else {
 			 setCursor(Cursor.getDefaultCursor());
+			 
+			 
+			 if(modele.isModeAjouterArete()) {
+					//On modifie la forme du curseur
+				    setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR) );		
+				}
+				else {
+					 setCursor(Cursor.getDefaultCursor());
+				}
 	      
 		}
 		
-		if(modele.isModeAjouterArete()) {
-			//On modifie la forme du curseur
-		    setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR) );		
-		}
-		else {
-			 setCursor(Cursor.getDefaultCursor());
-		}
+		
 		
 		
 		if (modele.isImprimerDemande()) {

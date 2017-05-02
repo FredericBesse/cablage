@@ -62,7 +62,7 @@ public class ControleurMenuEdition implements ActionListener {
 		
 		if (actionCommand.equals(Parametres.preferences)) {
 
-			new FenetrePreferences();
+			new FenetrePreferences(modele);
 
 		}
 	}

@@ -7,6 +7,8 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
 import fr.enac.iessa16.cablage.model.Modele;
+import fr.enac.iessa16.cablage.view.PanneauDessinGraphe;
+import fr.enac.iessa16.cablage.view.dialog.FenetreAjoutSommet;
 
 
 /**
@@ -42,7 +44,16 @@ public class ControleurSouris implements MouseListener, MouseMotionListener, Mou
 		if (e.getButton() == MouseEvent.BUTTON1) {
 			
 			if(modele.isModeAjouterSommet() == true) {
-				modele.ajouterSommetEffectif(e.getX(),e.getY());		
+				double longitude;
+				double latitude;
+				longitude = PanneauDessinGraphe.conversionXenLongitude(e.getX());
+				latitude = PanneauDessinGraphe.conversionYenLatitude(e.getY());
+				FenetreAjoutSommet fenAjoutSommet = new FenetreAjoutSommet(this.modele,longitude,latitude);
+				
+				
+				
+				
+				//modele.ajouterSommetEffectif(e.getX(),e.getY());		
 			}
 			else if (modele.isModeAjouterArete()) {
 				

@@ -31,12 +31,12 @@ public class ControleurMenuAffichage implements ActionListener {
 		}
 		if (s.equals(Parametres.zoomPlus)) {
 
-			model.zoomer();
+			model.zoom(Parametres.panneauDessinWidth/2 , Parametres.panneauDessinHeight/2 , -5);
 		}
 
 		if (s.equals(Parametres.zoomMoins)) {
 
-			model.dezoomer();
+			model.zoom(Parametres.panneauDessinWidth/2 , Parametres.panneauDessinHeight/2 ,5);
 		}
 
 		if (s.equals(Parametres.affichageSommet)) {

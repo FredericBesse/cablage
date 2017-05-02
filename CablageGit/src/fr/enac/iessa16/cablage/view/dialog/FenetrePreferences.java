@@ -3,6 +3,7 @@ package fr.enac.iessa16.cablage.view.dialog;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,100 +19,205 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.view.Parametres;
 
 public class FenetrePreferences extends JDialog implements ActionListener {
 
-	 private boolean sendData;
-	  private JLabel nomLabel, sexeLabel, cheveuxLabel, ageLabel, tailleLabel,taille2Label, icon;
-	  private JRadioButton tranche1, tranche2, tranche3, tranche4;
-	  private JComboBox sexe, cheveux;
-	  JButton nom;
-	private JTextField taille;
-	
-	
-	public FenetrePreferences() {
+	private Modele modele;
+
+	private JButton boutonCouleurSommet;
+	private JButton boutonCouleurSommetSelectionne;
+
+	private JButton boutonCouleurDernierSommetSelectionne;
+
+	private JButton boutoncouleurAreteSelectionne;
+
+	private JButton boutoncouleurArete;
+
+	private JButton boutoncouleurDerniereAreteSelectionne;
+
+	private JButton boutoncouleurAreteDijkstra;
+
+	private JButton boutoncouleurAreteKruskal;
+
+	public FenetrePreferences(Modele monModele) {
+
+		super();
+		this.modele = monModele;
+
+		this.setTitle("Preferences");
+
+		// Color initialColor = Color.red;
+		// Color newColor = JColorChooser.showDialog(null, "Dialog Title",
+		// initialColor);
+		// System.out.println(initialColor+" "+newColor);
+
+		// this.setSize(550, 270);
+		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+		// this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		this.initComponent();
+		this.pack();
+		this.setVisible(true);
+
+	}
+
+	private void initComponent() {
+
+		// Les couleurs nom
+		JPanel panCouleurs = new JPanel();
+		panCouleurs.setBorder(BorderFactory.createTitledBorder("Choix des couleurs"));
+		panCouleurs.setLayout(new GridLayout(7, 2));
+
+		// sommet
+		JLabel couleurSommet = new JLabel("Sommet");
+		this.boutonCouleurSommet = new JButton();
+		boutonCouleurSommet.setBackground(Parametres.couleurSommet);
+		// boutonCouleurSommet.setActionCommand("couleurDuSommet");
+		boutonCouleurSommet.setToolTipText("Couleur du sommet");
+		boutonCouleurSommet.addActionListener(this);
+		panCouleurs.add(couleurSommet);
+		panCouleurs.add(boutonCouleurSommet);
+
+		// sommet selectionné
+		JLabel couleurSommetSelectionne = new JLabel("Sommet sélectionné");
+		this.boutonCouleurSommetSelectionne = new JButton();
+		boutonCouleurSommetSelectionne.setBackground(Parametres.couleurSommetSelectionne);
+		// boutonCouleurSommetSelectionne.setActionCommand("couleurSelectionne");
+		boutonCouleurSommetSelectionne.setToolTipText("Couleur du sommet sélectionné");
+		boutonCouleurSommetSelectionne.addActionListener(this);
+		panCouleurs.add(couleurSommetSelectionne);
+		panCouleurs.add(boutonCouleurSommetSelectionne);
+
+		// Dernier Sommet selectionné
+		JLabel couleurDernierSommetSelectionne = new JLabel("Dernier sommet sélectionné");
+		this.boutonCouleurDernierSommetSelectionne = new JButton();
+		boutonCouleurDernierSommetSelectionne.setBackground(Parametres.couleurDernierSommetSelectionne);
+		// boutonCouleurDernierSommetSelectionne.setActionCommand("couleurDernierSelectionne");
+		boutonCouleurDernierSommetSelectionne.setToolTipText("Couleur du sommet sélectionné");
+		boutonCouleurDernierSommetSelectionne.addActionListener(this);
+		panCouleurs.add(couleurDernierSommetSelectionne);
+		panCouleurs.add(boutonCouleurDernierSommetSelectionne);
 		
-		 super();
-		 
-		 this.setTitle("Preferences");
 		
-		//Color initialColor = Color.red;
-	    //Color newColor = JColorChooser.showDialog(null, "Dialog Title", initialColor);
-	    //System.out.println(initialColor+" "+newColor);
-	
-	
-	 
-
-	  
-	   
-	    this.setSize(550, 270);
-	    this.setLocationRelativeTo(null);
-	    this.setResizable(false);
-	  //  this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-	    this.initComponent();
-	    this.setVisible(true);      
-
-	  }
-
-	 
-	  private void initComponent(){
-	   
-
-
-	    // Les couleurs nom
-	    JPanel panNom = new JPanel();
-	    //panNom.setBackground(Color.white);
-	   // panNom.setPreferredSize(new Dimension(220, 60));
-	    nom = new JButton();
-	    nom.setBackground(Parametres.couleurSommet);
-	    nom.addActionListener(this);
-	    //nom.setPreferredSize(new Dimension(100, 25));
-	    panNom.setBorder(BorderFactory.createTitledBorder("Choix des couleurs"));
-	    nomLabel = new JLabel("Sommet");
-	    panNom.add(nomLabel);
-	    panNom.add(nom);
-
-	   
-	   
-	    
-	    JPanel control = new JPanel();
-	    JButton okBouton = new JButton("OK");
-	    okBouton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+		//Couleur Arete 
+		
+		JLabel couleurArete = new JLabel("Arete");
+		this.boutoncouleurArete = new JButton();
+		boutoncouleurArete.setBackground(Parametres.couleurArete);
+		// boutonCouleurDernierSommetSelectionne.setActionCommand("couleurDernierSelectionne");
+		boutoncouleurArete.setToolTipText("Couleur de l'arete");
+		boutoncouleurArete.addActionListener(this);
+		panCouleurs.add(couleurArete);
+		panCouleurs.add(boutoncouleurArete);
+		
+		
+		
+		//Arete Selectionné
+		JLabel couleurAreteSelectionne = new JLabel("Arete sélectionnée");
+		this.boutoncouleurAreteSelectionne = new JButton();
+		boutoncouleurAreteSelectionne.setBackground(Parametres.couleurAreteSelectionne);
+		// boutonCouleurDernierSommetSelectionne.setActionCommand("couleurDernierSelectionne");
+		boutoncouleurAreteSelectionne.setToolTipText("Couleur de l'arete sélectionné");
+		boutoncouleurAreteSelectionne.addActionListener(this);
+		panCouleurs.add(couleurAreteSelectionne);
+		panCouleurs.add(boutoncouleurAreteSelectionne);
+		
+		
+		
+		
+		//Arete Djikstra
+		
+		JLabel couleurAreteDijkstra = new JLabel("Arete Dijkstra");
+		this.boutoncouleurAreteDijkstra = new JButton();
+		boutoncouleurAreteDijkstra.setBackground(Parametres.couleurAreteDijkstra);
+		// boutonCouleurDernierSommetSelectionne.setActionCommand("couleurDernierSelectionne");
+		boutoncouleurAreteDijkstra.setToolTipText("Couleur de l'arete sélectionné");
+		boutoncouleurAreteDijkstra.addActionListener(this);
+		panCouleurs.add(couleurAreteDijkstra);
+		panCouleurs.add(boutoncouleurAreteDijkstra);
+		
+		
+		//Arete Kruskal
+		
+		JLabel couleurAreteKruskal = new JLabel("Arete Kruskal");
+		this.boutoncouleurAreteKruskal = new JButton();
+		boutoncouleurAreteKruskal.setBackground(Parametres.couleurAreteKruskal);
+		// boutonCouleurDernierSommetSelectionne.setActionCommand("couleurDernierSelectionne");
+		boutoncouleurAreteKruskal.setToolTipText("Couleur de l'arete Kruskal");
+		boutoncouleurAreteKruskal.addActionListener(this);
+		panCouleurs.add(couleurAreteKruskal);
+		panCouleurs.add(boutoncouleurAreteKruskal);
 				
-			}
-		});
-	    JButton cancelBouton = new JButton("Annuler");
-	    cancelBouton.addActionListener(new ActionListener(){
-	    public void actionPerformed(ActionEvent arg0) {
-	    setVisible(false);
-	    }
-	    });
-	    control.add(okBouton);
-	    control.add(cancelBouton);
+		
+		
+		
+		
+		
+		
+		
 
+		JPanel panOkAnnuler = new JPanel();
 
-	    //this.getContentPane().add(panIcon, BorderLayout.WEST);
-	    this.getContentPane().add(panNom, BorderLayout.CENTER);
-	    this.getContentPane().add(control, BorderLayout.SOUTH);
-	  }
+		JButton boutonOk = new JButton("OK");
+		// FIXME boutonOk.setFocusPainted(true);
+		boutonOk.addActionListener(this);
+		boutonOk.setActionCommand("OK");
 
+		JButton boutonAnnuler = new JButton("Annuler");
+		boutonAnnuler.addActionListener(this);
+		boutonAnnuler.setActionCommand("Annuler");
+
+		panOkAnnuler.add(boutonOk);
+		panOkAnnuler.add(boutonAnnuler);
+		this.getContentPane().add(panCouleurs, BorderLayout.CENTER);
+		this.getContentPane().add(panOkAnnuler, BorderLayout.SOUTH);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
-		JButton source = (JButton) e.getSource();
-		Color initialColor = source.getBackground();
-	    Color newColor = JColorChooser.showDialog(null, "Couleur", initialColor);
-	    if (newColor != null)
-	    	source.setBackground(newColor);
-	    //System.out.println(initialColor+" "+newColor);
-	
-		
-	}  
+
+		String s = e.getActionCommand();
+		if (s.equals("OK")) {
+
+			Parametres.couleurSommet = boutonCouleurSommet.getBackground();
+			Parametres.couleurSommetSelectionne = boutonCouleurSommetSelectionne.getBackground();
+			Parametres.couleurDernierSommetSelectionne = boutonCouleurDernierSommetSelectionne.getBackground();
+			Parametres.couleurArete = boutoncouleurArete.getBackground();
+			Parametres.couleurAreteSelectionne = boutoncouleurAreteSelectionne.getBackground();
+			Parametres.couleurAreteDijkstra = boutoncouleurAreteDijkstra.getBackground();
+			Parametres.couleurAreteKruskal = boutoncouleurAreteKruskal.getBackground();
+			
+
+			this.dispose();
+			this.modele.changement();
+
+		} else if (s.equals("Annuler")) {
+
+			this.dispose();
+
+		} else {
+
+			/*
+			 * if(s.equals("couleurDuSommet")) { Color initialColor =
+			 * boutonCouleurSommet.getBackground(); Color newColor =
+			 * JColorChooser.showDialog(null, "Couleur", initialColor); if
+			 * (newColor != null) { boutonCouleurSommet.setBackground(newColor);
+			 * } }
+			 */
+				//Donne l'objet qui a declenché l'evenement 
+			JButton boutonSource = (JButton) e.getSource();
+
+			Color initialColor = boutonSource.getBackground();
+			Color newColor = JColorChooser.showDialog(null, "Couleur", initialColor);
+			if (newColor != null) {
+				boutonSource.setBackground(newColor);
+			}
+			
+
+		}
+
+	}
 }

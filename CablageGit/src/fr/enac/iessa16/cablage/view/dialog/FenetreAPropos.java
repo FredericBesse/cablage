@@ -34,11 +34,12 @@ public class FenetreAPropos extends JDialog {
 		
 	  
 	   
-	    this.setSize(550, 270);
+	   // this.setSize(550, 270);
 	    this.setLocationRelativeTo(null);
 	    this.setResizable(false);
 	  //  this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 	    this.initComponent();
+	    this.pack();
 	    this.setVisible(true);      
 
 	  }

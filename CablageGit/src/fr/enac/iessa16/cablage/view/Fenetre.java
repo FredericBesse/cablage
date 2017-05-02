@@ -1,6 +1,7 @@
 package fr.enac.iessa16.cablage.view;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
@@ -78,16 +79,17 @@ public class Fenetre extends JFrame implements Observer {
 		System.setProperty("apple.laf.useScreenMenuBar", "true"); // compatibilité MAC
 		creerMenu();
 		
+		// Recuperation du panneau contenaire
+		Container monContenair = this.getContentPane();
+		monContenair.setLayout(new BorderLayout());
+		
 		// Création de la toolbar
 		this.add(new BarreOutils(controleur), BorderLayout.NORTH);
 		
-		// Création du panneau contenaire
-		JPanel monContenair = new JPanel();
-		monContenair.setLayout(new BorderLayout());
-		
-		// Création du panneau parametre	
+		//Création du panneau parametre	
 		this.panneauParametres = new PanneauParametres(this.modele);
-		//monContenair.add(panneauParametres, BorderLayout.WEST);
+		
+		// on le met dans un scroll panel pour les petits ecrans
 		JScrollPane scroll = new JScrollPane();
 		scroll.setBorder(BorderFactory.createEmptyBorder());
 		scroll.setViewportView(panneauParametres);
@@ -95,11 +97,18 @@ public class Fenetre extends JFrame implements Observer {
 		
 		
 		// Création du panneau dessin
+		JPanel panneauVue2D = new JPanel();
+		panneauVue2D.setLayout(new BorderLayout());
+		//panneauVue2D.setBorder(border);
+		panneauVue2D.setBorder(BorderFactory.createTitledBorder(Parametres.titrePanneauVue2D));
 		this.panneauDessin = new PanneauDessinGraphe(this.modele, this.controleur);
-		monContenair.add(panneauDessin, BorderLayout.CENTER);
+		panneauVue2D.add(panneauDessin, BorderLayout.CENTER);
+		monContenair.add(panneauVue2D, BorderLayout.CENTER);
 				
 		// Ajout du contenu a la fenetre
-		this.getContentPane().add(monContenair);
+		//this.getContentPane().add(monContenair);
+		
+	
 	}
 
 	

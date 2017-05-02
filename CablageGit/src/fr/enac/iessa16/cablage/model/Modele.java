@@ -129,8 +129,9 @@ public class Modele extends Observable {
 	 */
 	public void nouveauGrapheVide() {
 		
-		// TODO nouveauGrapheVide
-		message("Graphe Vide", "à faire");
+		GrapheTheorique graphevide = new GrapheTheorique();
+		this.setGraphe(graphevide);
+		
 	}
 	
 	/**
@@ -268,9 +269,10 @@ public class Modele extends Observable {
 		
 		this.changement();
 	}
-	
+	// FIXME : à supprimer dans ajoutArete
 	public Sommet ajouterSommetEffectif(int x, int y) {
-
+		
+		String nom;
 		double longitude = PanneauDessinGraphe.conversionXenLongitude(x);
 		double latitude = PanneauDessinGraphe.conversionYenLatitude(y);
 		
@@ -286,6 +288,28 @@ public class Modele extends Observable {
         
         return sommet;
 	}
+	
+	
+	
+public Sommet ajouterSommetEffectif(double x, double y,String nom) {
+		
+	//	String nom;
+	//	double longitude = PanneauDessinGraphe.conversionXenLongitude(x);
+	//	double latitude = PanneauDessinGraphe.conversionYenLatitude(y);
+		
+		//TODO demander nom a l'utilisateur
+		//message("Creation sommet", "nom=toto...");
+		
+		
+        Sommet sommet = new Sommet(x,y,nom);
+        graphe.getListeSommets().add(sommet);
+        graphe.addVertex(sommet);
+        this.modeAjouterSommet = false;
+        changement();	
+        
+        return sommet;
+	}
+	
 
 	public void supprimerSommet() {
 		// TODO supprimer sommet
@@ -964,16 +988,8 @@ public class Modele extends Observable {
 	}
 
 
-	public void zoomer() {
-		// TODO Auto-generated method stub
-		
-	}
 
 
-	public void dezoomer() {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 	public boolean isImprimerDemande() {
