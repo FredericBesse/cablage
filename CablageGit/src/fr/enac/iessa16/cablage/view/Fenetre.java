@@ -7,11 +7,14 @@ import java.awt.Rectangle;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.UIManager;
+import javax.swing.border.Border;
 
 import fr.enac.iessa16.cablage.controller.Controleur;
 import fr.enac.iessa16.cablage.model.Modele;
@@ -21,6 +24,7 @@ import fr.enac.iessa16.cablage.view.menu.MenuAide;
 import fr.enac.iessa16.cablage.view.menu.MenuCalcul;
 import fr.enac.iessa16.cablage.view.menu.MenuEdition;
 import fr.enac.iessa16.cablage.view.menu.MenuFichier;
+
 
 /**
  * Classe Fenetre qui correspond à la vue.
@@ -59,8 +63,8 @@ public class Fenetre extends JFrame implements Observer {
 		this.setVisible(true);
 		
 		// Récupération de la taille du panneau dessin (pour les fonctions de conversion)
-		ParametresFenetre.panneauDessinWidth = this.panneauDessin.getWidth();
-		ParametresFenetre.panneauDessinHeight = this.panneauDessin.getHeight();
+		Parametres.panneauDessinWidth = this.panneauDessin.getWidth();
+		Parametres.panneauDessinHeight = this.panneauDessin.getHeight();
 	}
 	
 	
@@ -71,6 +75,7 @@ public class Fenetre extends JFrame implements Observer {
 	private void creerContenuFenetre() {
 		
 		// Création du menu
+		System.setProperty("apple.laf.useScreenMenuBar", "true"); // compatibilité MAC
 		creerMenu();
 		
 		// Création de la toolbar
@@ -80,9 +85,14 @@ public class Fenetre extends JFrame implements Observer {
 		JPanel monContenair = new JPanel();
 		monContenair.setLayout(new BorderLayout());
 		
-		// Création du panneau parametre		
+		// Création du panneau parametre	
 		this.panneauParametres = new PanneauParametres(this.modele);
-		monContenair.add(panneauParametres, BorderLayout.WEST);	
+		//monContenair.add(panneauParametres, BorderLayout.WEST);
+		JScrollPane scroll = new JScrollPane();
+		scroll.setBorder(BorderFactory.createEmptyBorder());
+		scroll.setViewportView(panneauParametres);
+		monContenair.add(scroll, BorderLayout.WEST);
+		
 		
 		// Création du panneau dessin
 		this.panneauDessin = new PanneauDessinGraphe(this.modele, this.controleur);
@@ -130,7 +140,7 @@ public class Fenetre extends JFrame implements Observer {
 		this.setSize(new Dimension(maximumWindowBounds.width, maximumWindowBounds.height));
 	
 		// Titre
-		this.setTitle(ParametresFenetre.titreFenetre);
+		this.setTitle(Parametres.titreFenetre);
 		
 		// Fermeture
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

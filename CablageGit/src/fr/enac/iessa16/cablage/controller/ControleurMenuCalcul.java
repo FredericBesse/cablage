@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.enac.iessa16.cablage.model.Modele;
-import fr.enac.iessa16.cablage.view.ParametresFenetre;
+import fr.enac.iessa16.cablage.view.Parametres;
 
 /**
  * Classe définissant le controleur du menu calcul
@@ -37,13 +37,13 @@ public class ControleurMenuCalcul implements ActionListener {
 		String s = e.getActionCommand();
 		
 		// Puis on compare cette string aux differentes options possibles
-		if(s.equals(ParametresFenetre.dijkstra)) {
+		if(s.equals(Parametres.dijkstra)) {
 			
 			// On appelle la methode calculerDjikstra implementée dans la classe Modele
 			modele.calculerDijkstra();
 		}
 		
-		if(s.equals(ParametresFenetre.kruskal)) {
+		if(s.equals(Parametres.kruskal)) {
 			
 			// On appelle la methode calculerKruskal implementée dans la classe Modele
 			modele.calculerKruskal();

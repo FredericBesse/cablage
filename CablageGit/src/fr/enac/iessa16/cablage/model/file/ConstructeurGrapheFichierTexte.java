@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -66,6 +68,12 @@ public class ConstructeurGrapheFichierTexte {
 
 		// Création du JFileChooser
 		JFileChooser fc = new JFileChooser("file/");
+		
+		// On définit les extensions que l'on accepte
+		FileFilter texteFilter = new FileNameExtensionFilter("Fichiers textes","txt");
+		fc.addChoosableFileFilter(texteFilter);
+		fc.setFileFilter(texteFilter);
+		
 		returnVal = fc.showOpenDialog(null);
 		fc.setVisible(true);
 		

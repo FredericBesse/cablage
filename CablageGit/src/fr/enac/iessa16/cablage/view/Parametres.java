@@ -3,11 +3,15 @@ package fr.enac.iessa16.cablage.view;
 import java.awt.Color;
 import java.awt.Component;
 
-public class ParametresFenetre {
+public class Parametres {
 	
+	
+	// Version
+	public static final String version = "1.0";
+		
 	
 	// Titre de la fenetre
-	public static final String titreFenetre = "Cablage à cout minimum";
+	public static final String titreFenetre = "Cablage à cout minimum - Version "+version;
 		
 	
 	// Items du menu Fichier 
@@ -43,10 +47,17 @@ public class ParametresFenetre {
 	
 	// Item du menu Affichage
 	public static final String menuAffichage = "Affichage";
+	
 	public static final String centrage = "Centrer vue";
+	
 	public static final String zoomPlus = "Zoomer";
 	public static final String zoomMoins = "Dezoomer";
 	
+	public static final String affichageSommet = "Sommet";
+	public static final String affichageNomSommet = "Nom sommet";
+	public static final String affichageArete = "Arete";
+	public static final String affichageDijkstra = "Dijkstra";
+	public static final String affichageKruskal = "Kruskal";
 	
 	
 	
@@ -54,12 +65,12 @@ public class ParametresFenetre {
 	
 	// Items du menu Calcul
 	public static final String menuCalcul = "Calcul";
-	public static final String dijkstra = "Calculer Djikstra";
+	public static final String dijkstra = "Calculer Dijkstra";
 	public static final String kruskal = "Calculer Kruskal";
 	
 	
 	// Items du menu ?
-	public static final String menuAide = "?";
+	public static final String menuAide = "Aide";
 	public static final String apropos = "\u00C0 propos...";
 	public static final String javadoc = "Javadoc...";
 
@@ -67,6 +78,7 @@ public class ParametresFenetre {
 	// Titres des panneaux
 	public static final String titrePanneauVue2D = "Vue 2D";
 	public static final String titrePanneauParametres = "Param\u00e8tres";
+	public static final String titrePanneauParametresAffichage = "Affichage";
 	public static final String titrePanneauParametresGraphe = "Graphe";
 	public static final String titrePanneauParametresSommet = "Sommet";
 	public static final String titrePanneauParametresArete = "Arete";
@@ -100,5 +112,14 @@ public class ParametresFenetre {
 	// Taille du panneau dessin (pour les fonctions de conversion)
 	public static int panneauDessinWidth;
 	public static int panneauDessinHeight;
+	
+	
+	// Parametres permettant de savoir si on affiche ou non les elements
+	public static boolean afficherSommet = true;
+	public static boolean afficherNomSommet = false;
+	public static boolean afficherArete = true;
+	public static boolean afficherDijkstra = true;
+	public static boolean afficherKruskal = true;
+	
 	
 }

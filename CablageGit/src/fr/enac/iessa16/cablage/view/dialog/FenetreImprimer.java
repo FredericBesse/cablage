@@ -1,16 +1,18 @@
-package fr.enac.iessa16.cablage.view;
+package fr.enac.iessa16.cablage.view.dialog;
 
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+
+import fr.enac.iessa16.cablage.view.PanneauDessinGraphe;
 
 /**
  * Classe impression
  *
  * @author Racha HEDIDI et Frédéric BESSE
  */
-public class Imprimer {
+public class FenetreImprimer {
 
-	public Imprimer(PanneauDessinGraphe dessin) {
+	public FenetreImprimer(PanneauDessinGraphe dessin) {
 
 		// Récupère un PrinterJob
 		PrinterJob job = PrinterJob.getPrinterJob();

@@ -19,10 +19,10 @@ public class Controleur {
 		
 	// Les controleurs des menus (et de la toolbar)
 	private ControleurMenuFichier controleurMenuFichier;
-	private ControleurMenuCalcul controleurMenuCalcul;
-	private ControleurMenuAide controleurMenuAide;
 	private ControleurMenuEdition controleurMenuEdition;
 	private ControleurMenuAffichage controleurMenuAffichage;
+	private ControleurMenuCalcul controleurMenuCalcul;
+	private ControleurMenuAide controleurMenuAide;
 	
 	// Le controleur de la souris
 	private ControleurSouris controleurSouris;
@@ -39,10 +39,11 @@ public class Controleur {
 		
 		// Création des sous-controleurs
 		this.controleurMenuFichier = new ControleurMenuFichier(monModel);
+		this.controleurMenuEdition = new ControleurMenuEdition(monModel);	
+		this.controleurMenuAffichage = new ControleurMenuAffichage(monModel);
 		this.controleurMenuCalcul = new ControleurMenuCalcul(monModel);
 		this.controleurMenuAide = new ControleurMenuAide(monModel);
-		this.controleurMenuEdition = new ControleurMenuEdition(monModel);		
-		this.controleurMenuAffichage = new ControleurMenuAffichage(monModel);
+			
 		this.controleurSouris = new ControleurSouris(monModel);
 
 	}
@@ -54,6 +55,14 @@ public class Controleur {
 	public ControleurMenuFichier getControleurMenuFichier() {
 		return controleurMenuFichier;
 	}
+	
+	public ControleurMenuEdition getControleurMenuEdition() {
+		return controleurMenuEdition;
+	}
+	
+	public  ControleurMenuAffichage getControleurMenuAffichage() {
+		return controleurMenuAffichage;
+	}	
 
 	public ControleurMenuCalcul getControleurMenuCalcul() {
 		return controleurMenuCalcul;
@@ -62,18 +71,8 @@ public class Controleur {
 	public ControleurMenuAide getControleMenuAide() {
 		return controleurMenuAide;
 	}
-
-	public ControleurMenuEdition getControleurMenuEdition() {
-		return controleurMenuEdition;
-	}
 	
 	public ControleurSouris getControleurSouris() {
 		return controleurSouris;
 	}
-
-
-	public  ControleurMenuAffichage getControleurMenuAffichage() {
-		return controleurMenuAffichage;
-	}	
-	
 }

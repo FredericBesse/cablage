@@ -4,7 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.enac.iessa16.cablage.model.Modele;
-import fr.enac.iessa16.cablage.view.ParametresFenetre;
+import fr.enac.iessa16.cablage.view.Parametres;
+import fr.enac.iessa16.cablage.view.dialog.FenetrePreferences;
 
 /**
  * Classe définissant le controleur du menu Edition
@@ -35,33 +36,33 @@ public class ControleurMenuEdition implements ActionListener {
 
 		String actionCommand = e.getActionCommand();
 
-		if (actionCommand.equals(ParametresFenetre.ajouterSommet)) {
+		if (actionCommand.equals(Parametres.ajouterSommet)) {
 			
 			modele.ajouterSommet();
 
 		}
 
-		if (actionCommand.equals(ParametresFenetre.supprimerSommet)) {
+		if (actionCommand.equals(Parametres.supprimerSommet)) {
 
 			modele.supprimerSommet();
 
 		}
 
-		if (actionCommand.equals(ParametresFenetre.ajouterArete)) {
+		if (actionCommand.equals(Parametres.ajouterArete)) {
 
 			modele.ajouterArete();
 
 		}
 
-		if (actionCommand.equals(ParametresFenetre.supprimerArete)) {
+		if (actionCommand.equals(Parametres.supprimerArete)) {
 
 			modele.supprimerArete();
 
 		}
 		
-		if (actionCommand.equals(ParametresFenetre.preferences)) {
+		if (actionCommand.equals(Parametres.preferences)) {
 
-			modele.preferences();
+			new FenetrePreferences();
 
 		}
 	}

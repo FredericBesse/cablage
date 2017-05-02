@@ -9,7 +9,7 @@ import javax.swing.KeyStroke;
 import com.sun.glass.events.KeyEvent;
 
 import fr.enac.iessa16.cablage.controller.Controleur;
-import fr.enac.iessa16.cablage.view.ParametresFenetre;
+import fr.enac.iessa16.cablage.view.Parametres;
 
 /**
  * Classe MenuAide
@@ -27,16 +27,16 @@ public class MenuAide extends JMenu {
 	 */
 	public MenuAide(Controleur controleur) {
 		
-		super(ParametresFenetre.menuAide);
+		super(Parametres.menuAide);
 		
-		JMenuItem javadoc = new JMenuItem(ParametresFenetre.javadoc);
-		javadoc.setActionCommand(ParametresFenetre.javadoc);
+		JMenuItem javadoc = new JMenuItem(Parametres.javadoc);
+		javadoc.setActionCommand(Parametres.javadoc);
 		javadoc.addActionListener(controleur.getControleMenuAide());
 		this.add(javadoc);
 		
 	
-		JMenuItem aPropos = new JMenuItem(ParametresFenetre.apropos);
-		aPropos.setActionCommand(ParametresFenetre.apropos);
+		JMenuItem aPropos = new JMenuItem(Parametres.apropos);
+		aPropos.setActionCommand(Parametres.apropos);
 		aPropos.addActionListener(controleur.getControleMenuAide());
 		this.add(aPropos);	
 	}

@@ -98,6 +98,8 @@ public class Arete extends DefaultWeightedEdge {
 	public boolean equals(Object obj) {
 		
 		Arete a = (Arete) obj;
+		if(obj==null)
+			return false;
 		
 		return (a.sommetExtremite.equals(this.sommetExtremite) && a.sommetOrigine.equals(this.sommetOrigine))
 				|| (a.sommetExtremite.equals(this.sommetOrigine) && a.sommetOrigine.equals(this.sommetExtremite));

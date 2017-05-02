@@ -25,7 +25,7 @@ import fr.enac.iessa16.cablage.model.core.Sommet;
 import fr.enac.iessa16.cablage.model.file.ConstructeurGrapheFichierTexte;
 import fr.enac.iessa16.cablage.model.file.ConstructeurGrapheFichierXML;
 import fr.enac.iessa16.cablage.view.PanneauDessinGraphe;
-import fr.enac.iessa16.cablage.view.ParametresFenetre;
+import fr.enac.iessa16.cablage.view.Parametres;
 
 /**
  * Classe Modele contenant les données utiles à afficher
@@ -79,6 +79,7 @@ public class Modele extends Observable {
 	private boolean centreVueDemande;
 
 	private boolean modeAjouterSommet;
+	private boolean modeAjouterArete;
 
 	
 	
@@ -109,6 +110,7 @@ public class Modele extends Observable {
 		
 		this.listeSousGraphesConnexes = null;
 		this.modeAjouterSommet = false;
+		this.modeAjouterArete = false;
 				
 		this.imprimerDemande = false;
 		this.centreVueDemande = false;
@@ -166,7 +168,11 @@ public class Modele extends Observable {
 		ConstructeurGrapheFichierTexte constructeurGrapheFichierTexte = new ConstructeurGrapheFichierTexte(this);
 		
 		// Récupération du graphe
-		setGraphe(constructeurGrapheFichierTexte.getGraphe());
+		GrapheTheorique graphe = constructeurGrapheFichierTexte.getGraphe();
+		
+		// S'il existe, on met a jour le modele
+		if (graphe != null)
+			setGraphe(graphe);
 	}
 	
 	/**
@@ -182,8 +188,11 @@ public class Modele extends Observable {
 		this.fichierXML = constructeurGrapheFichierXML.ouvrirFichierXML();
 		
 		ContenuFichierXML contenuFichierXML = constructeurGrapheFichierXML.getContenuFichierXML();
-		this.setGraphe(contenuFichierXML.getGraphe());
-		this.setCablage(contenuFichierXML.getCablage());
+		
+		if (contenuFichierXML != null) {
+			this.setGraphe(contenuFichierXML.getGraphe());
+			this.setCablage(contenuFichierXML.getCablage());
+		}
 
 	}
 	
@@ -259,24 +268,50 @@ public class Modele extends Observable {
 		
 		this.changement();
 	}
+	
+	public Sommet ajouterSommetEffectif(int x, int y) {
+
+		double longitude = PanneauDessinGraphe.conversionXenLongitude(x);
+		double latitude = PanneauDessinGraphe.conversionYenLatitude(y);
+		
+		//TODO demander nom a l'utilisateur
+		message("Creation sommet", "nom=toto...");
+		
+		
+        Sommet sommet = new Sommet(longitude,latitude, "toto");
+        graphe.getListeSommets().add(sommet);
+        graphe.addVertex(sommet);
+        this.modeAjouterSommet = false;
+        changement();	
+        
+        return sommet;
+	}
 
 	public void supprimerSommet() {
 		// TODO supprimer sommet
 		//message("Supprimer Sommet", "à faire");
 		
 		if (this.dernierSommetSelectionne == null) {
-			erreur("Suppression sommet impossible", "Vous devez selectionnee un sommet !");
+			erreur("Suppression sommet impossible", "Vous devez selectionner un sommet !");
 		} else {
 			Set<Arete> aretesTouchantLeSommetSet = graphe.edgesOf(dernierSommetSelectionne);
 			ArrayList<Arete> aretesTouchantLeSommet = new ArrayList<Arete>(aretesTouchantLeSommetSet); 
 			
+			String message;
+			if (aretesTouchantLeSommet.size()==0) {
+				 message="Vous avez demande la suppression du sommet :\n"
+						    + dernierSommetSelectionne.toString()
+						    + "\nVoulez-vous continuer ?";
+			} else {
+				 message="La suppression du sommet selectionné provoquera\n"
+						    + " la suppression des "+aretesTouchantLeSommet.size()+" aretes qui le touche.\n"
+						    + "Voulez-vous continuer ?";
+			}
 			
 			
 			int n = JOptionPane.showConfirmDialog(
 				    null,
-				    "La suppression du sommet selectionné provoquera\n"
-						    + " la suppression des "+aretesTouchantLeSommet.size()+" aretes qui le touche.\n"
-						    + "Voulez-vous continuer ?",
+				   message,
 				    "Suppression du sommet",
 				    JOptionPane.YES_NO_OPTION);
 			
@@ -316,18 +351,168 @@ public class Modele extends Observable {
 
 	public void ajouterArete() {
 		// TODO ajouter arete
-		message("Ajouter Arete", "à faire");
-	}
-
-	public void supprimerArete() {
-		// TODO supprimer arete
-		message("SupprimerArete", "à faire");
+		//message("Ajouter Arete", "à faire");
+		if (this.dernierSommetSelectionne == null) {
+			erreur("Ajout arete impossible", "Vous devez d'abord selectionner un sommet origine !");
+		} else {
+			this.modeAjouterArete = true;
+			this.changement();
+		}
 	}
 	
-	public void preferences() {
-		// TODO preferences
-		message("preferences", "à faire");
+	public void ajouterAreteEffectif(int xClic, int yClic) {
+		
+        
+		// Déclaration des variables locales
+		double distance;
+		double distanceMin = Double.MAX_VALUE;
+		double latitude;
+		double longitude;
+		double x;
+		double y;
+		Sommet sommetLePlusProcheDuClic = null;
+		Sommet sommet;
+		int nombreSommet;
+		ArrayList<Sommet> listeSommets;
+		
+		// si le graphe existe
+		if (this.graphe != null) {
+			
+			// on récupère la liste de sommets
+			listeSommets = graphe.getListeSommets();
+			
+			// si la liste existe (non null)
+			if (listeSommets != null) {
+				
+				// on récupère le nombre de sommets
+				nombreSommet = this.graphe.getListeSommets().size();
+								
+				// on parcourt l'ensemble des sommets du graphe 
+				for(int i=0 ; i<nombreSommet;i++) {
+					
+					// on récupère le sommet i
+					sommet = graphe.getListeSommets().get(i);
+					
+					// on recupère la longitude et latitude du sommet i.
+					longitude = sommet.getLongitude();
+					latitude  = sommet.getLatitude();
+	
+					// on les convertit en coordonnées écran (pixel)
+					x = PanneauDessinGraphe.conversionLongitudeEnX(longitude);
+					y = PanneauDessinGraphe.conversionLatitudeEnY(latitude);
+	
+					// on recupère la distance entre la position du clic et la position du sommet
+					distance = Math.sqrt(Math.pow(xClic-x,2)+Math.pow(yClic-y,2));
+					
+					//LOGGER.trace("distance = "+distance);
+					//Le sommet est consideré comme "sélectionné" si la distance entre le clique et 
+					//la position du sommet du graphe est inférieur au rayon de chaque sommet 
+					if(distance<Parametres.rayonSommetClic)	{
+						
+						if (distance<distanceMin) {
+							
+							distanceMin = distance;
+							sommetLePlusProcheDuClic = sommet;
+							
+						}
+					}
+				}
+				
+				
+				
+				
+				if (sommetLePlusProcheDuClic != null) {
+					
+					//FIXME on demande le poids de l'arete a l'utilisateur
+					message("Création arete", "poids=1");
+					double poids = 1;
+						
+					// Création de l'arete
+					Arete a = new Arete(dernierSommetSelectionne, sommetLePlusProcheDuClic, poids);
+	
+					// Ajout de l'arete au graphe
+					graphe.getListeAretes().add(a);
+					graphe.addEdge(dernierSommetSelectionne, sommetLePlusProcheDuClic, a);
+					
+					// on sort du mode ajout arete
+					modeAjouterArete = false;
+					
+					//On notifie la vue que le modèle a changé
+					this.changement();
+				} else {
+					
+					
+					int n = JOptionPane.showConfirmDialog(
+						    null,
+						   "Voulez-vous créer un nouveau sommet pour l'extremite ?",
+						    "Ajout d'une arete",
+						    JOptionPane.YES_NO_OPTION);
+					
+					if (n == JOptionPane.YES_OPTION) {
+						sommet = this.ajouterSommetEffectif(xClic, yClic);
+						
+						// si le sommet a bien été créé
+						if (sommet != null) {
+							//FIXME on demande le poids de l'arete a l'utilisateur
+							message("Création arete", "poids=1");
+							double poids = 1;
+								
+							// Création de l'arete
+							Arete a = new Arete(dernierSommetSelectionne, sommet, poids);
+			
+							// Ajout de l'arete au graphe
+							graphe.getListeAretes().add(a);
+							graphe.addEdge(dernierSommetSelectionne, sommet, a);
+							
+							// on sort du mode ajout arete
+							modeAjouterArete = false;
+							
+							//On notifie la vue que le modèle a changé
+							this.changement();
+						}
+					}
+					
+				}
+			}		
+		}
+     		
+     		//this.modeAjouterSommet = false;
+            //changeent();
 	}
+	
+	
+
+	public void supprimerArete() {
+		if (this.derniereAreteSelectionne == null) {
+			erreur("Suppression arete impossible", "Vous devez selectionner une arete !");
+		} else {
+			
+			int n = JOptionPane.showConfirmDialog(
+				    null,
+				    "Vous avez demande la suppression de l'arete :\n"
+						    + derniereAreteSelectionne.toString()
+						    + "\nVoulez-vous continuer ?",
+				    "Suppression de l'arete",
+				    JOptionPane.YES_NO_OPTION);
+			
+			if (n == JOptionPane.YES_OPTION) {
+				
+				graphe.getListeAretes().remove(derniereAreteSelectionne);
+				graphe.removeEdge(derniereAreteSelectionne);
+				derniereAreteSelectionne = null;
+				
+				this.changement();
+				
+				
+			}
+			
+		}
+	}
+	
+	//public void preferences() {
+		// TODO preferences
+	//	message("preferences", "à faire");
+	//}
 	
 
 	
@@ -394,35 +579,6 @@ public class Modele extends Observable {
 	
 	
 	
-	/* 
-	 * Fonctions appelées par le menu Aide
-	 */
-	public void javaDoc() {
-	
-		
-		if(Desktop.isDesktopSupported()) {  
-			if(Desktop.getDesktop().isSupported(java.awt.Desktop.Action.BROWSE)) {  
-				try { 
-					// FIXME copier les fichiers javadoc chez l'utilisateur pour que ca marche en local
-					Desktop.getDesktop().browse(new URI("file:///home/eleve/IESSA/bessefc/git/cablageGit/CablageGit/doc/index.html"));
-				} catch (Exception ex) {  
-					erreur("Javadoc", "Impossible de trouver la Javadoc...");
-				} 
-			} else {  
-				erreur("Javadoc", "La fonction n'est pas supportée par votre système d'exploitation...");  
-			}  
-		} else {  
-			erreur("Javadoc", "Desktop pas supporté par votre système d'exploitation...");  
-		}		
-	}
-
-
-	public void aPropos() {
-		// TODO apropos
-		message("apropos", "à faire");
-	}
-
-
 	
 	
 	
@@ -484,7 +640,7 @@ public class Modele extends Observable {
 					//LOGGER.trace("distance = "+distance);
 					//Le sommet est consideré comme "sélectionné" si la distance entre le clique et 
 					//la position du sommet du graphe est inférieur au rayon de chaque sommet 
-					if(distance<ParametresFenetre.rayonSommetClic)	{
+					if(distance<Parametres.rayonSommetClic)	{
 						
 						if (distance<distanceMin) {
 							
@@ -540,7 +696,7 @@ public class Modele extends Observable {
 	 * @param xClic
 	 * @param yClic
 	 */
-	public void touverAreteLPlusProcheDuClicSouris (int xClic, int yClic) {
+	public void touverAreteLaPlusProcheDuClicSouris (int xClic, int yClic) {
 	
 		LOGGER.debug("Recherche arete le plus proche du clic souris x="+xClic+" y="+yClic);
 		
@@ -596,7 +752,7 @@ public class Modele extends Observable {
 					//LOGGER.trace("distance = "+distance);
 					//Le sommet est consideré comme "sélectionné" si la distance entre le clique et 
 					//la position du sommet du graphe est inférieur au rayon de chaque sommet 
-					if(distance<ParametresFenetre.rayonSommetClic)	{
+					if(distance<Parametres.rayonSommetClic)	{
 						
 						if (distance<distanceMin) {
 							
@@ -625,8 +781,8 @@ public class Modele extends Observable {
 	 */
 	public void drag(int dx, int dy) {
 
-		ParametresFenetre.offsetX += dx;
-		ParametresFenetre.offsetY += dy;
+		Parametres.offsetX += dx;
+		Parametres.offsetY += dy;
 		
 		changement();
 	}
@@ -636,21 +792,21 @@ public class Modele extends Observable {
 
 			
 		// on calcule la nouvelle échelle pour la vue
-		double newEchelle = ParametresFenetre.echelle * 
+		double newEchelle = Parametres.echelle * 
 				 Math.pow(1.01, -5 * rotation);
 		
 		// on calcule les nouveaux offset en fonction de la position de la souris
-		double newOffsetX = ParametresFenetre.offsetX
-				+ PanneauDessinGraphe.conversionXenLongitude(xs) / ParametresFenetre.ECHELLE_BASE
-				* (ParametresFenetre.echelle - newEchelle);
-		double newOffsetY = ParametresFenetre.offsetY
-				- PanneauDessinGraphe.conversionYenLatitude(ys) / ParametresFenetre.ECHELLE_BASE
-				* (ParametresFenetre.echelle - newEchelle);
+		double newOffsetX = Parametres.offsetX
+				+ PanneauDessinGraphe.conversionXenLongitude(xs) / Parametres.ECHELLE_BASE
+				* (Parametres.echelle - newEchelle);
+		double newOffsetY = Parametres.offsetY
+				- PanneauDessinGraphe.conversionYenLatitude(ys) / Parametres.ECHELLE_BASE
+				* (Parametres.echelle - newEchelle);
 		
 		// On met à jour les paramètres de la fenetre
-		ParametresFenetre.echelle = newEchelle;
-		ParametresFenetre.offsetX = newOffsetX;
-		ParametresFenetre.offsetY = newOffsetY;
+		Parametres.echelle = newEchelle;
+		Parametres.offsetX = newOffsetX;
+		Parametres.offsetY = newOffsetY;
 				
 		// On notifie la vue
 		this.changement();
@@ -851,16 +1007,16 @@ public class Modele extends Observable {
 	}
 
 
-	public void ajouterSommetEffectif(int x, int y) {
-		// TODO Auto-generated method stub
-		double longitude = PanneauDessinGraphe.conversionXenLongitude(x);
-		double latitude = PanneauDessinGraphe.conversionYenLatitude(y);
-        Sommet sommet = new Sommet(longitude,latitude, "toto");
-        graphe.getListeSommets().add(sommet);
-        this.modeAjouterSommet = false;
-        changement();
-		
-		
+	
+
+
+	public boolean isModeAjouterArete() {
+		return modeAjouterArete;
+	}
+
+
+	public void setModeAjouterArete(boolean modeAjouterArete) {
+		this.modeAjouterArete = modeAjouterArete;
 	}
 	
 }

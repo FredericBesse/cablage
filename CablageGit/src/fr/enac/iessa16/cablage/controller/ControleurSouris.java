@@ -39,13 +39,23 @@ public class ControleurSouris implements MouseListener, MouseMotionListener, Mou
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
-		if(modele.isModeAjouterSommet() == true) {
-			modele.ajouterSommetEffectif(e.getX(),e.getY());
+		if (e.getButton() == MouseEvent.BUTTON1) {
 			
-		}
-		else {
-			modele.touverSommetLePlusProcheDuClicSouris(e.getX(), e.getY());
-			modele.touverAreteLPlusProcheDuClicSouris(e.getX(), e.getY());
+			if(modele.isModeAjouterSommet() == true) {
+				modele.ajouterSommetEffectif(e.getX(),e.getY());		
+			}
+			else if (modele.isModeAjouterArete()) {
+				
+				modele.ajouterAreteEffectif(e.getX(),e.getY());
+				
+			} else {
+				modele.touverSommetLePlusProcheDuClicSouris(e.getX(), e.getY());
+				modele.touverAreteLaPlusProcheDuClicSouris(e.getX(), e.getY());
+			}
+		} else if (e.getButton() == MouseEvent.BUTTON3) {
+			modele.setModeAjouterSommet(false);
+			modele.setModeAjouterArete(false);
+			modele.changement();
 		}
 	}
 

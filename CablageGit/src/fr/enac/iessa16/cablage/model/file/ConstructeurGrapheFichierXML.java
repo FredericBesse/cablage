@@ -3,6 +3,8 @@ package fr.enac.iessa16.cablage.model.file;
 import java.io.File;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -50,6 +52,8 @@ public class ConstructeurGrapheFichierXML {
 			modele.erreur("XML", "Erreur dans la création du contexte JAXB...");
 		}
 		
+		this.contenuFichierXML = null;
+		
 	}
 	
 	
@@ -83,6 +87,12 @@ public class ConstructeurGrapheFichierXML {
 
 		// Création du JFileChooser
 		JFileChooser fc = new JFileChooser("file/");
+		
+		// On définit les extensions que l'on accepte
+		FileFilter xmlFilter = new FileNameExtensionFilter("Fichiers XML","xml");
+		fc.addChoosableFileFilter(xmlFilter);
+				
+				
 		returnVal = fc.showSaveDialog(null);
 		fc.setVisible(true);
 		
@@ -108,6 +118,12 @@ public class ConstructeurGrapheFichierXML {
 
 		// Création du JFileChooser
 		JFileChooser fc = new JFileChooser("file/");
+		
+		// On définit les extensions que l'on accepte
+		FileFilter xmlFilter = new FileNameExtensionFilter("Fichiers XML","xml");
+		fc.addChoosableFileFilter(xmlFilter);
+		fc.setFileFilter(xmlFilter);
+				
 		returnVal = fc.showOpenDialog(null);
 		fc.setVisible(true);
 		

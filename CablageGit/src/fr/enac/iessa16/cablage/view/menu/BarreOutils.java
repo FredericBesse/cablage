@@ -5,7 +5,7 @@ import javax.swing.JButton;
 import javax.swing.JToolBar;
 
 import fr.enac.iessa16.cablage.controller.Controleur;
-import fr.enac.iessa16.cablage.view.ParametresFenetre;
+import fr.enac.iessa16.cablage.view.Parametres;
 
 /**
  * Classe BarreOutilsFichier
@@ -29,29 +29,29 @@ public class BarreOutils extends JToolBar{
         
         ImageIcon iconNouveau = new ImageIcon("icon/new.png");
         JButton nouveau = new JButton(iconNouveau);
-        nouveau.setToolTipText(ParametresFenetre.grapheVide);
-	    nouveau.setActionCommand(ParametresFenetre.grapheVide);
+        nouveau.setToolTipText(Parametres.grapheVide);
+	    nouveau.setActionCommand(Parametres.grapheVide);
 	    nouveau.addActionListener(controleur.getControleurMenuFichier());
 	    this.add(nouveau);   
         
 	    ImageIcon iconEnregistrer = new ImageIcon("icon/enregistrer.jpg");
         JButton enregistrer = new JButton(iconEnregistrer);
-        enregistrer.setToolTipText(ParametresFenetre.enregistrer);
-        enregistrer.setActionCommand(ParametresFenetre.enregistrer);
+        enregistrer.setToolTipText(Parametres.enregistrer);
+        enregistrer.setActionCommand(Parametres.enregistrer);
         enregistrer.addActionListener(controleur.getControleurMenuFichier());
 	    this.add(enregistrer);
 	   
 	    ImageIcon iconouvrir = new ImageIcon("icon/ouvrir.jpeg");
         JButton ouvrir = new JButton(iconouvrir);
-        ouvrir.setToolTipText(ParametresFenetre.ouvrir);
-        ouvrir.setActionCommand(ParametresFenetre.ouvrir);
+        ouvrir.setToolTipText(Parametres.ouvrir);
+        ouvrir.setActionCommand(Parametres.ouvrir);
         ouvrir.addActionListener(controleur.getControleurMenuFichier());
 	    this.add(ouvrir);
 	
 	    ImageIcon iconImprimer = new ImageIcon("icon/imprimer.jpeg");
         JButton imprimer = new JButton(iconImprimer);
-        imprimer.setToolTipText(ParametresFenetre.imprimer);
-        imprimer.setActionCommand(ParametresFenetre.imprimer);
+        imprimer.setToolTipText(Parametres.imprimer);
+        imprimer.setActionCommand(Parametres.imprimer);
         imprimer.addActionListener(controleur.getControleurMenuFichier());
 	    this.add(imprimer);
 	    
@@ -59,30 +59,30 @@ public class BarreOutils extends JToolBar{
 	    
 	    ImageIcon iconAjoutSommet = new ImageIcon("icon/sommetajout.jpeg");
         JButton ajoutSommet = new JButton(iconAjoutSommet);
-        ajoutSommet.setToolTipText(ParametresFenetre.ajouterSommet);
-	    ajoutSommet.setActionCommand(ParametresFenetre.ajouterSommet);
+        ajoutSommet.setToolTipText(Parametres.ajouterSommet);
+	    ajoutSommet.setActionCommand(Parametres.ajouterSommet);
 	    ajoutSommet.addActionListener(controleur.getControleurMenuEdition());
 	    this.add(ajoutSommet);
    
         
 	    ImageIcon iconSupprimerSommet = new ImageIcon("icon/SuppSomet.pngajout.jpeg");
         JButton suppSommet = new JButton(iconSupprimerSommet);
-        suppSommet.setToolTipText(ParametresFenetre.supprimerSommet);
-        suppSommet.setActionCommand(ParametresFenetre.supprimerSommet);
+        suppSommet.setToolTipText(Parametres.supprimerSommet);
+        suppSommet.setActionCommand(Parametres.supprimerSommet);
         suppSommet.addActionListener(controleur.getControleurMenuEdition());
 	    this.add(suppSommet);
 	   
 	    ImageIcon iconAjouterArete = new ImageIcon("icon/ajouterArete.jpeg.png");
         JButton ajouterArete = new JButton(iconAjouterArete);
-        ajouterArete.setToolTipText(ParametresFenetre.ajouterArete);
-        ajouterArete.setActionCommand(ParametresFenetre.ajouterArete);
+        ajouterArete.setToolTipText(Parametres.ajouterArete);
+        ajouterArete.setActionCommand(Parametres.ajouterArete);
         ajouterArete.addActionListener(controleur.getControleurMenuEdition());
 	    this.add(ajouterArete);
 	
 	    ImageIcon iconSupprimerArete = new ImageIcon("icon/suppArete.jpeg");
         JButton suppArete = new JButton(iconSupprimerArete);
-        suppArete.setToolTipText(ParametresFenetre.supprimerArete);
-        suppArete.setActionCommand(ParametresFenetre.supprimerArete);
+        suppArete.setToolTipText(Parametres.supprimerArete);
+        suppArete.setActionCommand(Parametres.supprimerArete);
         suppArete.addActionListener(controleur.getControleurMenuEdition());
 	    this.add(suppArete);
 	    

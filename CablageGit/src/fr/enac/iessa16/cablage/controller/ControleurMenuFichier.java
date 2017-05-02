@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.enac.iessa16.cablage.model.Modele;
-import fr.enac.iessa16.cablage.view.ParametresFenetre;
+import fr.enac.iessa16.cablage.view.Parametres;
 
 /**
  * Classe controleur du menu
@@ -41,55 +41,55 @@ public class ControleurMenuFichier implements ActionListener {
 
 		// On la compare aux differents choix possibles
 
-		if (s.equals(ParametresFenetre.grapheVide)) {
+		if (s.equals(Parametres.grapheVide)) {
 
 			model.nouveauGrapheVide();
 		}
 
-		if (s.equals(ParametresFenetre.grapheDefaut)) {
+		if (s.equals(Parametres.grapheDefaut)) {
 
 			// On appelle la methode ChargerLeGraphe implementée dans la classe
 			// Modele
 			model.chargerGrapheParDefaut();
 		}
 
-		if (s.equals(ParametresFenetre.grapheAleatoire)) {
+		if (s.equals(Parametres.grapheAleatoire)) {
 
 			model.nouveauGrapheAleatoire();
 		}
 
-		if (s.equals(ParametresFenetre.importer)) {
+		if (s.equals(Parametres.importer)) {
 
 			// On appelle la methode chargerGrapheFichierTexte implementée dans
 			// la classe Modele
 			model.chargerGrapheFichierTexte();
 		}
 
-		if (s.equals(ParametresFenetre.ouvrir)) {
+		if (s.equals(Parametres.ouvrir)) {
 			model.ouvrir();
 		}
 
-		if (s.equals(ParametresFenetre.enregistrer)) {
+		if (s.equals(Parametres.enregistrer)) {
 
 			model.enregister();
 		}
 
-		if (s.equals(ParametresFenetre.enregistrerSous)) {
+		if (s.equals(Parametres.enregistrerSous)) {
 
 			model.enregisterSous();
 		}
 		
-		if (s.equals(ParametresFenetre.imprimer)) {
+		if (s.equals(Parametres.imprimer)) {
 
 			model.imprimer();
 		}
 
-		if (s.equals(ParametresFenetre.fermer)) {
+		if (s.equals(Parametres.fermer)) {
 
 			model.fermer();
 		}		
 
-		if (s.equals(ParametresFenetre.quitter)) {
+		if (s.equals(Parametres.quitter)) {
 		
 			model.quitter();
 		}

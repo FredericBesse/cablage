@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -50,6 +51,8 @@ public class PanneauParametres extends JPanel {
 	private JTextField textFieldAretePoids;
 
 	private JTextField textFieldAreteCout;
+
+	private JLabel labelNbSommet;
 	
 	
 	/**
@@ -65,7 +68,7 @@ public class PanneauParametres extends JPanel {
 		this.modele = modele;
 		
 		// Création de la bordure
-		this.setBorder(BorderFactory.createTitledBorder(ParametresFenetre.titrePanneauParametres));
+		this.setBorder(BorderFactory.createTitledBorder(Parametres.titrePanneauParametres));
 		
 		// Layout
 		this.setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
@@ -89,31 +92,34 @@ public class PanneauParametres extends JPanel {
 		creerPanneauInfo();
 	}
 	
-
+	
 	/**
 	 * Méthode permettant de créer le sous-panneau graphe
 	 */
 	private void creerPanneauGraphe() {
 		
 		JPanel graphe = new JPanel();
-		graphe.setBorder(BorderFactory.createTitledBorder(ParametresFenetre.titrePanneauParametresGraphe));
+		graphe.setBorder(BorderFactory.createTitledBorder(Parametres.titrePanneauParametresGraphe));
 		graphe.setLayout(new GridLayout(3,2));
 		
-		JLabel labelNbSommet = new JLabel("Nb sommet(s) : ");
+		labelNbSommet = new JLabel("Nombre sommet");
 		graphe.add(labelNbSommet);
 		textFieldNombreSommets = new JTextField(10);
+		textFieldNombreSommets.setEditable(false);
 		labelNbSommet.setLabelFor(textFieldNombreSommets);
 		graphe.add(textFieldNombreSommets);
 		
-		JLabel labelNbAretes = new JLabel("Nb arete(s) : ");
+		JLabel labelNbAretes = new JLabel("Nombre arete");
 		graphe.add(labelNbAretes);
 		textFieldNombreAretes = new JTextField(10);
+		textFieldNombreAretes.setEditable(false);
 		labelNbAretes.setLabelFor(textFieldNombreAretes);
 		graphe.add(textFieldNombreAretes);
 		
-		JLabel labelNbCompConnexe = new JLabel("Comp. connexe(s) : ");
+		JLabel labelNbCompConnexe = new JLabel("Comp. connexe");
 		graphe.add(labelNbCompConnexe);
 		textFieldCompConnexe = new JTextField(10);
+		textFieldCompConnexe.setEditable(false);
 		labelNbCompConnexe.setLabelFor(textFieldCompConnexe);
 		graphe.add(textFieldCompConnexe);
 		
@@ -127,7 +133,7 @@ public class PanneauParametres extends JPanel {
 	private void creerPanneauSommet() {
 		
 		JPanel sommet = new JPanel();
-		sommet.setBorder(BorderFactory.createTitledBorder(ParametresFenetre.titrePanneauParametresSommet));
+		sommet.setBorder(BorderFactory.createTitledBorder(Parametres.titrePanneauParametresSommet));
 		sommet.setLayout(new GridLayout(3,2));
 		
 		JLabel labelNom = new JLabel("Nom : ");
@@ -158,7 +164,7 @@ public class PanneauParametres extends JPanel {
 	private void creerPanneauArete() {
 		
 		JPanel arete = new JPanel();
-		arete.setBorder(BorderFactory.createTitledBorder(ParametresFenetre.titrePanneauParametresArete));
+		arete.setBorder(BorderFactory.createTitledBorder(Parametres.titrePanneauParametresArete));
 		arete.setLayout(new GridLayout(4,2));
 		
 		JLabel labelOrigine = new JLabel("Origine : ");
@@ -195,7 +201,7 @@ public class PanneauParametres extends JPanel {
 	private void creerPanneauDijkstra() {
 		
 		JPanel dijkstra = new JPanel();
-		dijkstra.setBorder(BorderFactory.createTitledBorder(ParametresFenetre.titrePanneauParametresDijkstra));
+		dijkstra.setBorder(BorderFactory.createTitledBorder(Parametres.titrePanneauParametresDijkstra));
 		dijkstra.setLayout(new GridLayout(4,2));
 		
 		JLabel labelOrigine = new JLabel("Origine : ");
@@ -213,7 +219,7 @@ public class PanneauParametres extends JPanel {
 		JLabel labelListeArete = new JLabel("Aretes : ");
 		dijkstra.add(labelListeArete);
 		comboBoxAretesDijkstra= new JComboBox<Arete>();
-		labelDest.setLabelFor(textFieldDest);
+		//labelDest.setLabelFor(textFieldDest);
 		dijkstra.add(comboBoxAretesDijkstra);	
 		
 		JLabel labelCout = new JLabel("Cout total : ");
@@ -232,7 +238,7 @@ public class PanneauParametres extends JPanel {
 	private void creerPanneauKruskal() {
 	
 		JPanel kruskal = new JPanel();
-		kruskal.setBorder(BorderFactory.createTitledBorder(ParametresFenetre.titrePanneauParametresKruskal));
+		kruskal.setBorder(BorderFactory.createTitledBorder(Parametres.titrePanneauParametresKruskal));
 		kruskal.setLayout(new GridLayout(3,2));
 		
 		JLabel labelListeSommetSelectionne = new JLabel("Sommet Selec : ");
@@ -261,10 +267,10 @@ public class PanneauParametres extends JPanel {
 	 */
 	private void creerPanneauInfo() {
 		
-		infoArea = new JTextArea(20, 20);
+		infoArea = new JTextArea(10, 10);
 		JScrollPane info = new JScrollPane(infoArea); 
 		infoArea.setEditable(false);
-		info.setBorder(BorderFactory.createTitledBorder(ParametresFenetre.titrePanneauParametresInformation));			
+		info.setBorder(BorderFactory.createTitledBorder(Parametres.titrePanneauParametresInformation));			
 		this.add(info);
 	}
 	
@@ -275,7 +281,7 @@ public class PanneauParametres extends JPanel {
 	 * Méthode permettant de mettre à jour le panneau 
 	 */
 	public void update() {
-		
+		// FIXME a enveler ...
 		if (modele != null) {
 						
 			// Mise à jour panneau graphe
@@ -287,6 +293,10 @@ public class PanneauParametres extends JPanel {
 				textFieldNombreAretes.setText(Integer.toString(graphe.getListeAretes().size()));
 				if (modele.getListeSousGraphesConnexes() != null)
 					textFieldCompConnexe.setText(Integer.toString(modele.getListeSousGraphesConnexes().size()));
+			} else {
+				textFieldNombreSommets.setText("");
+				textFieldNombreAretes.setText("");
+				textFieldCompConnexe.setText("");
 			}
 			
 			// Mise à jour panneau sommet
@@ -317,8 +327,10 @@ public class PanneauParametres extends JPanel {
 			}
 			
 			// Mise à jour panneau dijkstra
+			// TODO rajouter une variable dijkstra changed dans le modele
+			
 			double cout = modele.getCoutCheminDijkstra();
-			if (cout >= 0) {
+			if (cout > 0) {
 				textFieldCout.setText(Double.toString(cout));
 			}
 			
@@ -331,6 +343,8 @@ public class PanneauParametres extends JPanel {
 			if (destination != null) {
 				textFieldDest.setText(destination.getNom());
 			}
+			
+			
 			
 			List<Arete> chemin = modele.getListeAretesDijkstra();
 			if (chemin != null) {

@@ -22,12 +22,12 @@ import javax.swing.JPanel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 import fr.enac.iessa16.cablage.controller.Controleur;
 import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.model.core.Arete;
 import fr.enac.iessa16.cablage.model.core.Cablage;
 import fr.enac.iessa16.cablage.model.core.Sommet;
+import fr.enac.iessa16.cablage.view.dialog.FenetreImprimer;
 
 
 /**
@@ -72,7 +72,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		this.addMouseWheelListener(controleur.getControleurSouris());
 		
 		// Bordure 	
-		this.setBorder(BorderFactory.createTitledBorder(ParametresFenetre.titrePanneauVue2D));
+		this.setBorder(BorderFactory.createTitledBorder(Parametres.titrePanneauVue2D));
 		
 		// FIXME Chargement image de fond uniquement si besoin apres chargement du graphe
 		//this.chargerImageFond();
@@ -128,18 +128,28 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 				//dessinerAretes(g);
 				//dessinerAretes2(g);
 				
+				if (Parametres.afficherSommet)
+					dessinerSommets3(g);
 				
-				dessinerSommets3(g);
+				if (Parametres.afficherNomSommet)
+					dessinerNomSommets(g);
 				
-				dessinerAretes3(g);
+				if (Parametres.afficherArete)
+					dessinerAretes3(g);
 
-				dessinerCheminDijkstra(g);
-				dessinerCheminKruskal(g);
+				if (Parametres.afficherDijkstra)
+					dessinerCheminDijkstra(g);
 				
-				dessinerAreteSelectionne(g);
+				if (Parametres.afficherKruskal)
+					dessinerCheminKruskal(g);
 				
-				dessinerSommetsSelectionnes(g);
-				dessinerDernierSommetSelectionne(g);
+				if (Parametres.afficherArete)
+					dessinerAreteSelectionne(g);
+				
+				if (Parametres.afficherSommet) {
+					dessinerSommetsSelectionnes(g);
+					dessinerDernierSommetSelectionne(g);
+				}
 				
 			}
 		}
@@ -196,13 +206,13 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			
 			// On choisit la couleur selon que le sommet est sélectionné ou non
 			if (sommet.getSelected() == false)
-				g.setColor(ParametresFenetre.couleurSommet);
+				g.setColor(Parametres.couleurSommet);
 			else
-				g.setColor(ParametresFenetre.couleurSommetSelectionne);
+				g.setColor(Parametres.couleurSommetSelectionne);
 			
 			// On dessine les sommets
-			g.fillOval(x - ParametresFenetre.rayonSommetAffichage, y - ParametresFenetre.rayonSommetAffichage, 
-					2 * ParametresFenetre.rayonSommetAffichage,	2 * ParametresFenetre.rayonSommetAffichage);
+			g.fillOval(x - Parametres.rayonSommetAffichage, y - Parametres.rayonSommetAffichage, 
+					2 * Parametres.rayonSommetAffichage,	2 * Parametres.rayonSommetAffichage);
 			
 			// On affiche les noms de chaque sommet
 			g.drawString(sommet.getNom(), x, y);
@@ -246,13 +256,13 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			
 			// On choisit la couleur selon que le sommet est sélectionné ou non
 			if (sommet.getSelected() == false)
-				g.setColor(ParametresFenetre.couleurSommet);
+				g.setColor(Parametres.couleurSommet);
 			else
-				g.setColor(ParametresFenetre.couleurSommetSelectionne);
+				g.setColor(Parametres.couleurSommetSelectionne);
 			
 			// On dessine les sommets
-			g.fillOval(x - ParametresFenetre.rayonSommetAffichage, y - ParametresFenetre.rayonSommetAffichage, 
-					2 * ParametresFenetre.rayonSommetAffichage,	2 * ParametresFenetre.rayonSommetAffichage);
+			g.fillOval(x - Parametres.rayonSommetAffichage, y - Parametres.rayonSommetAffichage, 
+					2 * Parametres.rayonSommetAffichage,	2 * Parametres.rayonSommetAffichage);
 			
 			// On affiche les noms de chaque sommet
 			g.drawString(sommet.getNom(), x, y);
@@ -292,13 +302,13 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			
 			// On choisit la couleur selon que le sommet est sélectionné ou non
 			if (sommet.getSelected() == false)
-				g.setColor(ParametresFenetre.couleurSommet);
+				g.setColor(Parametres.couleurSommet);
 			else
-				g.setColor(ParametresFenetre.couleurSommetSelectionne);
+				g.setColor(Parametres.couleurSommetSelectionne);
 			
 			// On dessine les sommets
-			g.fillOval(x - ParametresFenetre.rayonSommetAffichage, y - ParametresFenetre.rayonSommetAffichage, 
-					2 * ParametresFenetre.rayonSommetAffichage,	2 * ParametresFenetre.rayonSommetAffichage);
+			g.fillOval(x - Parametres.rayonSommetAffichage, y - Parametres.rayonSommetAffichage, 
+					2 * Parametres.rayonSommetAffichage,	2 * Parametres.rayonSommetAffichage);
 			
 			// On affiche les noms de chaque sommet
 			g.drawString(sommet.getNom(), x, y);
@@ -322,7 +332,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		ArrayList<Sommet> sommets = modele.getGraphe().getListeSommets();
 		
 		// On choisit la couleur des sommets
-		g.setColor(ParametresFenetre.couleurSommet);
+		g.setColor(Parametres.couleurSommet);
 		
 		// On parcourt l'ensemble des sommets
 		for (Sommet sommet : sommets) {
@@ -357,13 +367,46 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		y = conversionLatitudeEnY(latitude);
 		
 		// On dessine le sommet
-		g.fillOval(x - ParametresFenetre.rayonSommetAffichage, y - ParametresFenetre.rayonSommetAffichage, 
-				2 * ParametresFenetre.rayonSommetAffichage,	2 * ParametresFenetre.rayonSommetAffichage);
+		g.fillOval(x - Parametres.rayonSommetAffichage, y - Parametres.rayonSommetAffichage, 
+				2 * Parametres.rayonSommetAffichage,	2 * Parametres.rayonSommetAffichage);
 		
-		// On affiche les noms de chaque sommet
-		g.drawString(sommet.getNom(), x, y);
+		
 	}
 	
+	
+	/**
+	 * Méthode permettant de dessiner le nom des sommets
+	 * @param g
+	 */
+	private void dessinerNomSommets(Graphics g) {
+
+		int x, y;
+		double longitude;
+		double latitude;
+		
+		// On récupère l'ensemble des sommets
+		ArrayList<Sommet> sommets = modele.getGraphe().getListeSommets();
+		
+		// On choisit la couleur des sommets
+		g.setColor(Parametres.couleurSommet);
+		
+		// On parcourt l'ensemble des sommets
+		for (Sommet sommet : sommets) {
+			
+			// On récupère ses coordonnees
+			longitude = sommet.getLongitude();
+			latitude = sommet.getLatitude();
+			
+			// On convertit les coordonnees pour l'affichage
+			x = conversionLongitudeEnX(longitude);
+			y = conversionLatitudeEnY(latitude);
+			
+			// On affiche les noms de chaque sommet
+			g.drawString(sommet.getNom(), x + 2*Parametres.rayonSommetAffichage, y + Parametres.rayonSommetAffichage);
+
+		}
+		
+	}
 	
 	
 
@@ -394,7 +437,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			y1 = conversionLatitudeEnY(lat1);
 			y2 = conversionLatitudeEnY(lat2);
 
-			g.setColor(ParametresFenetre.couleurArete);
+			g.setColor(Parametres.couleurArete);
 			g.drawLine(x1, y1, x2, y2);
 		}
 		
@@ -445,7 +488,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			y2 = conversionLatitudeEnY(lat2);
 
 			// on choisit la couleur d'affichage des aretes
-			g.setColor(ParametresFenetre.couleurArete);
+			g.setColor(Parametres.couleurArete);
 			
 			// on dessine l'arete
 			g.drawLine(x1, y1, x2, y2);
@@ -475,7 +518,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		nombreAretes = listeAretes.size();
 		
 		// on choisit la couleur d'affichage des aretes
-		g2D.setColor(ParametresFenetre.couleurArete);
+		g2D.setColor(Parametres.couleurArete);
 		
 		// on parcourt toutes les aretes
 		for (int i = 0; i < nombreAretes; i++) {
@@ -545,7 +588,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		ArrayList<Sommet> sommets = modele.getListeSommetsSelectionnes();
 
 		// On choisit la couleur des sommets sélectionnés
-		g.setColor(ParametresFenetre.couleurSommetSelectionne);
+		g.setColor(Parametres.couleurSommetSelectionne);
 		
 		// On parcourt l'ensemble des sommets
 		for (Sommet sommet : sommets) {
@@ -559,8 +602,8 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			y = conversionLatitudeEnY(latitude);
 			
 			// On dessine le sommets
-			g.fillOval(x - ParametresFenetre.rayonSommetSelectionneAffichage, y - ParametresFenetre.rayonSommetSelectionneAffichage, 
-					2 * ParametresFenetre.rayonSommetSelectionneAffichage,	2 * ParametresFenetre.rayonSommetSelectionneAffichage);
+			g.fillOval(x - Parametres.rayonSommetSelectionneAffichage, y - Parametres.rayonSommetSelectionneAffichage, 
+					2 * Parametres.rayonSommetSelectionneAffichage,	2 * Parametres.rayonSommetSelectionneAffichage);
 		}
 	}
 	
@@ -594,18 +637,18 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			
 			// on l'affiche
 			if (sommet.getSelected())
-				g.setColor(ParametresFenetre.couleurSommetSelectionne);
+				g.setColor(Parametres.couleurSommetSelectionne);
 			else 
-				g.setColor(ParametresFenetre.couleurSommet);
-			g.fillOval(x - ParametresFenetre.rayonSommetSelectionneAffichage, y - ParametresFenetre.rayonSommetSelectionneAffichage,
-					2*ParametresFenetre.rayonSommetSelectionneAffichage, 2*ParametresFenetre.rayonSommetSelectionneAffichage);
-			g.setColor(ParametresFenetre.couleurDernierSommetSelectionne);
-			g.fillOval(x - ParametresFenetre.rayonSommetSelectionneAffichage/2, y - ParametresFenetre.rayonSommetSelectionneAffichage/2,
-					ParametresFenetre.rayonSommetSelectionneAffichage, ParametresFenetre.rayonSommetSelectionneAffichage);
+				g.setColor(Parametres.couleurSommet);
+			g.fillOval(x - Parametres.rayonSommetSelectionneAffichage, y - Parametres.rayonSommetSelectionneAffichage,
+					2*Parametres.rayonSommetSelectionneAffichage, 2*Parametres.rayonSommetSelectionneAffichage);
+			g.setColor(Parametres.couleurDernierSommetSelectionne);
+			g.fillOval(x - Parametres.rayonSommetSelectionneAffichage/2, y - Parametres.rayonSommetSelectionneAffichage/2,
+					Parametres.rayonSommetSelectionneAffichage, Parametres.rayonSommetSelectionneAffichage);
 		
 			// on affiche le nom
-			nom = sommet.getNom();
-			g.drawString(nom, x, y);
+			//nom = sommet.getNom();
+			//g.drawString(nom, x, y);
 
 		}
 	}
@@ -633,7 +676,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		Stroke s = g2D.getStroke();
 		// trait épais
 		g2D.setStroke(new BasicStroke(5));
-		g2D.setColor(ParametresFenetre.couleurAreteDijkstra);
+		g2D.setColor(Parametres.couleurAreteDijkstra);
 		
 		// s'il existe
 		if (listeAretesDijkstra != null) {
@@ -683,7 +726,7 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 				Stroke s = g2D.getStroke();
 				// trait épais
 				g2D.setStroke(new BasicStroke(5));
-				g2D.setColor(ParametresFenetre.couleurAreteKruskal);
+				g2D.setColor(Parametres.couleurAreteKruskal);
 				
 				// on parcourt toutes les aretes du chemin
 				nombreAretes = listeAretesKruskal.size();
@@ -716,17 +759,17 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		lonMin = modele.getGraphe().getLongitudeMin();
 		lonMax = modele.getGraphe().getLongitudeMax();
 
-		echelleX = (this.getWidth() - 100) * ParametresFenetre.ECHELLE_BASE
+		echelleX = (this.getWidth() - 100) * Parametres.ECHELLE_BASE
 					/ (lonMax - lonMin);
-			echelleY = (this.getHeight() - 100) * ParametresFenetre.ECHELLE_BASE
+			echelleY = (this.getHeight() - 100) * Parametres.ECHELLE_BASE
 					/ (latMax - latMin);
 
-		ParametresFenetre.echelle = Math.min(echelleX, echelleY);
+		Parametres.echelle = Math.min(echelleX, echelleY);
 
-		ParametresFenetre.offsetX = -(this.conversionLongitudeEnX((lonMax + lonMin) / 2)
+		Parametres.offsetX = -(this.conversionLongitudeEnX((lonMax + lonMin) / 2)
 				- this.conversionLongitudeEnX(0));
 		
-		ParametresFenetre.offsetY = -(this.conversionLatitudeEnY((latMax + latMin) / 2)
+		Parametres.offsetY = -(this.conversionLatitudeEnY((latMax + latMin) / 2)
 				- this.conversionLatitudeEnY(0));
 		
 		this.repaint();
@@ -745,8 +788,8 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	 */
 	public static int conversionLongitudeEnX(double longitude) {
 		
-		return (int) Math.round(ParametresFenetre.panneauDessinWidth / 2 + ParametresFenetre.offsetX + longitude
-				* ParametresFenetre.echelle / ParametresFenetre.ECHELLE_BASE);
+		return (int) Math.round(Parametres.panneauDessinWidth / 2 + Parametres.offsetX + longitude
+				* Parametres.echelle / Parametres.ECHELLE_BASE);
 
 	}
 
@@ -759,8 +802,8 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	 */
 	public static int conversionLatitudeEnY(double latitude) {
 		
-		return (int) Math.round(ParametresFenetre.panneauDessinHeight / 2 + ParametresFenetre.offsetY - latitude
-				* ParametresFenetre.echelle / ParametresFenetre.ECHELLE_BASE);
+		return (int) Math.round(Parametres.panneauDessinHeight / 2 + Parametres.offsetY - latitude
+				* Parametres.echelle / Parametres.ECHELLE_BASE);
 
 	}
 
@@ -775,8 +818,8 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	 */
 	public static double conversionXenLongitude(double x) {
 		
-		return (x - (ParametresFenetre.panneauDessinWidth / 2 + ParametresFenetre.offsetX))
-				* ParametresFenetre.ECHELLE_BASE / ParametresFenetre.echelle;
+		return (x - (Parametres.panneauDessinWidth / 2 + Parametres.offsetX))
+				* Parametres.ECHELLE_BASE / Parametres.echelle;
 	}
 
 	/**
@@ -788,8 +831,8 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	 */
 	public static double conversionYenLatitude(double y) {
 			
-		return (y - (ParametresFenetre.panneauDessinHeight / 2 + ParametresFenetre.offsetY))
-				* -ParametresFenetre.ECHELLE_BASE / ParametresFenetre.echelle;
+		return (y - (Parametres.panneauDessinHeight / 2 + Parametres.offsetY))
+				* -Parametres.ECHELLE_BASE / Parametres.echelle;
 	}
 
 	
@@ -804,17 +847,25 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			modele.setCentreVueDemande(false);
 		}
 		if(modele.isModeAjouterSommet()==true) {
-			
 			//On modifie la forme du curseur
-		    setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR) );
-			      
-			
-			
+		    setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR) );		
 		}
-		else
-		{
+		else {
 			 setCursor(Cursor.getDefaultCursor());
 	      
+		}
+		
+		if(modele.isModeAjouterArete()) {
+			//On modifie la forme du curseur
+		    setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR) );		
+		}
+		else {
+			 setCursor(Cursor.getDefaultCursor());
+		}
+		
+		
+		if (modele.isImprimerDemande()) {
+			new FenetreImprimer(this);
 		}
 		
 		
