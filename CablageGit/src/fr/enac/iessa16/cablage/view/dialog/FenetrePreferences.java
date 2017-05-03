@@ -35,11 +35,13 @@ public class FenetrePreferences extends JDialog implements ActionListener {
 
 	private JButton boutoncouleurArete;
 
-	private JButton boutoncouleurDerniereAreteSelectionne;
+	//private JButton boutoncouleurDerniereAreteSelectionne;
 
 	private JButton boutoncouleurAreteDijkstra;
 
 	private JButton boutoncouleurAreteKruskal;
+	
+	private JButton boutoncouleurFond;
 
 	public FenetrePreferences(Modele monModele) {
 
@@ -68,7 +70,7 @@ public class FenetrePreferences extends JDialog implements ActionListener {
 		// Les couleurs nom
 		JPanel panCouleurs = new JPanel();
 		panCouleurs.setBorder(BorderFactory.createTitledBorder("Choix des couleurs"));
-		panCouleurs.setLayout(new GridLayout(7, 2));
+		panCouleurs.setLayout(new GridLayout(8, 2));
 
 		// sommet
 		JLabel couleurSommet = new JLabel("Sommet");
@@ -149,6 +151,17 @@ public class FenetrePreferences extends JDialog implements ActionListener {
 		boutoncouleurAreteKruskal.addActionListener(this);
 		panCouleurs.add(couleurAreteKruskal);
 		panCouleurs.add(boutoncouleurAreteKruskal);
+		
+		
+		// Fond
+		JLabel couleurFond = new JLabel("Fond");
+		this.boutoncouleurFond = new JButton();
+		boutoncouleurFond.setBackground(Parametres.couleurFondPanneauDessin);
+		// boutonCouleurDernierSommetSelectionne.setActionCommand("couleurDernierSelectionne");
+		boutoncouleurFond.setToolTipText("Couleur de fond du graphe");
+		boutoncouleurFond.addActionListener(this);
+		panCouleurs.add(couleurFond);
+		panCouleurs.add(boutoncouleurFond);
 				
 		
 		
@@ -189,6 +202,7 @@ public class FenetrePreferences extends JDialog implements ActionListener {
 			Parametres.couleurAreteSelectionne = boutoncouleurAreteSelectionne.getBackground();
 			Parametres.couleurAreteDijkstra = boutoncouleurAreteDijkstra.getBackground();
 			Parametres.couleurAreteKruskal = boutoncouleurAreteKruskal.getBackground();
+			Parametres.couleurFondPanneauDessin = boutoncouleurFond.getBackground();
 			
 
 			this.dispose();

@@ -26,6 +26,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import fr.enac.iessa16.cablage.controller.Controleur;
+import fr.enac.iessa16.cablage.model.EtatVue;
 import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.view.menu.BarreOutils;
 import fr.enac.iessa16.cablage.view.menu.MenuAffichage;
@@ -49,6 +50,16 @@ public class Fenetre extends JFrame implements Observer {
 	private Modele modele;
 	private PanneauDessinGraphe panneauDessin;
 	private PanneauParametres panneauParametres;
+
+	private MenuFichier menuFichier;
+
+	private MenuEdition menuEdition;
+
+	private MenuAffichage menuAffichage;
+
+	private MenuCalcul menuCalcul;
+
+	private MenuAide menuAide;
 
 	/**
 	 * Constructeur de la classe Fenetre.java
@@ -75,12 +86,12 @@ public class Fenetre extends JFrame implements Observer {
 		setProprietesFenetre();
 		
 		// on rend visible la fenetre
-		try {
+		/*try {
 			// pour voir le splash screen
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
+		}*/
 	
 		this.setVisible(true);
 
@@ -88,6 +99,7 @@ public class Fenetre extends JFrame implements Observer {
 		// conversion)
 		Parametres.panneauDessinWidth = this.panneauDessin.getWidth();
 		Parametres.panneauDessinHeight = this.panneauDessin.getHeight();
+		Parametres.couleurFondPanneauDessinLancement = this.panneauDessin.getBackground();
 	}
 
 	
@@ -140,19 +152,19 @@ public class Fenetre extends JFrame implements Observer {
 		
 		JMenuBar jMenuBar = new JMenuBar();
 
-		MenuFichier menuFichier = new MenuFichier(controleur);
+		menuFichier = new MenuFichier(controleur);
 		jMenuBar.add(menuFichier);
 
-		MenuEdition menuEdition = new MenuEdition(controleur);
+		menuEdition = new MenuEdition(controleur);
 		jMenuBar.add(menuEdition);
 
-		MenuAffichage menuAffichage = new MenuAffichage(controleur, this);
+		menuAffichage = new MenuAffichage(controleur, this);
 		jMenuBar.add(menuAffichage);
 
-		MenuCalcul menuCalcul = new MenuCalcul(controleur);
+		menuCalcul = new MenuCalcul(controleur);
 		jMenuBar.add(menuCalcul);
 
-		MenuAide menuAide = new MenuAide(controleur);
+		menuAide = new MenuAide(controleur);
 		jMenuBar.add(menuAide);
 
 		this.setJMenuBar(jMenuBar);
@@ -198,6 +210,28 @@ public class Fenetre extends JFrame implements Observer {
 		panneauDessin.update();
 
 		panneauParametres.update();
+		
+		
+		if (EtatVue.nouveauGraphe) {
+			
+			panneauDessin.updateNouveauGraphe();
+			
+			menuFichier.updateNouveauGraphe();
+			menuEdition.updateNouveauGraphe();
+			menuAffichage.updateNouveauGraphe();
+			menuCalcul.updateNouveauGraphe();
+			
+			EtatVue.nouveauGraphe = false;
+		}
+		
+		if (EtatVue.fermerGraphe) {
+			panneauDessin.updateFermerGraphe();
+			menuFichier.updateFermerGraphe();
+			menuEdition.updateFermerGraphe();
+			menuAffichage.updateFermerGraphe();
+			menuCalcul.updateFermerGraphe();
+			EtatVue.fermerGraphe = false;
+		}
 	}
 
 	/*

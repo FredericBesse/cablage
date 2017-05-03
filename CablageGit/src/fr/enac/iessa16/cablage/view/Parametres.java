@@ -23,10 +23,11 @@ public class Parametres {
 	public static final String nouveau = "Nouveau";
 	public static final String grapheVide = "Graphe vide";
 	public static final String grapheDefaut = "Graphe par défaut";
-	public static final String grapheAleatoire = "Graphe aléatoire...";
 	
 	public static final String importer = "Importer...";
+	public static final String importerTooltip = "Importer un fichier texte...";
 	public static final String ouvrir = "Ouvrir...";
+	public static final String ouvrirTooltip = "Ouvrir un fichier XML...";
 
 	public static final String enregistrer = "Enregistrer";
 	public static final String enregistrerSous = "Enregistrer sous...";
@@ -115,6 +116,9 @@ public class Parametres {
 	// Taille du panneau dessin (pour les fonctions de conversion)
 	public static int panneauDessinWidth;
 	public static int panneauDessinHeight;
+	public static Color couleurFondPanneauDessin = new Color(225, 225, 225);
+	public static Color couleurFondPanneauDessinLancement;
+
 	
 	
 	// Parametres permettant de savoir si on affiche ou non les elements
@@ -123,6 +127,8 @@ public class Parametres {
 	public static boolean afficherArete = true;
 	public static boolean afficherDijkstra = true;
 	public static boolean afficherKruskal = true;
+
+	
 	
 	
 }

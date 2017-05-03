@@ -238,7 +238,8 @@ public class Modele extends Observable {
 
 	public void fermer() {
 		// TODO fermer
-		this.graphe = null;
+		this.initialise();
+		EtatVue.fermerGraphe = true;
 		this.changement();
 	}
 
@@ -576,13 +577,14 @@ public class Modele extends Observable {
 	 * Fonctions appelées par le controleur de la souris
 	 */
 
+	
 	/**
 	 * Méthode permettant de trouver le noeud le plus proche du clic souris
-	 * 
 	 * @param xClic
 	 * @param yClic
+	 * @return true si un sommet proche du clic souris a été trouvé
 	 */
-	public void touverSommetLePlusProcheDuClicSouris(int xClic, int yClic) {
+	public boolean touverSommetLePlusProcheDuClicSouris(int xClic, int yClic) {
 
 		LOGGER.debug("Recherche sommet le plus proche du clic souris x=" + xClic + " y=" + yClic);
 
@@ -674,6 +676,9 @@ public class Modele extends Observable {
 				}
 			}
 		}
+		
+		// On renvoie true si on a trouvé un sommet, false sinon
+		return (sommetLePlusProcheDuClic != null);
 	}
 
 	/**
@@ -885,6 +890,7 @@ public class Modele extends Observable {
 		testConnectivite();
 
 		EtatVue.centreVueDemande = true;
+		EtatVue.nouveauGraphe = true;
 
 		changement();
 	}

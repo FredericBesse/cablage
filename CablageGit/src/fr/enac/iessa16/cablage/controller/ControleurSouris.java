@@ -61,8 +61,12 @@ public class ControleurSouris implements MouseListener, MouseMotionListener, Mou
 				modele.ajouterAreteEffectif(e.getX(),e.getY());
 				
 			} else {
-				modele.touverSommetLePlusProcheDuClicSouris(e.getX(), e.getY());
-				modele.touverAreteLaPlusProcheDuClicSouris(e.getX(), e.getY());
+				
+				boolean sommetTrouve = modele.touverSommetLePlusProcheDuClicSouris(e.getX(), e.getY());
+				
+				// si on n'a pas trouve de sommet proche du clic souris, on cherche une arete
+				if (sommetTrouve == false)
+					modele.touverAreteLaPlusProcheDuClicSouris(e.getX(), e.getY());
 			}
 		} else if (e.getButton() == MouseEvent.BUTTON3) {
 			

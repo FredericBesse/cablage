@@ -17,6 +17,14 @@ import fr.enac.iessa16.cablage.view.Parametres;
 @SuppressWarnings("serial")
 public class MenuFichier extends JMenu {
 	
+	private Controleur controleur;
+	
+	private JMenuItem optionEnregistrer;
+	private JMenuItem optionEnregistrerSous;
+	private JMenuItem optionImprimer;
+	private JMenuItem optionfermer;
+	
+	
 	/**
 	 * Constructeur de la classe MenuFichier
 	 *
@@ -26,6 +34,15 @@ public class MenuFichier extends JMenu {
 		
 		// Appel au constructeur parent
 		super(Parametres.menuFichier);
+		
+		// on récupère le controleur
+		this.controleur = controleur;
+		
+		// on crée les items
+		this.creerItems();
+	}
+	
+	private void creerItems() {
 		
 		// Création du sous-menu Nouveau...
 		JMenu optionNouveau = new JMenu(Parametres.nouveau);
@@ -44,18 +61,13 @@ public class MenuFichier extends JMenu {
 		optionGrapheParDefaut.setActionCommand(Parametres.grapheDefaut);
 		optionGrapheParDefaut.addActionListener(controleur.getControleurMenuFichier());
 		optionNouveau.add(optionGrapheParDefaut);
-		
-		// Création de l'item Nouveau/Graphe aléatoire		
-		JMenuItem optionGrapheAleatoire = new JMenuItem(Parametres.grapheAleatoire);
-		optionNouveau.add(optionGrapheAleatoire);
-		optionGrapheAleatoire.setActionCommand(Parametres.grapheAleatoire);
-		optionGrapheAleatoire.addActionListener(controleur.getControleurMenuFichier());
-		
+			
 		// Ajout du sous-menu Nouveau au menu Fichier		
 		this.add(optionNouveau);
 		
 		// Création de l'item Importer
 		JMenuItem optionImporter = new JMenuItem(Parametres.importer);
+		optionImporter.setToolTipText(Parametres.importerTooltip);
 		optionImporter.setMnemonic(KeyEvent.VK_O);
 		optionImporter.setAccelerator(KeyStroke.getKeyStroke("control I"));
 		optionImporter.setActionCommand(Parametres.importer);
@@ -73,40 +85,44 @@ public class MenuFichier extends JMenu {
 		this.addSeparator();
 				
 		// Création de l'item Enregistrer		
-		JMenuItem optionEnregistrer = new JMenuItem(Parametres.enregistrer);
+		optionEnregistrer = new JMenuItem(Parametres.enregistrer);
         optionEnregistrer.setMnemonic(KeyEvent.VK_S);
 		optionEnregistrer.setAccelerator(KeyStroke.getKeyStroke("control S"));
 		optionEnregistrer.setActionCommand(Parametres.enregistrer);
 		optionEnregistrer.addActionListener(controleur.getControleurMenuFichier());
+		optionEnregistrer.setEnabled(false);
 		this.add(optionEnregistrer);
 		
 		// Création de l'item Enregistrer Sous		
-		JMenuItem optionEnregistrerSous = new JMenuItem(Parametres.enregistrerSous);
+		optionEnregistrerSous = new JMenuItem(Parametres.enregistrerSous);
         //optionEnregistrerSous.setMnemonic(KeyEvent.VK_S);
 		//optionEnregistrerSous.setAccelerator(KeyStroke.getKeyStroke("control shift S"));
 		//optionEnregistrerSous.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK + KeyEvent.SHIFT_MASK));
 		optionEnregistrerSous.setActionCommand(Parametres.enregistrerSous);
 		optionEnregistrerSous.addActionListener(controleur.getControleurMenuFichier());
+		optionEnregistrerSous.setEnabled(false);
 		this.add(optionEnregistrerSous);
 		
 		this.addSeparator();
 		
 		// Création de l'item Imprimer		
-		JMenuItem optionImprimer = new JMenuItem(Parametres.imprimer);
+		optionImprimer = new JMenuItem(Parametres.imprimer);
 		optionImprimer.setMnemonic(KeyEvent.VK_P);
 		optionImprimer.setAccelerator(KeyStroke.getKeyStroke("control P"));
 		optionImprimer.setActionCommand(Parametres.imprimer);
 		optionImprimer.addActionListener(controleur.getControleurMenuFichier());
+		optionImprimer.setEnabled(false);
 		this.add(optionImprimer);
 		
 		this.addSeparator();
 	
 		// Création de l'item Fermer
-		JMenuItem optionfermer = new JMenuItem(Parametres.fermer);
+		optionfermer = new JMenuItem(Parametres.fermer);
         optionfermer.setMnemonic(KeyEvent.VK_W);
 		optionfermer.setAccelerator(KeyStroke.getKeyStroke("control W"));
 		optionfermer.setActionCommand(Parametres.fermer);
 		optionfermer.addActionListener(controleur.getControleurMenuFichier());
+		optionfermer.setEnabled(false);
 		this.add(optionfermer);
 		
 		// Création de l'item Quitter
@@ -116,5 +132,22 @@ public class MenuFichier extends JMenu {
 		optionQuitter.setActionCommand(Parametres.quitter);
 		optionQuitter.addActionListener(controleur.getControleurMenuFichier());
 		this.add(optionQuitter);		
+	}
+
+	public void updateNouveauGraphe() {
+
+		//optionEnregistrer;
+		optionEnregistrerSous.setEnabled(true);
+		optionImprimer.setEnabled(true);
+		optionfermer.setEnabled(true);
+		
+	}
+
+	public void updateFermerGraphe() {
+		// TODO Auto-generated method stub
+		optionEnregistrerSous.setEnabled(false);
+		optionImprimer.setEnabled(false);
+		optionfermer.setEnabled(false);
+		
 	}	
 }

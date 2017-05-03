@@ -7,5 +7,8 @@ public class EtatVue {
 
 	public static boolean modeAjouterSommet = false;
 	public static boolean modeAjouterArete = false;
-
+	
+	
+	public static boolean nouveauGraphe = false;
+	public static boolean fermerGraphe = false;
 }

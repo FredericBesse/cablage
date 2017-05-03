@@ -118,6 +118,10 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			
 			// Si le graphe n'est pas vide
 			if (modele.getGraphe() != null) {
+				
+				//System.out.println("Back color = "+this.getBackground());
+				//r=192,g=192,b=192
+				//this.setBackground(new Color(225, 225, 225));
 
 				//dessinerFondCarte(g);
 								
@@ -152,7 +156,11 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 					dessinerDernierSommetSelectionne(g);
 				}
 				
-			}
+			} //else {
+				//r=192,g=192,b=192
+				//214,217,223
+				//this.setBackground(new Color(214, 217, 223));
+			//}
 		}
 	}
 
@@ -907,5 +915,15 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			}	     
 		}	    
 		return retValue;
+	}
+
+
+	public void updateNouveauGraphe() {
+		this.setBackground(Parametres.couleurFondPanneauDessin);
+	}
+
+
+	public void updateFermerGraphe() {
+		this.setBackground(Parametres.couleurFondPanneauDessinLancement);		
 	}	
 }
