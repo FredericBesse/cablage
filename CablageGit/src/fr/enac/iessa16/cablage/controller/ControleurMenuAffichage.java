@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JCheckBoxMenuItem;
 
+import fr.enac.iessa16.cablage.model.EtatVue;
 import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.view.Parametres;
 
@@ -26,7 +27,8 @@ public class ControleurMenuAffichage implements ActionListener {
 		String s = e.getActionCommand();
 		if (s.equals(Parametres.centrage)) {
 
-			model.centrerVue();
+			EtatVue.centreVueDemande=true;
+			model.changement();
 
 		}
 		if (s.equals(Parametres.zoomPlus)) {

@@ -17,9 +17,9 @@ public class Sommet {
 	@XmlAttribute
 	private String nom;
 	@XmlAttribute
-	private double longitude ;
+	private double abscisse ;
 	@XmlAttribute
-	private double latitude;
+	private double ordonnee;
 	@XmlTransient
 	private boolean selected;
 	
@@ -28,6 +28,9 @@ public class Sommet {
 	private static int nbSommetCree = 0;
 
 	
+	/**
+	 * Constructeur par défaut de la classe sommet 
+	 */
 	public Sommet() {
 		
 		nbSommetCree++;
@@ -35,17 +38,18 @@ public class Sommet {
 		
 	}
 	
+	
 	/**
-	 * Constructeur de la classe sommet
+	 * Constructeur de la classe Sommet
 	 * 
-	 * @param latitude
-	 * @param longitude
+	 * @param abscisse l'abscisse du sommet
+	 * @param ordonnee
 	 * @param nom
-	 */	
-	public Sommet(double longitude, double latitude, String nom) {
+	 */
+	public Sommet(double abscisse, double ordonnee, String nom) {
 
-		this.longitude = longitude;
-		this.latitude = latitude;
+		this.abscisse = abscisse;
+		this.ordonnee = ordonnee;
 		this.nom = nom;
 		this.selected = false;
 		
@@ -54,34 +58,32 @@ public class Sommet {
 	}
 	
 	
-	/**
-	 * @return longitude 
-	 */	
-	public double getLongitude() {
-		return longitude;
+	
+	/* 
+	 * Getters et setters
+	 */
+	public double getAbscisse() {
+		return abscisse;
 	}
 
-	/**
-	 * Setter de la Longitude
-	 * @param longitude
-	 */
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
+	public void setAbscisse(double abscisse) {
+		this.abscisse = abscisse;
 	}
 
 	/**
 	 * @return latitude 
 	 */
-	public double getLatitude() {
-		return latitude;
+	public double getOrdonnee() {
+		return ordonnee;
 	}
 
 	/**
-	 * Setter de la Latitude
-	 * @param latitude
+	 * Setter de l'ordonnee
+	 * 
+	 * @param ordonnee
 	 */
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
+	public void setOrdonnee(double ordonnee) {
+		this.ordonnee = ordonnee;
 	}
 
 	/**
@@ -91,11 +93,6 @@ public class Sommet {
 		return nom;
 	}
 	
-	public int getId() {
-		return id;
-	}
-
-
 	/**
 	 * Setter du nom du sommet 
 	 * @param nom
@@ -103,6 +100,10 @@ public class Sommet {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
+	
+	public int getId() {
+		return id;
+	}	
 	
 	public boolean getSelected() {	
 		return selected;	
@@ -121,7 +122,7 @@ public class Sommet {
 	 */
 	public double calculerDistance(Sommet sommet) {
 		double distance = 0;
-		distance = Math.sqrt(Math.pow(sommet.latitude-this.latitude,2)+Math.pow(sommet.longitude-this.longitude,2));
+		distance = Math.sqrt(Math.pow(sommet.ordonnee-this.ordonnee,2)+Math.pow(sommet.abscisse-this.abscisse,2));
 		return distance;
 	}
 
@@ -133,7 +134,7 @@ public class Sommet {
 
 	@Override
 	public boolean equals(Object obj) {
-		return (this.latitude == ((Sommet)obj).getLatitude())&&(this.longitude == ((Sommet)obj).getLongitude());
+		return (this.ordonnee == ((Sommet)obj).getOrdonnee())&&(this.abscisse == ((Sommet)obj).getAbscisse());
 	}
 	
 	@Override

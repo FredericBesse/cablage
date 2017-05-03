@@ -130,8 +130,8 @@ public class GrapheTheorique extends SimpleWeightedGraph<Sommet, Arete>{
 		
 		for (int i = 0; i < size; i++) {
 			
-			longitudeCourante = listeSommets.get(i).getLongitude();
-			latitudeCourante = listeSommets.get(i).getLatitude();
+			longitudeCourante = listeSommets.get(i).getAbscisse();
+			latitudeCourante = listeSommets.get(i).getOrdonnee();
 
 			if (longitudeCourante < longitudeMin) {
 				longitudeMin = longitudeCourante;

@@ -27,28 +27,28 @@ public class BarreOutils extends JToolBar{
 		 
         setOrientation(JToolBar.HORIZONTAL);
         
-        ImageIcon iconNouveau = new ImageIcon("icon/new.png");
+        ImageIcon iconNouveau = new ImageIcon("image/icon/new.png");
         JButton nouveau = new JButton(iconNouveau);
         nouveau.setToolTipText(Parametres.grapheVide);
 	    nouveau.setActionCommand(Parametres.grapheVide);
 	    nouveau.addActionListener(controleur.getControleurMenuFichier());
 	    this.add(nouveau);   
         
-	    ImageIcon iconEnregistrer = new ImageIcon("icon/enregistrer.jpg");
+	    ImageIcon iconEnregistrer = new ImageIcon("image/icon/enregistrer.jpg");
         JButton enregistrer = new JButton(iconEnregistrer);
         enregistrer.setToolTipText(Parametres.enregistrer);
         enregistrer.setActionCommand(Parametres.enregistrer);
         enregistrer.addActionListener(controleur.getControleurMenuFichier());
 	    this.add(enregistrer);
 	   
-	    ImageIcon iconouvrir = new ImageIcon("icon/ouvrir.jpeg");
+	    ImageIcon iconouvrir = new ImageIcon("image/icon/ouvrir.jpeg");
         JButton ouvrir = new JButton(iconouvrir);
         ouvrir.setToolTipText(Parametres.ouvrir);
         ouvrir.setActionCommand(Parametres.ouvrir);
         ouvrir.addActionListener(controleur.getControleurMenuFichier());
 	    this.add(ouvrir);
 	
-	    ImageIcon iconImprimer = new ImageIcon("icon/imprimer.jpeg");
+	    ImageIcon iconImprimer = new ImageIcon("image/icon/imprimer.jpeg");
         JButton imprimer = new JButton(iconImprimer);
         imprimer.setToolTipText(Parametres.imprimer);
         imprimer.setActionCommand(Parametres.imprimer);
@@ -57,7 +57,7 @@ public class BarreOutils extends JToolBar{
 	    
 	    
 	    
-	    ImageIcon iconAjoutSommet = new ImageIcon("icon/sommetajout.jpeg");
+	    ImageIcon iconAjoutSommet = new ImageIcon("image/icon/sommetajout.jpeg");
         JButton ajoutSommet = new JButton(iconAjoutSommet);
         ajoutSommet.setToolTipText(Parametres.ajouterSommet);
 	    ajoutSommet.setActionCommand(Parametres.ajouterSommet);
@@ -65,21 +65,21 @@ public class BarreOutils extends JToolBar{
 	    this.add(ajoutSommet);
    
         
-	    ImageIcon iconSupprimerSommet = new ImageIcon("icon/SuppSomet.pngajout.jpeg");
+	    ImageIcon iconSupprimerSommet = new ImageIcon("image/icon/SuppSomet.pngajout.jpeg");
         JButton suppSommet = new JButton(iconSupprimerSommet);
         suppSommet.setToolTipText(Parametres.supprimerSommet);
         suppSommet.setActionCommand(Parametres.supprimerSommet);
         suppSommet.addActionListener(controleur.getControleurMenuEdition());
 	    this.add(suppSommet);
 	   
-	    ImageIcon iconAjouterArete = new ImageIcon("icon/ajouterArete.jpeg.png");
+	    ImageIcon iconAjouterArete = new ImageIcon("image/icon/ajouterArete.jpeg.png");
         JButton ajouterArete = new JButton(iconAjouterArete);
         ajouterArete.setToolTipText(Parametres.ajouterArete);
         ajouterArete.setActionCommand(Parametres.ajouterArete);
         ajouterArete.addActionListener(controleur.getControleurMenuEdition());
 	    this.add(ajouterArete);
 	
-	    ImageIcon iconSupprimerArete = new ImageIcon("icon/suppArete.jpeg");
+	    ImageIcon iconSupprimerArete = new ImageIcon("image/icon/suppArete.jpeg");
         JButton suppArete = new JButton(iconSupprimerArete);
         suppArete.setToolTipText(Parametres.supprimerArete);
         suppArete.setActionCommand(Parametres.supprimerArete);

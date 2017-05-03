@@ -23,6 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import fr.enac.iessa16.cablage.controller.Controleur;
+import fr.enac.iessa16.cablage.model.EtatVue;
 import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.model.core.Arete;
 import fr.enac.iessa16.cablage.model.core.Cablage;
@@ -197,8 +198,8 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			sommet = sommets.get(i);
 			
 			// On récupère ses coordonnees
-			longitude = sommet.getLongitude();
-			latitude = sommet.getLatitude();
+			longitude = sommet.getAbscisse();
+			latitude = sommet.getOrdonnee();
 			
 			// On convertit les coordonnees pour l'affichage
 			x = conversionLongitudeEnX(longitude);
@@ -247,8 +248,8 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			sommet = sommets.get(i);
 			
 			// On récupère ses coordonnees
-			longitude = sommet.getLongitude();
-			latitude = sommet.getLatitude();
+			longitude = sommet.getAbscisse();
+			latitude = sommet.getOrdonnee();
 			
 			// On convertit les coordonnees pour l'affichage
 			x = conversionLongitudeEnX(longitude);
@@ -293,8 +294,8 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		for (Sommet sommet : sommets) {
 			
 			// On récupère ses coordonnees
-			longitude = sommet.getLongitude();
-			latitude = sommet.getLatitude();
+			longitude = sommet.getAbscisse();
+			latitude = sommet.getOrdonnee();
 			
 			// On convertit les coordonnees pour l'affichage
 			x = conversionLongitudeEnX(longitude);
@@ -359,8 +360,8 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		double latitude;
 		
 		// On récupère ses coordonnees
-		longitude = sommet.getLongitude();
-		latitude = sommet.getLatitude();
+		longitude = sommet.getAbscisse();
+		latitude = sommet.getOrdonnee();
 		
 		// On convertit les coordonnees pour l'affichage
 		x = conversionLongitudeEnX(longitude);
@@ -394,8 +395,8 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		for (Sommet sommet : sommets) {
 			
 			// On récupère ses coordonnees
-			longitude = sommet.getLongitude();
-			latitude = sommet.getLatitude();
+			longitude = sommet.getAbscisse();
+			latitude = sommet.getOrdonnee();
 			
 			// On convertit les coordonnees pour l'affichage
 			x = conversionLongitudeEnX(longitude);
@@ -426,11 +427,11 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		
 		for (int i = 0; i < modele.getGraphe().getListeAretes().size(); i++) {
 
-			long1 = modele.getGraphe().getListeAretes().get(i).getSommetOrigine().getLongitude();
+			long1 = modele.getGraphe().getListeAretes().get(i).getSommetOrigine().getAbscisse();
 			long2 = modele.getGraphe().getListeAretes().get(i).getSommetExtremité()
-					.getLongitude();
-			lat1 = modele.getGraphe().getListeAretes().get(i).getSommetOrigine().getLatitude();
-			lat2 = modele.getGraphe().getListeAretes().get(i).getSommetExtremité().getLatitude();
+					.getAbscisse();
+			lat1 = modele.getGraphe().getListeAretes().get(i).getSommetOrigine().getOrdonnee();
+			lat2 = modele.getGraphe().getListeAretes().get(i).getSommetExtremité().getOrdonnee();
 
 			x1 = conversionLongitudeEnX(long1);
 			x2 = conversionLongitudeEnX(long2);
@@ -476,10 +477,10 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 			extremite = arete.getSommetExtremité();
 			
 			// on récupère leurs coordonnées
-			long1 = origine.getLongitude();
-			long2 = extremite.getLongitude();
-			lat1 = origine.getLatitude();
-			lat2 = extremite.getLatitude();
+			long1 = origine.getAbscisse();
+			long2 = extremite.getAbscisse();
+			lat1 = origine.getOrdonnee();
+			lat2 = extremite.getOrdonnee();
 
 			// on les convertit pour l'affichage
 			x1 = conversionLongitudeEnX(long1);
@@ -547,10 +548,10 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		extremite = arete.getSommetExtremité();
 			
 		// on récupère leurs coordonnées
-		long1 = origine.getLongitude();
-		long2 = extremite.getLongitude();
-		lat1 = origine.getLatitude();
-		lat2 = extremite.getLatitude();
+		long1 = origine.getAbscisse();
+		long2 = extremite.getAbscisse();
+		lat1 = origine.getOrdonnee();
+		lat2 = extremite.getOrdonnee();
 
 		// on les convertit pour l'affichage
 		x1 = conversionLongitudeEnX(long1);
@@ -594,8 +595,8 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		for (Sommet sommet : sommets) {
 			
 			// On récupère ses coordonnees
-			longitude = sommet.getLongitude();
-			latitude = sommet.getLatitude();
+			longitude = sommet.getAbscisse();
+			latitude = sommet.getOrdonnee();
 			
 			// On convertit les coordonnees pour l'affichage
 			x = conversionLongitudeEnX(longitude);
@@ -628,8 +629,8 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 		if(sommet!=null){
 			
 			// on recupère ses coordonnées 
-			lon = sommet.getLongitude();
-			lat = sommet.getLatitude();
+			lon = sommet.getAbscisse();
+			lat = sommet.getOrdonnee();
 			
 			// on les convertit pour l'affichage
 			x =	conversionLongitudeEnX(lon);
@@ -842,33 +843,30 @@ public class PanneauDessinGraphe extends JPanel implements Printable {
 	 */
 	public void update() {
 		
-		if (modele.isCentreVueDemande()) {
-			this.centrerVue();
-			modele.setCentreVueDemande(false);
+		// si on a demandé à centrer la vue
+		if (EtatVue.centreVueDemande) {
+			
+			this.centrerVue();			
+			EtatVue.centreVueDemande = false;
 		}
-		if(modele.isModeAjouterSommet()==true) {
+		
+		// Si on est en mode ajout (noeud ou arete)
+		if(EtatVue.modeAjouterSommet || EtatVue.modeAjouterArete) {
+			
 			//On modifie la forme du curseur
 		    setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR) );		
 		}
 		else {
-			 setCursor(Cursor.getDefaultCursor());
-			 
-			 
-			 if(modele.isModeAjouterArete()) {
-					//On modifie la forme du curseur
-				    setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR) );		
-				}
-				else {
-					 setCursor(Cursor.getDefaultCursor());
-				}
-	      
+			
+			// sinon on remet le curseur par defaut
+			setCursor(Cursor.getDefaultCursor());
 		}
 		
 		
-		
-		
-		if (modele.isImprimerDemande()) {
+		// si on a demandé à imprimer		
+		if (EtatVue.imprimerDemande) {
 			new FenetreImprimer(this);
+			EtatVue.imprimerDemande = false;
 		}
 		
 		

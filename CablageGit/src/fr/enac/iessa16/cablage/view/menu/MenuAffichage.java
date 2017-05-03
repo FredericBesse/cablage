@@ -12,15 +12,19 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import fr.enac.iessa16.cablage.controller.Controleur;
+import fr.enac.iessa16.cablage.view.Fenetre;
 import fr.enac.iessa16.cablage.view.Parametres;
 
 @SuppressWarnings("serial")
 public class MenuAffichage extends JMenu {
 
 	private LookAndFeelInfo[] listeLAF;
+	private Fenetre fenetre;
 
-	public MenuAffichage(Controleur controleur) {
+	public MenuAffichage(Controleur controleur, Fenetre fenetre) {
 		super(Parametres.menuAffichage);
+		
+		this.fenetre = fenetre;
 
 		JMenuItem optionCentrage = new JMenuItem(Parametres.centrage);
 		this.add(optionCentrage);
@@ -83,7 +87,7 @@ public class MenuAffichage extends JMenu {
 	    jm.setText("Look and Feel");
 	      ButtonGroup bg1 = new ButtonGroup();
 	      listeLAF = UIManager.getInstalledLookAndFeels ();
-	      JRadioButtonMenuItem[] tJrbi = new JRadioButtonMenuItem[listeLAF.length];
+	      final JRadioButtonMenuItem[] tJrbi = new JRadioButtonMenuItem[listeLAF.length];
 	      for (int i=0; i < listeLAF.length; i++) {
 	          tJrbi[i] = new JRadioButtonMenuItem();
 	          tJrbi[i].setText(listeLAF[i].getName ());
@@ -98,8 +102,9 @@ public class MenuAffichage extends JMenu {
 	            		 break;
 	                try{
 	                   UIManager.setLookAndFeel(MenuAffichage.this.listeLAF[i].getClassName());
-	                   SwingUtilities.updateComponentTreeUI(MenuAffichage.this);
+	                   SwingUtilities.updateComponentTreeUI(fenetre);
 	                   //System.out.println(listeLAF[i]);
+	                   // FIXME selectionner nimbus par defaut
 	                }catch (Exception ex1) {System.out.println(ex1);}
 	             }
 	          });

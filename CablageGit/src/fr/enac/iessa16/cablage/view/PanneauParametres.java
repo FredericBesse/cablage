@@ -304,8 +304,8 @@ public class PanneauParametres extends JPanel {
 		
 			if (sommetSelectionne != null) {				
 				textFieldNom.setText(sommetSelectionne.getNom());
-				textFieldLat.setText(Double.toString(sommetSelectionne.getLatitude()));
-				textFieldLon.setText(Double.toString(sommetSelectionne.getLongitude()));
+				textFieldLat.setText(Double.toString(sommetSelectionne.getOrdonnee()));
+				textFieldLon.setText(Double.toString(sommetSelectionne.getAbscisse()));
 			} else {
 				textFieldNom.setText("");
 				textFieldLat.setText("");

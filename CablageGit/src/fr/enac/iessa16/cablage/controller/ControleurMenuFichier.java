@@ -53,11 +53,6 @@ public class ControleurMenuFichier implements ActionListener {
 			model.chargerGrapheParDefaut();
 		}
 
-		if (s.equals(Parametres.grapheAleatoire)) {
-
-			model.nouveauGrapheAleatoire();
-		}
-
 		if (s.equals(Parametres.importer)) {
 
 			// On appelle la methode chargerGrapheFichierTexte implementée dans

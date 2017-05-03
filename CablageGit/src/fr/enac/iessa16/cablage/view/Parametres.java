@@ -8,6 +8,9 @@ public class Parametres {
 	
 	// Version
 	public static final String version = "1.0";
+	
+	// Mode demo
+	public static final boolean modeDemo = true;
 		
 	
 	// Titre de la fenetre

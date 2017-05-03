@@ -6,6 +6,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
+import fr.enac.iessa16.cablage.model.EtatVue;
 import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.view.PanneauDessinGraphe;
 import fr.enac.iessa16.cablage.view.dialog.FenetreAjoutSommet;
@@ -43,7 +44,7 @@ public class ControleurSouris implements MouseListener, MouseMotionListener, Mou
 		
 		if (e.getButton() == MouseEvent.BUTTON1) {
 			
-			if(modele.isModeAjouterSommet() == true) {
+			if(EtatVue.modeAjouterSommet == true) {
 				double longitude;
 				double latitude;
 				longitude = PanneauDessinGraphe.conversionXenLongitude(e.getX());
@@ -55,7 +56,7 @@ public class ControleurSouris implements MouseListener, MouseMotionListener, Mou
 				
 				//modele.ajouterSommetEffectif(e.getX(),e.getY());		
 			}
-			else if (modele.isModeAjouterArete()) {
+			else if (EtatVue.modeAjouterArete == true) {
 				
 				modele.ajouterAreteEffectif(e.getX(),e.getY());
 				
@@ -64,8 +65,10 @@ public class ControleurSouris implements MouseListener, MouseMotionListener, Mou
 				modele.touverAreteLaPlusProcheDuClicSouris(e.getX(), e.getY());
 			}
 		} else if (e.getButton() == MouseEvent.BUTTON3) {
-			modele.setModeAjouterSommet(false);
-			modele.setModeAjouterArete(false);
+			
+			EtatVue.modeAjouterSommet = false;
+			EtatVue.modeAjouterArete = false;
+			
 			modele.changement();
 		}
 	}
