@@ -8,7 +8,7 @@ import fr.enac.iessa16.cablage.controller.Controleur;
 import fr.enac.iessa16.cablage.view.Parametres;
 
 /**
- * Classe BarreOutilsFichier
+ * Classe BarreOutils
  *	
  * @author Racha HEDIDI et Frédéric BESSE
  */
@@ -19,7 +19,7 @@ public class BarreOutils extends JToolBar{
 	/**
 	 * Constructeur de la classe BarreOutilsFichier
 	 * 
-	 * @param controleur
+	 * @param controleur le controleur
 	 */
 	public BarreOutils(Controleur controleur) {
 		
@@ -53,9 +53,7 @@ public class BarreOutils extends JToolBar{
         imprimer.setToolTipText(Parametres.imprimer);
         imprimer.setActionCommand(Parametres.imprimer);
         imprimer.addActionListener(controleur.getControleurMenuFichier());
-	    this.add(imprimer);
-	    
-	    
+	    this.add(imprimer);    
 	    
 	    ImageIcon iconAjoutSommet = new ImageIcon("image/icon/sommetajout.jpeg");
         JButton ajoutSommet = new JButton(iconAjoutSommet);
@@ -63,7 +61,6 @@ public class BarreOutils extends JToolBar{
 	    ajoutSommet.setActionCommand(Parametres.ajouterSommet);
 	    ajoutSommet.addActionListener(controleur.getControleurMenuEdition());
 	    this.add(ajoutSommet);
-   
         
 	    ImageIcon iconSupprimerSommet = new ImageIcon("image/icon/SuppSomet.pngajout.jpeg");
         JButton suppSommet = new JButton(iconSupprimerSommet);
@@ -87,9 +84,7 @@ public class BarreOutils extends JToolBar{
 	    this.add(suppArete);
 	    
 	    this.setFloatable(false);
- 
     }
-	
 }
 		
 		

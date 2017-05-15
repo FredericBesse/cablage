@@ -50,9 +50,9 @@ public class Cablage {
 	/**
 	 * Constructeur de la classe Cablage
 	 * 
-	 * @param sommetsSelectionnes
-	 * @param sommetsUtiles
-	 * @param listeAretes
+	 * @param sommetsSelectionnes la liste de sommets selectionné
+	 * @param sommetsUtiles la liste de sommets utiles
+	 * @param listeAretes la liste des aretes
 	 */
 	public Cablage(ArrayList<Sommet> sommetsSelectionnes, ArrayList<Sommet> sommetsUtiles,
 			ArrayList<Arete> listeAretes) {

@@ -36,34 +36,26 @@ public class ControleurMenuEdition implements ActionListener {
 
 		String actionCommand = e.getActionCommand();
 
+		// TODO : remplacer par un switch
+		
 		if (actionCommand.equals(Parametres.ajouterSommet)) {
-			
 			modele.ajouterSommet();
-
 		}
 
 		if (actionCommand.equals(Parametres.supprimerSommet)) {
-
 			modele.supprimerSommet();
-
 		}
 
 		if (actionCommand.equals(Parametres.ajouterArete)) {
-
 			modele.ajouterArete();
-
 		}
 
 		if (actionCommand.equals(Parametres.supprimerArete)) {
-
 			modele.supprimerArete();
-
 		}
 		
 		if (actionCommand.equals(Parametres.preferences)) {
-
 			new FenetrePreferences(modele);
-
 		}
 	}
 }

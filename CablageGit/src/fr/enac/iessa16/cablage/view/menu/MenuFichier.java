@@ -95,9 +95,6 @@ public class MenuFichier extends JMenu {
 		
 		// Création de l'item Enregistrer Sous		
 		optionEnregistrerSous = new JMenuItem(Parametres.enregistrerSous);
-        //optionEnregistrerSous.setMnemonic(KeyEvent.VK_S);
-		//optionEnregistrerSous.setAccelerator(KeyStroke.getKeyStroke("control shift S"));
-		//optionEnregistrerSous.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK + KeyEvent.SHIFT_MASK));
 		optionEnregistrerSous.setActionCommand(Parametres.enregistrerSous);
 		optionEnregistrerSous.addActionListener(controleur.getControleurMenuFichier());
 		optionEnregistrerSous.setEnabled(false);
@@ -135,19 +132,16 @@ public class MenuFichier extends JMenu {
 	}
 
 	public void updateNouveauGraphe() {
-
-		//optionEnregistrer;
+		optionEnregistrer.setEnabled(true);
 		optionEnregistrerSous.setEnabled(true);
 		optionImprimer.setEnabled(true);
 		optionfermer.setEnabled(true);
-		
 	}
 
 	public void updateFermerGraphe() {
-		// TODO Auto-generated method stub
+		optionEnregistrer.setEnabled(false);
 		optionEnregistrerSous.setEnabled(false);
 		optionImprimer.setEnabled(false);
 		optionfermer.setEnabled(false);
-		
 	}	
 }

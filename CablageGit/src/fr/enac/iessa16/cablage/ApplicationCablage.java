@@ -39,7 +39,7 @@ public class ApplicationCablage {
 	/**
 	 * Main de l'application cablage
 	 * 
-	 * @param args
+	 * @param args les paramètres de lancement
 	 */
 	public static void main(String[] args) {
 		

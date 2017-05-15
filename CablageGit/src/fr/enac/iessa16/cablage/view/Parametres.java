@@ -1,7 +1,6 @@
 package fr.enac.iessa16.cablage.view;
 
 import java.awt.Color;
-import java.awt.Component;
 
 public class Parametres {
 	

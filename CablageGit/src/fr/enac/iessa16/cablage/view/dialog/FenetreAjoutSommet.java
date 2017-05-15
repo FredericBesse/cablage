@@ -33,7 +33,6 @@ public class FenetreAjoutSommet extends JDialog implements ActionListener {
 		this.ordonnee = ordonnee;
 		this.modele = monModel;
 		this.setTitle("Ajout Sommet");
-		// this.setSize(550, 270);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
@@ -41,7 +40,6 @@ public class FenetreAjoutSommet extends JDialog implements ActionListener {
 		this.initComponent();
 		this.pack();
 		this.setVisible(true);
-
 	}
 
 	private void initComponent() {
@@ -87,28 +85,25 @@ public class FenetreAjoutSommet extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		// TODO Auto-generated method stub
-		// si bouton ok
 		String nomSommet;
 		double abscisseSommet;
 		double ordonneeSommet;
 		String s = e.getActionCommand();
 
+		// si bouton ok
 		if (s.equals("ok")) {
-			// FIXME gerer les exceptions
+			// FIXME gerer les exceptions format
 
 			nomSommet = nomEntree.getText();
 			abscisseSommet = Double.parseDouble(abscisseEntree.getText());
 			ordonneeSommet = Double.parseDouble(ordonneeEntree.getText());
 			modele.ajouterSommetEffectif(abscisseSommet, ordonneeSommet, nomSommet);
 			dispose();
-
 		}
+		
+		// si bouton annuler
 		if (s.equals("annuler")) {
 			this.dispose();
-
 		}
-
 	}
-
 }

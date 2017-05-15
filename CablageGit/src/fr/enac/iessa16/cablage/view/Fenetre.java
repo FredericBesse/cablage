@@ -1,26 +1,20 @@
 package fr.enac.iessa16.cablage.view;
 
-import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
-import java.awt.SplashScreen;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.border.Border;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -52,13 +46,9 @@ public class Fenetre extends JFrame implements Observer {
 	private PanneauParametres panneauParametres;
 
 	private MenuFichier menuFichier;
-
 	private MenuEdition menuEdition;
-
 	private MenuAffichage menuAffichage;
-
 	private MenuCalcul menuCalcul;
-
 	private MenuAide menuAide;
 
 	/**
@@ -86,13 +76,12 @@ public class Fenetre extends JFrame implements Observer {
 		setProprietesFenetre();
 		
 		// on rend visible la fenetre
-		/*try {
+		try {
 			// pour voir le splash screen
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}*/
-	
+		}
 		this.setVisible(true);
 
 		// Récupération de la taille du panneau dessin (pour les fonctions de
@@ -131,7 +120,6 @@ public class Fenetre extends JFrame implements Observer {
 		// Création du panneau dessin
 		JPanel panneauVue2D = new JPanel();
 		panneauVue2D.setLayout(new BorderLayout());
-		// panneauVue2D.setBorder(border);
 		panneauVue2D.setBorder(BorderFactory.createTitledBorder(Parametres.titrePanneauVue2D));
 		this.panneauDessin = new PanneauDessinGraphe(this.modele, this.controleur);
 		panneauVue2D.add(panneauDessin, BorderLayout.CENTER);
@@ -190,7 +178,6 @@ public class Fenetre extends JFrame implements Observer {
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 			// "com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
-			// FIXME 
 			SwingUtilities.updateComponentTreeUI(this);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -207,14 +194,13 @@ public class Fenetre extends JFrame implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 
-		panneauDessin.update();
-
-		panneauParametres.update();
+		
 		
 		
 		if (EtatVue.nouveauGraphe) {
 			
 			panneauDessin.updateNouveauGraphe();
+			panneauParametres.updateNouveauGraphe();
 			
 			menuFichier.updateNouveauGraphe();
 			menuEdition.updateNouveauGraphe();
@@ -226,12 +212,17 @@ public class Fenetre extends JFrame implements Observer {
 		
 		if (EtatVue.fermerGraphe) {
 			panneauDessin.updateFermerGraphe();
+			panneauParametres.updateNouveauGraphe();
 			menuFichier.updateFermerGraphe();
 			menuEdition.updateFermerGraphe();
 			menuAffichage.updateFermerGraphe();
 			menuCalcul.updateFermerGraphe();
 			EtatVue.fermerGraphe = false;
 		}
+		
+		panneauDessin.update();
+
+		panneauParametres.update();
 	}
 
 	/*

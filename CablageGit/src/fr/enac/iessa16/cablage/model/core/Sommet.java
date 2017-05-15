@@ -43,8 +43,8 @@ public class Sommet {
 	 * Constructeur de la classe Sommet
 	 * 
 	 * @param abscisse l'abscisse du sommet
-	 * @param ordonnee
-	 * @param nom
+	 * @param ordonnee l'ord du sommet
+	 * @param nom le nom
 	 */
 	public Sommet(double abscisse, double ordonnee, String nom) {
 
@@ -80,14 +80,14 @@ public class Sommet {
 	/**
 	 * Setter de l'ordonnee
 	 * 
-	 * @param ordonnee
+	 * @param ordonnee la nouvelle ordonnee
 	 */
 	public void setOrdonnee(double ordonnee) {
 		this.ordonnee = ordonnee;
 	}
 
 	/**
-	 * @return nom
+	 * @return nom le nom
 	 */
 	public String getNom() {
 		return nom;
@@ -95,7 +95,7 @@ public class Sommet {
 	
 	/**
 	 * Setter du nom du sommet 
-	 * @param nom
+	 * @param nom le nouveau nom
 	 */
 	public void setNom(String nom) {
 		this.nom = nom;
@@ -117,7 +117,7 @@ public class Sommet {
 	/**
 	 * Méthode qui determine la distance entre deux sommets
 	 *   
-	 * @param sommet
+	 * @param sommet le sommet
 	 * @return la distance
 	 */
 	public double calculerDistance(Sommet sommet) {
@@ -134,11 +134,26 @@ public class Sommet {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		
 		return (this.ordonnee == ((Sommet)obj).getOrdonnee())&&(this.abscisse == ((Sommet)obj).getAbscisse());
 	}
 	
+	
+
+
 	@Override
 	public String toString() {
-		return nom;
+		
+		if (nom.length() == 0)
+			return Integer.toString(id);
+		else return nom;
+			
+				
 	}	
 }

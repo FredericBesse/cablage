@@ -1,1 +1,9 @@
+fr.enac.iessa16.cablage
+fr.enac.iessa16.cablage.controller
+fr.enac.iessa16.cablage.model
+fr.enac.iessa16.cablage.model.algorithm
 fr.enac.iessa16.cablage.model.core
+fr.enac.iessa16.cablage.model.file
+fr.enac.iessa16.cablage.view
+fr.enac.iessa16.cablage.view.dialog
+fr.enac.iessa16.cablage.view.menu

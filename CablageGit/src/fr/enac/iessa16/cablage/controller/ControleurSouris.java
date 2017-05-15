@@ -29,7 +29,7 @@ public class ControleurSouris implements MouseListener, MouseMotionListener, Mou
 	/**
 	 * Constructeur de la classe ControleurSouris
 	 * 
-	 * @param monModele
+	 * @param monModele le modele
 	 */
 	public ControleurSouris(Modele monModele) {
 		super();
@@ -49,17 +49,10 @@ public class ControleurSouris implements MouseListener, MouseMotionListener, Mou
 				double latitude;
 				longitude = PanneauDessinGraphe.conversionXenLongitude(e.getX());
 				latitude = PanneauDessinGraphe.conversionYenLatitude(e.getY());
-				FenetreAjoutSommet fenAjoutSommet = new FenetreAjoutSommet(this.modele,longitude,latitude);
-				
-				
-				
-				
-				//modele.ajouterSommetEffectif(e.getX(),e.getY());		
+				new FenetreAjoutSommet(this.modele,longitude,latitude);
 			}
 			else if (EtatVue.modeAjouterArete == true) {
-				
 				modele.ajouterAreteEffectif(e.getX(),e.getY());
-				
 			} else {
 				
 				boolean sommetTrouve = modele.touverSommetLePlusProcheDuClicSouris(e.getX(), e.getY());
@@ -80,7 +73,7 @@ public class ControleurSouris implements MouseListener, MouseMotionListener, Mou
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
+		// on enregistre la position de la souris pour le drag
 		this.x_old = e.getX();
 		this.y_old = e.getY();
 	}
@@ -101,11 +94,10 @@ public class ControleurSouris implements MouseListener, MouseMotionListener, Mou
 	}
 
 
-	
-
 	@Override
 	public void mouseDragged(MouseEvent e) {
 
+		// on calcule le déplacement depuis l'appui sur le bouton
 		int dx = e.getX()-x_old;
 		int dy = e.getY()-y_old;
 		

@@ -29,7 +29,7 @@ public class MenuEdition extends JMenu {
 	/**
 	 * Constructeur de la classe MenuEdition
 	 *
-	 * @param controleur
+	 * @param controleur le controleur
 	 */
 	public MenuEdition(Controleur controleur) {
 
@@ -44,6 +44,7 @@ public class MenuEdition extends JMenu {
 	}
 
 	private void creerItems() {
+		
 		// Item Ajouter sommet
 		ajouterSommet = new JMenuItem(Parametres.ajouterSommet);
 		ajouterSommet.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ADD, ActionEvent.CTRL_MASK));

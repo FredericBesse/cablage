@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jgrapht.alg.ConnectivityInspector;
-import org.jgrapht.graph.SimpleWeightedGraph;
 
 import fr.enac.iessa16.cablage.model.algorithm.AlgoDijkstraJGrapht;
 import fr.enac.iessa16.cablage.model.algorithm.AlgoKruskalJGrapht;
@@ -66,12 +65,6 @@ public class Modele extends Observable {
 	// Fichier XML
 	private File fichierXML;
 
-	// FIXME deplace dans etat vue
-	// private boolean imprimerDemande;
-	// private boolean centreVueDemande;
-
-	// private boolean modeAjouterSommet;
-	// private boolean modeAjouterArete;
 
 	/**
 	 * Constructeur de la classe DonneesAAfficher.java
@@ -104,20 +97,11 @@ public class Modele extends Observable {
 		this.coutCheminDijkstra = 0;
 
 		this.algoKruskal = null;
-		// this.listeAretesKruskal = new ArrayList<Arete>();
 		this.cablageKruskal = null;
 
 		this.listeSousGraphesConnexes = null;
-		// this.modeAjouterSommet = false;
-		// this.modeAjouterArete = false;
-
-		// this.imprimerDemande = false;
-		// this.centreVueDemande = false;
 
 		this.fichierXML = null;
-
-		// this.fenetre = null;
-
 	}
 
 	/*
@@ -229,15 +213,11 @@ public class Modele extends Observable {
 	 * Méthode permettant d'imprimer le graphe
 	 */
 	public void imprimer() {
-
 		EtatVue.imprimerDemande = true;
 		this.changement();
-		// new Imprimer(fenetre.getDessin());
-
 	}
 
 	public void fermer() {
-		// TODO fermer
 		this.initialise();
 		EtatVue.fermerGraphe = true;
 		this.changement();
@@ -245,7 +225,7 @@ public class Modele extends Observable {
 
 	public void quitter() {
 
-		// FIXME : demande si l'utilisateur est sur de vouloir quitter
+		// FIXME : demander si l'utilisateur est sur de vouloir quitter
 
 		LOGGER.info("Fin de l'application ! Au revoir...");
 		System.exit(0);
@@ -254,43 +234,25 @@ public class Modele extends Observable {
 	/*
 	 * Fonctions appelées par le menu Edition (et la toolbar)
 	 */
-
+	/**
+	 * Méthode permettant de passer en mode ajout sommet
+	 */
 	public void ajouterSommet() {
-		// TODO ajouter sommet
-		// message("Ajouter Sommet", "à faire");
-		// return true;
 		EtatVue.modeAjouterSommet = true;
-
 		this.changement();
 	}
 
-	// FIXME : à supprimer dans ajoutArete
-	public Sommet ajouterSommetEffectif(int x, int y) {
+	
 
-		String nom;
-		double longitude = PanneauDessinGraphe.conversionXenLongitude(x);
-		double latitude = PanneauDessinGraphe.conversionYenLatitude(y);
-
-		// TODO demander nom a l'utilisateur
-		message("Creation sommet", "nom=toto...");
-
-		Sommet sommet = new Sommet(longitude, latitude, "toto");
-		graphe.getListeSommets().add(sommet);
-		graphe.addVertex(sommet);
-		EtatVue.modeAjouterSommet = false;
-		changement();
-
-		return sommet;
-	}
-
+	/**
+	 * Méthode permettant de créer un nouveau sommet dans le graphe
+	 * 
+	 * @param x l'abscisse du sommet
+	 * @param y l'ordonnee
+	 * @param nom le nom
+	 * @return le sommet créé
+	 */
 	public Sommet ajouterSommetEffectif(double x, double y, String nom) {
-
-		// String nom;
-		// double longitude = PanneauDessinGraphe.conversionXenLongitude(x);
-		// double latitude = PanneauDessinGraphe.conversionYenLatitude(y);
-
-		// TODO demander nom a l'utilisateur
-		// message("Creation sommet", "nom=toto...");
 
 		Sommet sommet = new Sommet(x, y, nom);
 		graphe.getListeSommets().add(sommet);
@@ -301,10 +263,11 @@ public class Modele extends Observable {
 		return sommet;
 	}
 
+	/**
+	 * Méthode permettant de supprimer un sommet sélectionné
+	 */
 	public void supprimerSommet() {
-		// TODO supprimer sommet
-		// message("Supprimer Sommet", "à faire");
-
+		
 		if (this.dernierSommetSelectionne == null) {
 			erreur("Suppression sommet impossible", "Vous devez selectionner un sommet !");
 		} else {
@@ -324,12 +287,6 @@ public class Modele extends Observable {
 
 			if (n == JOptionPane.YES_OPTION) {
 
-				// message("suppr","Avant :
-				// sommet:"+graphe.getListeSommets().size()+"
-				// "+graphe.vertexSet().size()+"
-				// aretes:"+graphe.getListeAretes().size()+"
-				// "+graphe.edgeSet().size());
-
 				Arete arete;
 				for (int i = 0; i < aretesTouchantLeSommet.size(); i++) {
 					arete = aretesTouchantLeSommet.get(i);
@@ -343,22 +300,17 @@ public class Modele extends Observable {
 				derniereAreteSelectionne = null;
 				dernierSommetSelectionne = null;
 
-				// message("suppr","Apres :
-				// sommet:"+graphe.getListeSommets().size()+"
-				// "+graphe.vertexSet().size()+"
-				// aretes:"+graphe.getListeAretes().size()+"
-				// "+graphe.edgeSet().size());
-
 				this.changement();
 
 			}
-
 		}
 	}
 
+	/**
+	 * Méthode permettant de passer en mode ajout arete
+	 */
 	public void ajouterArete() {
-		// TODO ajouter arete
-		// message("Ajouter Arete", "à faire");
+		
 		if (this.dernierSommetSelectionne == null) {
 			erreur("Ajout arete impossible", "Vous devez d'abord selectionner un sommet origine !");
 		} else {
@@ -367,6 +319,12 @@ public class Modele extends Observable {
 		}
 	}
 
+	/**
+	 * Méthode permettant d'ajouter une arete
+	 * 
+	 * @param xClic la position x du clic souris (pixel)
+	 * @param yClic la position y du clic souris (pixel)
+	 */
 	public void ajouterAreteEffectif(int xClic, int yClic) {
 
 		// Déclaration des variables locales
@@ -411,7 +369,6 @@ public class Modele extends Observable {
 					// position du sommet
 					distance = Math.sqrt(Math.pow(xClic - x, 2) + Math.pow(yClic - y, 2));
 
-					// LOGGER.trace("distance = "+distance);
 					// Le sommet est consideré comme "sélectionné" si la
 					// distance entre le clique et
 					// la position du sommet du graphe est inférieur au rayon de
@@ -451,8 +408,11 @@ public class Modele extends Observable {
 							"Voulez-vous créer un nouveau sommet pour l'extremite ?", "Ajout d'une arete",
 							JOptionPane.YES_NO_OPTION);
 
+					// TODO : demander le nom a l'utilisateur
+					String nom = "toto";
+					
 					if (n == JOptionPane.YES_OPTION) {
-						sommet = this.ajouterSommetEffectif(xClic, yClic);
+						sommet = this.ajouterSommetEffectif(xClic, yClic, nom);
 
 						// si le sommet a bien été créé
 						if (sommet != null) {
@@ -475,15 +435,14 @@ public class Modele extends Observable {
 							this.changement();
 						}
 					}
-
 				}
 			}
 		}
-
-		// this.modeAjouterSommet = false;
-		// changeent();
 	}
 
+	/**
+	 * Méthode permettant de supprimer une arete sélectionnée
+	 */
 	public void supprimerArete() {
 		if (this.derniereAreteSelectionne == null) {
 			erreur("Suppression arete impossible", "Vous devez selectionner une arete !");
@@ -504,18 +463,10 @@ public class Modele extends Observable {
 				this.changement();
 
 			}
-
 		}
 	}
 
-	// public void preferences() {
-	// TODO preferences
-	// message("preferences", "à faire");
-	// }
 
-	/*
-	 * Fonctions appelées par le menu Calcul
-	 */
 
 	/**
 	 * Methode permettant de calculer Dijkstra
@@ -558,30 +509,27 @@ public class Modele extends Observable {
 	 */
 	public void calculerKruskal() {
 
-		// FIXME a faire plutot dans le setGraphe, ou en cas de modification du
-		// graphe (ajout sommet, arete)
 		this.algoKruskal = new AlgoKruskalJGrapht(this);
 
 		algoKruskal.calculerKruskal(this.listeSommetsSelectionnes);
 
 		this.cablageKruskal = algoKruskal.getCablageLePlusCourtKruskal();
 
-		// FIXME gerer null ?
 		LOGGER.trace("Le chemin le plus court contient " + cablageKruskal.getAretes().size() + " aretes");
 
 		changement();
-
 	}
 
+	
+	
 	/*
 	 * Fonctions appelées par le controleur de la souris
 	 */
 
-	
 	/**
 	 * Méthode permettant de trouver le noeud le plus proche du clic souris
-	 * @param xClic
-	 * @param yClic
+	 * @param xClic la position x du clic souris (pixel)
+	 * @param yClic la position y du clic souris (pixel)
 	 * @return true si un sommet proche du clic souris a été trouvé
 	 */
 	public boolean touverSommetLePlusProcheDuClicSouris(int xClic, int yClic) {
@@ -684,8 +632,8 @@ public class Modele extends Observable {
 	/**
 	 * Méthode permettant de trouver l'arete le plus proche du clic souris
 	 * 
-	 * @param xClic
-	 * @param yClic
+	 * @param xClic la position x du clic souris (pixel)
+	 * @param yClic la position y du clic souris (pixel)
 	 */
 	public void touverAreteLaPlusProcheDuClicSouris(int xClic, int yClic) {
 
@@ -768,8 +716,8 @@ public class Modele extends Observable {
 	/**
 	 * Méthode permettant de déplacer la vue suite à un drag de la souris
 	 * 
-	 * @param dx
-	 * @param dy
+	 * @param dx le déplacement en x (pixel)
+	 * @param dy le déplacement en y (pixel)
 	 */
 	public void drag(int dx, int dy) {
 
@@ -779,6 +727,13 @@ public class Modele extends Observable {
 		changement();
 	}
 
+	/**
+	 * Méthode permettant de zoomer
+	 * 
+	 * @param xs la position x du clic souris (pixel)
+	 * @param ys la position y du clic souris (pixel)
+	 * @param rotation la rotation de la molette
+	 */
 	public void zoom(int xs, int ys, int rotation) {
 
 		// on calcule la nouvelle échelle pour la vue
@@ -806,20 +761,9 @@ public class Modele extends Observable {
 	 */
 	private void testConnectivite() {
 
-		SimpleWeightedGraph<Sommet, Arete> graphPourJGrapht = new SimpleWeightedGraph<Sommet, Arete>(Arete.class);
+		
 
-		// Ajout de tous les sommets au graphe JGrapht
-		for (Sommet sommet : graphe.getListeSommets()) {
-			graphPourJGrapht.addVertex(sommet);
-		}
-
-		// Ajout de toutes les aretes au graphe JGrapht
-		for (Arete arete : graphe.getListeAretes()) {
-			graphPourJGrapht.addEdge(arete.getSommetOrigine(), arete.getSommetExtremité(), arete);
-			// FIXME graphPourJGrapht.setEdgeWeight(arete, arete.getCout());
-		}
-
-		ConnectivityInspector<Sommet, Arete> connectivityInspector = new ConnectivityInspector<>(graphPourJGrapht);
+		ConnectivityInspector<Sommet, Arete> connectivityInspector = new ConnectivityInspector<>(this.graphe);
 
 		listeSousGraphesConnexes = (ArrayList<Set<Sommet>>) connectivityInspector.connectedSets();
 
@@ -842,10 +786,11 @@ public class Modele extends Observable {
 		JOptionPane.showMessageDialog(null, message, titre, JOptionPane.ERROR_MESSAGE);
 	}
 
+	
 	/*
 	 * Getters
 	 */
-
+	
 	public ArrayList<Arete> getListeAretesDijkstra() {
 		return listeAretesDijkstra;
 	}

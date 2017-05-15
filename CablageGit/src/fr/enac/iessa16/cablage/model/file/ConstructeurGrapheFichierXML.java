@@ -13,10 +13,8 @@ import javax.xml.bind.Unmarshaller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import fr.enac.iessa16.cablage.ApplicationCablage;
 import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.model.core.ContenuFichierXML;
-import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
 
 /**
  * Classe permettant de lire et écrire un fichier XML
@@ -30,8 +28,6 @@ public class ConstructeurGrapheFichierXML {
 
 	private Modele modele;
 	
-	private GrapheTheorique graphe;
-
 	private JAXBContext jaxbContext;
 
 	private ContenuFichierXML contenuFichierXML;
@@ -39,6 +35,11 @@ public class ConstructeurGrapheFichierXML {
 	
 
 
+	/**
+	 * Constructeur
+	 * 
+	 * @param modele le modele
+	 */
 	public ConstructeurGrapheFichierXML(Modele modele) {
 		
 		this.modele = modele;
@@ -53,15 +54,19 @@ public class ConstructeurGrapheFichierXML {
 		}
 		
 		this.contenuFichierXML = null;
-		
 	}
 	
 	
+	/**
+	 * Méthode permettant de créer un fichier XML
+	 * 
+	 * @param fichier le fichier a créer
+	 * @param structureFichier le contenu
+	 */
 	public void enregistrerFichierXML(File fichier, ContenuFichierXML structureFichier) {
 		
 		
 		if (jaxbContext != null) {
-		
 				
 			try {
 				Marshaller marshaller = jaxbContext.createMarshaller();
@@ -71,20 +76,25 @@ public class ConstructeurGrapheFichierXML {
 				marshaller.marshal(structureFichier, fichier);
 			
 			} catch (JAXBException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
 			modele.erreur("XML", "Pas de contexte JAXB...");
+			LOGGER.error("Erreur JAXB context");
 		}
 	}
 	
+	/**
+	 * Méthode permettant de créer un nouveau fichier XML
+	 * 
+	 * @param structureFichier le contenu
+	 * @return le fichier 
+	 */
 	public File enregistrerSousFichierXML(ContenuFichierXML structureFichier) {
 		
 		int returnVal;
 		File fichier = null;
-		String s = null;
-
+		
 		// Création du JFileChooser
 		JFileChooser fc = new JFileChooser("file/");
 		
@@ -108,13 +118,15 @@ public class ConstructeurGrapheFichierXML {
 	}
 
 
+	/**
+	 * Méthode permettant d'ouvrir un fichier XML
+	 * 
+	 * @return le fichier ouvert
+	 */
 	public File ouvrirFichierXML() {
-		
-		//modele.message("ouverture du fichier", "test");
-		
+				
 		int returnVal;
 		File fichier = null;
-		String s = null;
 
 		// Création du JFileChooser
 		JFileChooser fc = new JFileChooser("file/");
@@ -131,7 +143,6 @@ public class ConstructeurGrapheFichierXML {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			
 			fichier = fc.getSelectedFile();
-			//modele.message("ouverture du fichier", fichier.getAbsolutePath());
 
 			if (jaxbContext != null) {
 				
@@ -140,24 +151,19 @@ public class ConstructeurGrapheFichierXML {
 					Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 							
 					this.contenuFichierXML = (ContenuFichierXML) unmarshaller.unmarshal(fichier);
-					//modele.message("ouverture du fichier", "unmarshal done "+contenuFichierXML.getGraphe());
 				
 				} catch (JAXBException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else {
 				modele.erreur("XML", "Pas de contexte JAXB...");
 			}
-			
-			
-		
 		}
 		
 		return fichier;
 	}
 
-	
+	// Getter
 	public ContenuFichierXML getContenuFichierXML() {
 		return contenuFichierXML;
 	}

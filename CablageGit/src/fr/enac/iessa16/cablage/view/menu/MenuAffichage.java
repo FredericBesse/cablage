@@ -1,7 +1,6 @@
 package fr.enac.iessa16.cablage.view.menu;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -36,6 +35,7 @@ public class MenuAffichage extends JMenu {
 		super(Parametres.menuAffichage);
 
 		this.fenetre = fenetre;
+		
 		// on récupère le controleur
 		this.controleur = controleur;
 
@@ -43,6 +43,7 @@ public class MenuAffichage extends JMenu {
 		this.creerItems();
 	}
 
+	
 	private void creerItems() {
 
 		optionCentrage = new JMenuItem(Parametres.centrage);

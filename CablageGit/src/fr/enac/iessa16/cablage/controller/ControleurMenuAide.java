@@ -22,7 +22,7 @@ public class ControleurMenuAide implements ActionListener {
 	/**
 	 * Constructeur de la classe ControleurMenuAide
 	 *
-	 * @param monModel le modèle de l'application
+	 * @param monModele le modèle de l'application
 	 */
 	public ControleurMenuAide(Modele monModele) {
 		

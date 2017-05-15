@@ -1,12 +1,7 @@
 package fr.enac.iessa16.cablage.view.menu;
 
-import java.awt.event.ActionEvent;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
-
-import com.sun.glass.events.KeyEvent;
 
 import fr.enac.iessa16.cablage.controller.Controleur;
 import fr.enac.iessa16.cablage.view.Parametres;
@@ -23,7 +18,7 @@ public class MenuAide extends JMenu {
 	/**
 	 * Constructeur de la classe MenuAide
 	 * 
-	 * @param controleur
+	 * @param controleur le controleur
 	 */
 	public MenuAide(Controleur controleur) {
 		

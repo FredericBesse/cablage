@@ -18,7 +18,6 @@ import fr.enac.iessa16.cablage.model.Modele;
 import fr.enac.iessa16.cablage.model.core.Arete;
 import fr.enac.iessa16.cablage.model.core.GrapheTheorique;
 import fr.enac.iessa16.cablage.model.core.Sommet;
-import fr.enac.iessa16.cablage.view.Fenetre;
 
 /**
  * Classe ConstructeurGrapheFichierTexte
@@ -30,6 +29,7 @@ public class ConstructeurGrapheFichierTexte {
 	// Le logger
 	private Logger LOGGER = LogManager.getLogger(ConstructeurGrapheFichierTexte.class);
 	
+	// Le graphe
 	private GrapheTheorique graphe;
 	
 	// FIXME utiliser une seule liste pour les points et les
@@ -44,6 +44,8 @@ public class ConstructeurGrapheFichierTexte {
 	
 	/**
 	 * Constructeur de la classe ConstructeurGrapheFichierTexte
+	 *
+	 * @param modele le modèle
 	 */
 	public ConstructeurGrapheFichierTexte(Modele modele) {
 		
@@ -86,7 +88,6 @@ public class ConstructeurGrapheFichierTexte {
 			try {
 				fis = new FileReader(fichier);
 			} catch (FileNotFoundException e) {
-				//e.printStackTrace();
 				modele.erreur("Erreur", "Fichier non trouvé !");
 			}
 	
@@ -106,14 +107,12 @@ public class ConstructeurGrapheFichierTexte {
 					}
 				}
 			} catch (IOException e) {
-				//e.printStackTrace();
 				modele.erreur("Erreur", "Erreur de lecture du fichier !");
 			}
 			
 			try {
 				bis.close();
 			} catch (IOException e) {
-				//e.printStackTrace();
 				modele.erreur("Erreur", "Erreur pendant la fermeture du fichier !");
 			}
 			graphe = new GrapheTheorique(sommets, aretes);					
@@ -133,12 +132,10 @@ public class ConstructeurGrapheFichierTexte {
 			double latitude1 = Double.parseDouble(tab1[1]);
 			String nom1 = tab[1];
 
-			// System.out.println("lat="+latitude1+" lon="+longitude1);
 
 			Sommet sommet1 = new Sommet(longitude1, latitude1, nom1);
-			// System.out.println("sommet="+sommets);//+" "+sommets.size());
 			points.add(sommet1);
-			// arete = null;
+			
 		} else {
 			LOGGER.warn("Erreur dans le format des données : "+ligne);
 		}
@@ -166,10 +163,8 @@ public class ConstructeurGrapheFichierTexte {
 				latitude1 = Double.parseDouble(tab3[1]);
 
 				sommet1 = new Sommet(longitude1, latitude1, "");
-
-				//if (!sommets.contains(sommet1))
-				//	sommets.add(sommet1);
 				index = sommets.indexOf(sommet1);
+				
 				// si le sommet n'existe pas
 				if (index == -1) {
 					sommets.add(sommet1);

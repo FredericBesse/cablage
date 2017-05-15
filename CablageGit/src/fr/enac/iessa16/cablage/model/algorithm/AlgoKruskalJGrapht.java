@@ -65,7 +65,7 @@ public class AlgoKruskalJGrapht {
 	/**
 	 * Méthode permettant de calculer le chemin à moindre cout reliant l'ensemble des noeuds sélectionnés
 	 * 
-	 * @param listeDeSommetsSelectionnés
+	 * @param listeDeSommetsSelectionnés la liste des sommets selectionnés
 	 */
 	public void calculerKruskal(ArrayList<Sommet> listeDeSommetsSelectionnés) {
 		
@@ -110,27 +110,16 @@ public class AlgoKruskalJGrapht {
 		}
 		
 		if (nbNoeudSupplémentaire > 0) {
-			
-			// FIXME modele.message("Algorithme de Kruskal", nbNoeudSupplémentaire+" noeud(s) non sélectionné(s) ont du etre rajouté pour le calcul du chemin à cout minimum");
+			// TODO ajouter mode debug
+			modele.message("Algorithme de Kruskal", nbNoeudSupplémentaire+" noeud(s) non sélectionné(s) ont du etre rajouté pour le calcul du chemin à cout minimum");
 			
 		}
+			
 		
-		//On cree un sous graphe avec la liste des sommets selectionnés et les sous Aretes.
-		//sousGraphe = new GrapheTheorique(sousSommets, sousAretes);
-		
-		
-		 // Ajout de tous les sommets au graphe JGrapht
+		// Ajout de tous les sommets au graphe JGrapht
         for (Sommet sommet : sousSommets) {
             sousGraphe.addVertex(sommet);
         }
-        /* 
-          Sommet sommet;
-          for (int i = 0; i< sousSommets.size();i++) {
-    			sommet = sousSommets.get(i);
-        		sousGraphe.addVertex(sommet);
-    	  }
-    	*/
-       
         
         // Ajout de toutes les aretes au graphe JGrapht
         for (Arete arete : sousAretes) {
@@ -151,54 +140,16 @@ public class AlgoKruskalJGrapht {
         this.cablageKruskal = new Cablage(listeDeSommetsSelectionnés, sousSommets, listeAretesKruskal);
         
         
-        
-        
-        ArrayList<Sommet> test = modele.getListeSommetsSelectionnes();
-        ArrayList<Arete> testsarete;
-		for (Sommet sommet : test) {
-			LOGGER.info("noeud selectionne : "+sommet.getId());
-			
-			testsarete = cablageKruskal.getAretesParSommet().get(sommet);
-			
-			for (Arete arete : testsarete) {
-				LOGGER.info("   -> arete : "+arete.getSommetOrigine().getId()+" -> "+arete.getSommetExtremité().getId());
-			}
-			
-		}
-        
-        
-        
-		for (Sommet sommet : listeDeSommetsSelectionnés) {
-			LOGGER.info("noeud selectionne : "+sommet.getId());
-			
-			testsarete = cablageKruskal.getAretesParSommet().get(sommet);
-			
-			for (Arete arete : testsarete) {
-				LOGGER.info("   -> arete : "+arete.getSommetOrigine().getId()+" -> "+arete.getSommetExtremité().getId());
-			}
-			
-		}
-        
-        
-        
         // On élague le graphe si nécessaire
         if (nbNoeudSupplémentaire > 0) {
         	this.elague();
         }
         
         
-        for (Sommet sommet : listeDeSommetsSelectionnés) {
-			LOGGER.info("apres elagage noeud selectionne : "+sommet.getId());
-			
-			testsarete = cablageKruskal.getAretesParSommet().get(sommet);
-			
-			for (Arete arete : testsarete) {
-				LOGGER.info("   -> arete : "+arete.getSommetOrigine().getId()+" -> "+arete.getSommetExtremité().getId());
-			}
-			
-		}
+       
         
-        // FIXME modele.message("kruskal", "nb aretes="+listeAretesKruskal.size()+"  cout="+cablageKruskal.getCout());
+        // TODO mode debug 
+        modele.message("kruskal", "nb aretes="+listeAretesKruskal.size()+"  cout="+cablageKruskal.getCout());
 	}
 	
 	
@@ -225,7 +176,7 @@ public class AlgoKruskalJGrapht {
 		
 		
 		
-		while (hasElague && nbPasses < 100) {
+		while (hasElague && nbPasses < 10000) {
 			nbPasses ++;
 			nbNoeudSupprimePasse = 0;
 			hasElague = false;
@@ -298,7 +249,6 @@ public class AlgoKruskalJGrapht {
 					LOGGER.info("ERRRROOOOOOOORRRRR   Suppression du sommet "+sommet.getId()+" nbAretes="+areteParSommet.get(sommet).size());
 				areteParSommet.remove(sommet);
 				cablageKruskal.getSommetsUtiles().remove(sommet);
-				//nbNoeudSupprime++;
 			}
 			sommetsASupprimer.clear();
 						
@@ -317,7 +267,7 @@ public class AlgoKruskalJGrapht {
 	
 	/**
 	 * Méthode permettant de récupérer le cablage le plus court 
-	 * @return
+	 * @return le cablage
 	 */
 	public Cablage getCablageLePlusCourtKruskal() {
         return cablageKruskal;

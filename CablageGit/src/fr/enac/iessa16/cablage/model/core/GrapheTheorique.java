@@ -6,7 +6,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.jgrapht.graph.SimpleWeightedGraph;
@@ -18,6 +17,7 @@ import org.jgrapht.graph.SimpleWeightedGraph;
  * 
  * @author Racha HEDIDI et Frédéric BESSE
  */
+@SuppressWarnings("serial")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GrapheTheorique extends SimpleWeightedGraph<Sommet, Arete>{
 
@@ -162,19 +162,19 @@ public class GrapheTheorique extends SimpleWeightedGraph<Sommet, Arete>{
 		return listeAretes;
 	}
 
-	public double getLatitudeMax() {
+	public double getOrdMax() {
 		return latitudeMax;
 	}
 
-	public double getLatitudeMin() {
+	public double getOrdMin() {
 		return latitudeMin;
 	}
 
-	public double getLongitudeMin() {
+	public double getAbsMin() {
 		return longitudeMin;
 	}
 
-	public double getLongitudeMax() {
+	public double getAbsMax() {
 		return longitudeMax;
 	}
 }

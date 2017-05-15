@@ -38,9 +38,9 @@ public class Arete extends DefaultWeightedEdge {
 	/**
 	 * Constructeur de la classe Arete
 	 * 
-	 * @param origine
-	 * @param extremite
-	 * @param poids
+	 * @param origine de l'arete
+	 * @param extremite de l'arete
+	 * @param poids de l'arete
 	 */
 	public Arete(Sommet origine, Sommet extremite, double poids) {
 		

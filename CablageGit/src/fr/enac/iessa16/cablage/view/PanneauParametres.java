@@ -1,11 +1,11 @@
 package fr.enac.iessa16.cablage.view;
 
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -142,13 +142,13 @@ public class PanneauParametres extends JPanel {
 		labelNom.setLabelFor(textFieldNom);
 		sommet.add(textFieldNom);
 		
-		JLabel labelLat = new JLabel("Lat : ");
+		JLabel labelLat = new JLabel("ordonnee : ");
 		sommet.add(labelLat);
 		textFieldLat = new JTextField(10);
 		labelLat.setLabelFor(textFieldLat);
 		sommet.add(textFieldLat);
 		
-		JLabel labelLon = new JLabel("Long : ");
+		JLabel labelLon = new JLabel("abscisse : ");
 		sommet.add(labelLon);
 		textFieldLon = new JTextField(10);
 		labelLon.setLabelFor(textFieldLon);
@@ -281,11 +281,12 @@ public class PanneauParametres extends JPanel {
 	 * Méthode permettant de mettre à jour le panneau 
 	 */
 	public void update() {
-		// FIXME a enveler ...
+
 		if (modele != null) {
 						
 			// Mise à jour panneau graphe
 			GrapheTheorique graphe = modele.getGraphe();
+			
 			if (graphe != null) {
 				
 				//FIXME mettre à jour le nom du lable pour gérer le singulier pluriel
@@ -303,7 +304,7 @@ public class PanneauParametres extends JPanel {
 			Sommet sommetSelectionne = modele.getdernierSommetSelectionne();
 		
 			if (sommetSelectionne != null) {				
-				textFieldNom.setText(sommetSelectionne.getNom());
+				textFieldNom.setText(sommetSelectionne.toString());
 				textFieldLat.setText(Double.toString(sommetSelectionne.getOrdonnee()));
 				textFieldLon.setText(Double.toString(sommetSelectionne.getAbscisse()));
 			} else {
@@ -317,8 +318,9 @@ public class PanneauParametres extends JPanel {
 			if (a != null) {
 				textFieldAreteOrigine.setText(a.getSommetOrigine().toString());
 				textFieldAreteExtremite.setText(a.getSommetExtremité().toString());
-				textFieldAreteCout.setText(Double.toString(a.getCout()));
-				textFieldAretePoids.setText(Double.toString(a.getPoids()));
+				//FIXME utiliser format
+				textFieldAreteCout.setText(Integer.toString((int)a.getCout()));
+				textFieldAretePoids.setText(Double.toString((int)a.getPoids()));
 			} else {
 				textFieldAreteOrigine.setText("");
 				textFieldAreteExtremite.setText("");
@@ -331,20 +333,18 @@ public class PanneauParametres extends JPanel {
 			
 			double cout = modele.getCoutCheminDijkstra();
 			if (cout > 0) {
-				textFieldCout.setText(Double.toString(cout));
+				textFieldCout.setText(Integer.toString((int)cout));
 			}
 			
 			Sommet origine = modele.getSommetOrigineDijkstra();
 			if (origine != null) {
-				textFieldOrigine.setText(origine.getNom());
+				textFieldOrigine.setText(origine.toString());
 			}
 			
 			Sommet destination = modele.getSommetDestination();
 			if (destination != null) {
-				textFieldDest.setText(destination.getNom());
+				textFieldDest.setText(destination.toString());
 			}
-			
-			
 			
 			List<Arete> chemin = modele.getListeAretesDijkstra();
 			if (chemin != null) {
@@ -353,6 +353,62 @@ public class PanneauParametres extends JPanel {
 					comboBoxAretesDijkstra.addItem(chemin.get(i));
 				}				
 			}
+			
+			
+			ArrayList<Sommet> sommetsSel;
+			ArrayList<Arete> aretes;
+			
+			if (modele.getCablage()!=null) {
+				sommetsSel = modele.getCablage().getSommetsSelectionnes();
+				
+				comboBoxSommetSelectionne.removeAllItems();
+				
+				for (Sommet sommet : sommetsSel) {
+					comboBoxSommetSelectionne.addItem(sommet);
+				}
+				
+				aretes = modele.getCablage().getAretes();
+				
+				comboBoxAretesKruskal.removeAllItems();
+				
+				for (Arete arete : aretes) {
+					comboBoxAretesKruskal.addItem(arete);
+				}
+				
+				textFieldCoutKruskal.setText(Integer.toString((int) modele.getCablage().getCout()));
+				
+			}	
 		}		
+	}
+
+
+	public void updateNouveauGraphe() {
+
+		textFieldNombreSommets.setText("");
+		textFieldNombreAretes.setText("");
+		textFieldCompConnexe.setText("");
+		
+		textFieldNom.setText("");
+		textFieldLat.setText("");
+		textFieldLon.setText("");
+		
+		textFieldAreteOrigine.setText("");
+		textFieldAreteExtremite.setText("");
+		textFieldAreteCout.setText("");
+		textFieldAretePoids.setText("");
+		
+		textFieldCout.setText("");
+		textFieldOrigine.setText("");
+		textFieldDest.setText("");
+	
+		comboBoxAretesDijkstra.removeAllItems();
+		comboBoxSommetSelectionne.removeAllItems();
+		
+		comboBoxAretesKruskal.removeAllItems();
+		textFieldCoutKruskal.setText("");
+		
+		
+		
+		
 	}
 }
